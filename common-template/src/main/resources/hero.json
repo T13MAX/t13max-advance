@@ -1,0 +1,93 @@
+[
+  {
+    "id": 100001,
+    "name": "",
+    "atk": 100,
+    "def": 10,
+    "hp": 300,
+    "speed": 30,
+    "element": 1,
+    "mastery": 10,
+    "skill1": 110001,
+    "skill2": 0,
+    "des": ""
+  },
+  {
+    "id": 100002,
+    "name": "",
+    "atk": 30,
+    "def": 80,
+    "hp": 500,
+    "speed": 20,
+    "element": 1,
+    "mastery": 10,
+    "skill1": 110001,
+    "skill2": 0,
+    "des": ""
+  },
+  {
+    "id": 100003,
+    "name": "",
+    "atk": 40,
+    "def": 70,
+    "hp": 400,
+    "speed": 25,
+    "element": 1,
+    "mastery": 10,
+    "skill1": 110001,
+    "skill2": 0,
+    "des": ""
+  },
+  {
+    "id": 100004,
+    "name": "",
+    "atk": 60,
+    "def": 60,
+    "hp": 800,
+    "speed": 10,
+    "element": 3,
+    "mastery": 10,
+    "skill1": 110001,
+    "skill2": 0,
+    "des": ""
+  },
+  {
+    "id": 100005,
+    "name": "",
+    "atk": 50,
+    "def": 10,
+    "hp": 400,
+    "speed": 50,
+    "element": 2,
+    "mastery": 10,
+    "skill1": 110001,
+    "skill2": 0,
+    "des": ""
+  },
+  {
+    "id": 100006,
+    "name": "",
+    "atk": 20,
+    "def": 20,
+    "hp": 2000,
+    "speed": 10,
+    "element": 3,
+    "mastery": 10,
+    "skill1": 110001,
+    "skill2": 0,
+    "des": ""
+  },
+  {
+    "id": 100007,
+    "name": "",
+    "atk": 10,
+    "def": 100,
+    "hp": 50,
+    "speed": 20,
+    "element": 2,
+    "mastery": 10,
+    "skill1": 110001,
+    "skill2": 0,
+    "des": ""
+  }
+]

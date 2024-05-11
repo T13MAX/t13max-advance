@@ -1,0 +1,26 @@
+[
+  {
+    "id": 110001,
+    "type": 0,
+    "toSelfImpacts": "",
+    "toOtherImpacts": "1",
+    "params": "",
+    "des": "平A"
+  },
+  {
+    "id": 110002,
+    "type": 0,
+    "toSelfImpacts": "",
+    "toOtherImpacts": "2",
+    "params": "120001",
+    "des": "挂水"
+  },
+  {
+    "id": 110003,
+    "type": 0,
+    "toSelfImpacts": "",
+    "toOtherImpacts": "3",
+    "params": "2,2,120003",
+    "des": "2单位火属性攻击, 不反应则挂120003"
+  }
+]

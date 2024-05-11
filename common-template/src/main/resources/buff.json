@@ -1,0 +1,34 @@
+[
+  {
+    "id": 120001,
+    "activeCondition": 0,
+    "disposedCondition": 2,
+    "effect": "2",
+    "params": "1,10",
+    "des": "挂10单位的水"
+  },
+  {
+    "id": 120002,
+    "activeCondition": 0,
+    "disposedCondition": 2,
+    "effect": "2",
+    "params": "1,4",
+    "des": "挂4单位的水"
+  },
+  {
+    "id": 120003,
+    "activeCondition": 0,
+    "disposedCondition": 2,
+    "effect": "2",
+    "params": "2,4",
+    "des": "挂4单位的火"
+  },
+  {
+    "id": 120004,
+    "activeCondition": 0,
+    "disposedCondition": 2,
+    "effect": "2",
+    "params": "3,4",
+    "des": "挂4单位的雷"
+  }
+]
