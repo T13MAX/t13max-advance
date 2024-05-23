@@ -1,6 +1,9 @@
 package com.t13max.fight;
 
 import com.t13max.fight.enums.FightEnum;
+import com.t13max.game.manager.ManagerBase;
+import com.t13max.template.manager.TemplateManager;
+import com.t13max.util.Log;
 import com.t13max.util.ThreadNameFactory;
 import com.t13max.util.TimeUtil;
 import lombok.extern.log4j.Log4j2;
@@ -15,11 +18,11 @@ import java.util.concurrent.*;
  * @since: 13:41 2024/4/11
  */
 @Log4j2
-public class FightManager {
+public class FightManager extends ManagerBase {
 
     private ExecutorService fightExecutor;
 
-    private Map<Long, FightMatch> fightImplMap = new ConcurrentHashMap<>();
+    private Map<Long, FightMatch> fightMatchMap = new ConcurrentHashMap<>();
 
     private Set<FightMatch> finishedList = new HashSet<>();
 
@@ -33,6 +36,35 @@ public class FightManager {
 
     }
 
+    /**
+     * 获取当前实例对象
+     *
+     * @Author t13max
+     * @Date 16:44 2024/5/23
+     */
+    public static FightManager inst() {
+        return ManagerBase.inst(FightManager.class);
+    }
+
+    @Override
+    protected void onShutdown() {
+
+        this.stop = true;
+        this.fightExecutor.shutdown();
+        try {
+            if (!fightExecutor.awaitTermination(2, TimeUnit.SECONDS)) {
+                fightExecutor.shutdownNow();
+                if (!fightExecutor.awaitTermination(2, TimeUnit.SECONDS)) {
+                    Log.battle.error("战斗tick线程shutdown失败!");
+                }
+            }
+        } catch (InterruptedException e) {
+            Log.battle.error("战斗tick线程shutdown中断!");
+        }
+        super.onShutdown();
+    }
+
+    @Override
     public void init() {
 
         if (init) return;
@@ -47,7 +79,7 @@ public class FightManager {
     private void tick() {
 
         while (!stop) {
-            if (fightImplMap.isEmpty()) {
+            if (fightMatchMap.isEmpty()) {
                 try {
                     Thread.sleep(1 * 1000);
                 } catch (InterruptedException e) {
@@ -58,7 +90,7 @@ public class FightManager {
 
             long beginMills = TimeUtil.nowMills();
 
-            for (FightMatch fightMatch : fightImplMap.values()) {
+            for (FightMatch fightMatch : fightMatchMap.values()) {
                 try {
                     fightMatch.tick();
                     if (fightMatch.getFightEnum() == FightEnum.FINISHED) {
@@ -97,20 +129,20 @@ public class FightManager {
 
     private void destroyFight() {
         for (FightMatch fight : this.finishedList) {
-            this.fightImplMap.remove(fight.getId());
+            this.fightMatchMap.remove(fight.getId());
         }
     }
 
-    public void addFightImpl(FightMatch fightMatch) {
-        this.fightImplMap.put(fightMatch.getId(), fightMatch);
+    public void addFightMatch(FightMatch fightMatch) {
+        this.fightMatchMap.put(fightMatch.getId(), fightMatch);
     }
 
-    public void removeFightImpl(FightMatch fightMatch) {
-        this.fightImplMap.remove(fightMatch.getId());
+    public void removeFightMatch(FightMatch fightMatch) {
+        this.fightMatchMap.remove(fightMatch.getId());
     }
 
     public void quickStart() {
         FightMatch fightMatch = FightFactory.quickCreateFightImpl();
-        this.addFightImpl(fightMatch);
+        this.addFightMatch(fightMatch);
     }
 }
