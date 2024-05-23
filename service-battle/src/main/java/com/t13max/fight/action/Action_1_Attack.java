@@ -1,7 +1,7 @@
 package com.t13max.fight.action;
 
 import com.t13max.fight.FightHero;
-import com.t13max.fight.FightImpl;
+import com.t13max.fight.FightMatch;
 import com.t13max.fight.FightTimeMachine;
 import com.t13max.fight.damage.CommonDamageCalculator;
 import com.t13max.fight.event.ReadyToSubHpEvent;
@@ -26,7 +26,7 @@ public class Action_1_Attack extends AbstractAction {
     @Override
     public void onTimeIsUp() {
         FightTimeMachine fightTimeMachine = this.getFightTimeMachine();
-        FightImpl fight = fightTimeMachine.getFight();
+        FightMatch fight = fightTimeMachine.getFight();
         FightHero fightHero = fight.getFightHero(this.getGenerator(), this.isAttacker());
         List<Long> targetHeroIds = this.getTargetHeroIds();
 

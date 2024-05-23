@@ -1,6 +1,5 @@
 package com.t13max.fight;
 
-import com.t13max.fight.action.IAction;
 import com.t13max.fight.impact.IImpact;
 import com.t13max.fight.trigger.ITrigger;
 import com.t13max.fight.trigger.TriggerTimeline;
@@ -17,9 +16,9 @@ public class FightTimeMachine {
     private TriggerTimeline triggerTimeline;
 
     @Getter
-    private FightImpl fight;
+    private FightMatch fight;
 
-    public FightTimeMachine(FightImpl fight) {
+    public FightTimeMachine(FightMatch fight) {
         this.fight = fight;
         this.triggerTimeline = new TriggerTimeline();
     }

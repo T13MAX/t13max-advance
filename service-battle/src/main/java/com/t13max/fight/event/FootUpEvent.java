@@ -1,6 +1,6 @@
 package com.t13max.fight.event;
 
-import com.t13max.fight.FightImpl;
+import com.t13max.fight.FightMatch;
 import lombok.Getter;
 
 /**
@@ -10,9 +10,9 @@ import lombok.Getter;
 @Getter
 public class FootUpEvent extends AbstractEvent {
 
-    private FightImpl fight;
+    private FightMatch fight;
 
-    public FootUpEvent(FightImpl fight) {
+    public FootUpEvent(FightMatch fight) {
         super(FightEventEnum.FOOT_UP);
         this.fight = fight;
     }

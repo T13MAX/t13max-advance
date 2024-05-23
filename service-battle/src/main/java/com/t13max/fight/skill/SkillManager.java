@@ -16,7 +16,7 @@ public class SkillManager {
 
     private FightHero owner;
 
-    private Map<Integer, SkillImpl> skillMap = new HashMap<>();
+    private Map<Integer, FightSkill> skillMap = new HashMap<>();
 
     public SkillManager(FightHero owner) {
         this.owner = owner;
@@ -30,18 +30,18 @@ public class SkillManager {
         if (templateSkill1 == null) {
             throw new BattleException("TemplateSkill为空, id=" + templateHero.getSkill1());
         }
-        SkillImpl skill1 = new SkillImpl(templateSkill1);
+        FightSkill skill1 = new FightSkill(templateSkill1);
         skillMap.put(skill1.getSkillId(), skill1);
 
         TemplateSkill templateSkill2 = TemplateSkill.getTemplate(templateHero.getSkill1());
         if (templateSkill2 != null) {
-            SkillImpl skill2 = new SkillImpl(templateSkill2);
+            FightSkill skill2 = new FightSkill(templateSkill2);
             skillMap.put(skill2.getSkillId(), skill2);
         }
 
     }
 
-    public SkillImpl getSkill(int skillId) {
+    public FightSkill getSkill(int skillId) {
         return skillMap.get(skillId);
     }
 }

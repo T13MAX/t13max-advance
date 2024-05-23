@@ -13,12 +13,12 @@ public class BattleApplication {
     }
 
     public static void quickStart() {
-        TemplateManager templateManager = new TemplateManager();
-        if (!templateManager.load()) {
+        /*TemplateManager templateManager = new TemplateManager();
+        if (!templateManager.reload()) {
             return;
         }
         FightManager fightManager = new FightManager();
         fightManager.init();
-        fightManager.quickStart();
+        fightManager.quickStart();*/
     }
 }

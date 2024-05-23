@@ -1,7 +1,7 @@
 package com.t13max.fight.action;
 
 import com.t13max.fight.FightHero;
-import com.t13max.fight.FightImpl;
+import com.t13max.fight.FightMatch;
 import com.t13max.fight.FightTimeMachine;
 import com.t13max.fight.buff.BuffBoxImpl;
 import com.t13max.fight.buff.BuffFactory;
@@ -27,7 +27,7 @@ public class Action_2_Buff extends AbstractAction {
     @Override
     public void onTimeIsUp() {
         FightTimeMachine fightTimeMachine = this.getFightTimeMachine();
-        FightImpl fight = fightTimeMachine.getFight();
+        FightMatch fight = fightTimeMachine.getFight();
 
         TemplateSkill template = TemplateSkill.getTemplate(getSkillId());
         if (template == null) {

@@ -8,13 +8,13 @@ import lombok.Data;
  * @since: 15:56 2024/4/15
  */
 @Data
-public class SkillImpl {
+public class FightSkill {
 
     private int skillId;
 
     private int collDown;
 
-    public SkillImpl(TemplateSkill templateSkill) {
+    public FightSkill(TemplateSkill templateSkill) {
         this.skillId = templateSkill.getId();
     }
 

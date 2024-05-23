@@ -18,16 +18,16 @@ import java.util.Map;
 @UtilityClass
 public class FightFactory {
 
-    public FightImpl createFightImpl() {
-        FightImpl fight = new FightImpl();
+    public FightMatch createFightImpl() {
+        FightMatch fight = new FightMatch();
         return fight;
     }
 
-    public FightImpl quickCreateFightImpl() {
-        FightImpl fight = null;
+    public FightMatch quickCreateFightImpl() {
+        FightMatch fight = null;
         try {
 
-            fight = new FightImpl(UuidUtil.getNextId());
+            fight = new FightMatch(UuidUtil.getNextId());
 
             Map<Long, FightHero> attacker = quickGenHero(createFightMember(UuidUtil.getNextId(), true), fight);
             Map<Long, FightHero> defender = quickGenHero(createFightMember(UuidUtil.getNextId(), false), fight);
@@ -47,7 +47,7 @@ public class FightFactory {
         return new FightMember(uid, attacker);
     }
 
-    public Map<Long, FightHero> quickGenHero(FightMember fightMember, FightImpl fight) {
+    public Map<Long, FightHero> quickGenHero(FightMember fightMember, FightMatch fight) {
         Map<Long, FightHero> result = new HashMap<>();
         ArrayList<TemplateHero> templateHeroes = new ArrayList<>(TemplateHero.getAll());
         for (int i = 0; i < 5; i++) {

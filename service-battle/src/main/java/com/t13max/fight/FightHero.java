@@ -5,7 +5,7 @@ import com.t13max.fight.buff.BuffManager;
 import com.t13max.fight.impact.IImpact;
 import com.t13max.fight.impact.ImpactFactory;
 import com.t13max.fight.member.FightMember;
-import com.t13max.fight.skill.SkillImpl;
+import com.t13max.fight.skill.FightSkill;
 import com.t13max.fight.skill.SkillManager;
 import com.t13max.template.temp.TemplateHero;
 import com.t13max.template.temp.TemplateSkill;
@@ -37,11 +37,11 @@ public class FightHero {
 
     private SkillManager skillManager;
 
-    private FightImpl fight;
+    private FightMatch fight;
 
     private LifecycleObserver lifecycleObserver;
 
-    public FightHero(long id, FightMember fightMember, int templateId, FightImpl fight) {
+    public FightHero(long id, FightMember fightMember, int templateId, FightMatch fight) {
         this.id = id;
         this.fightMember = fightMember;
         this.templateId = templateId;
@@ -74,8 +74,8 @@ public class FightHero {
         return fightAttrManager.isAlive();
     }
 
-    public void emitSkill(int skillId, List<Long> targetIds, FightImpl fight) {
-        SkillImpl skill = this.getSkillManager().getSkill(skillId);
+    public void emitSkill(int skillId, List<Long> targetIds, FightMatch fight) {
+        FightSkill skill = this.getSkillManager().getSkill(skillId);
         if (skill == null) {
             log.error("英雄没这个技能! heroId={}, skillId={}", this.id, skillId);
             return;

@@ -6,7 +6,7 @@ import com.t13max.fight.event.*;
 import com.t13max.fight.log.FightLogManager;
 import com.t13max.fight.moveBar.ActionMoveBar;
 import com.t13max.fight.moveBar.MoveBarUnit;
-import com.t13max.fight.skill.SkillImpl;
+import com.t13max.fight.skill.FightSkill;
 import com.t13max.template.temp.TemplateSkill;
 import com.t13max.util.TimeUtil;
 import lombok.Data;
@@ -24,7 +24,7 @@ import java.util.Map;
 @Data
 @Log4j2
 @NoArgsConstructor
-public class FightImpl {
+public class FightMatch {
 
     private long id;
 
@@ -54,7 +54,7 @@ public class FightImpl {
 
     private long lastFightStatusChangeMills;
 
-    public FightImpl(long id) {
+    public FightMatch(long id) {
         this.id = id;
         this.fightEnum = FightEnum.INIT;
         this.smallRoundEnum = SmallRoundEnum.DETERMINE_NEXT_ACTION_UNIT;
@@ -218,7 +218,7 @@ public class FightImpl {
             return false;
         }
 
-        SkillImpl skill = curActionHero.getSkillManager().getSkill(skillId);
+        FightSkill skill = curActionHero.getSkillManager().getSkill(skillId);
         if (skill == null) {
             log.error("行动失败, 参数错误");
             return false;

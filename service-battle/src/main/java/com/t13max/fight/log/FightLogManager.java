@@ -1,7 +1,7 @@
 package com.t13max.fight.log;
 
 import com.t13max.fight.FightHero;
-import com.t13max.fight.FightImpl;
+import com.t13max.fight.FightMatch;
 import com.t13max.fight.event.*;
 import lombok.extern.log4j.Log4j2;
 
@@ -73,7 +73,7 @@ public class FightLogManager extends AbstractEventListener {
             }
             case FOOT_UP -> {
                 FootUpEvent footUpEvent = (FootUpEvent) event;
-                FightImpl fight = footUpEvent.getFight();
+                FightMatch fight = footUpEvent.getFight();
                 Map<Long, FightHero> winMap = fight.getAttacker();
                 if (winMap.isEmpty()) {
                     winMap = fight.getDefender();

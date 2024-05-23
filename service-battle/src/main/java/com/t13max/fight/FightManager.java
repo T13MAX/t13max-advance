@@ -5,7 +5,6 @@ import com.t13max.util.ThreadNameFactory;
 import com.t13max.util.TimeUtil;
 import lombok.extern.log4j.Log4j2;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -20,9 +19,9 @@ public class FightManager {
 
     private ExecutorService fightExecutor;
 
-    private Map<Long, FightImpl> fightImplMap = new ConcurrentHashMap<>();
+    private Map<Long, FightMatch> fightImplMap = new ConcurrentHashMap<>();
 
-    private Set<FightImpl> finishedList = new HashSet<>();
+    private Set<FightMatch> finishedList = new HashSet<>();
 
     private volatile boolean stop;
 
@@ -59,17 +58,17 @@ public class FightManager {
 
             long beginMills = TimeUtil.nowMills();
 
-            for (FightImpl fightImpl : fightImplMap.values()) {
+            for (FightMatch fightMatch : fightImplMap.values()) {
                 try {
-                    fightImpl.tick();
-                    if (fightImpl.getFightEnum() == FightEnum.FINISHED) {
-                        fightImpl.finish();
-                        this.finishedList.add(fightImpl);
+                    fightMatch.tick();
+                    if (fightMatch.getFightEnum() == FightEnum.FINISHED) {
+                        fightMatch.finish();
+                        this.finishedList.add(fightMatch);
                     }
                 } catch (Exception exception) {
                     exception.printStackTrace();
-                    fightImpl.getFightLogManager().forcePrint();
-                    this.finishedList.add(fightImpl);
+                    fightMatch.getFightLogManager().forcePrint();
+                    this.finishedList.add(fightMatch);
                 }
             }
 
@@ -97,21 +96,21 @@ public class FightManager {
     }
 
     private void destroyFight() {
-        for (FightImpl fight : this.finishedList) {
+        for (FightMatch fight : this.finishedList) {
             this.fightImplMap.remove(fight.getId());
         }
     }
 
-    public void addFightImpl(FightImpl fightImpl) {
-        this.fightImplMap.put(fightImpl.getId(), fightImpl);
+    public void addFightImpl(FightMatch fightMatch) {
+        this.fightImplMap.put(fightMatch.getId(), fightMatch);
     }
 
-    public void removeFightImpl(FightImpl fightImpl) {
-        this.fightImplMap.remove(fightImpl.getId());
+    public void removeFightImpl(FightMatch fightMatch) {
+        this.fightImplMap.remove(fightMatch.getId());
     }
 
     public void quickStart() {
-        FightImpl fightImpl = FightFactory.quickCreateFightImpl();
-        this.addFightImpl(fightImpl);
+        FightMatch fightMatch = FightFactory.quickCreateFightImpl();
+        this.addFightImpl(fightMatch);
     }
 }
