@@ -5,6 +5,8 @@ import com.t13max.fight.FightMatch;
 import com.t13max.fight.FightTimeMachine;
 import com.t13max.fight.buff.BuffBoxImpl;
 import com.t13max.fight.buff.BuffFactory;
+import com.t13max.template.helper.SkillHelper;
+import com.t13max.template.manager.TemplateManager;
 import com.t13max.template.temp.TemplateSkill;
 import lombok.extern.log4j.Log4j2;
 
@@ -29,7 +31,8 @@ public class Action_2_Buff extends AbstractAction {
         FightTimeMachine fightTimeMachine = this.getFightTimeMachine();
         FightMatch fight = fightTimeMachine.getFight();
 
-        TemplateSkill template = TemplateSkill.getTemplate(getSkillId());
+        SkillHelper skillHelper = TemplateManager.inst().helper(SkillHelper.class);
+        TemplateSkill template = skillHelper.getTemplate(getSkillId());
         if (template == null) {
             log.error("TemplateSkill为空, skillId={}", getSkillId());
             return;

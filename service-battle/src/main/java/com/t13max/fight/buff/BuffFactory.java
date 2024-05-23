@@ -7,6 +7,9 @@ import com.t13max.fight.buff.condition.IEventCondition;
 import com.t13max.fight.buff.effect.AbstractEffect;
 import com.t13max.fight.buff.effect.BuffEffectEnum;
 import com.t13max.fight.buff.effect.IBuffEffect;
+import com.t13max.template.helper.BuffHelper;
+import com.t13max.template.helper.SkillHelper;
+import com.t13max.template.manager.TemplateManager;
 import com.t13max.template.temp.TemplateBuff;
 import lombok.experimental.UtilityClass;
 import lombok.extern.log4j.Log4j2;
@@ -43,7 +46,8 @@ public class BuffFactory {
         buffBox.setOwner(owner);
 
         for (Integer buffId : buffIds) {
-            TemplateBuff template = TemplateBuff.getTemplate(buffId);
+            BuffHelper buffHelper = TemplateManager.inst().helper(BuffHelper.class);
+            TemplateBuff template = buffHelper.getTemplate(buffId);
             if (template == null) {
                 log.error("createBuffBoxImpl, buff不存在, buffId={}", buffId);
                 continue;

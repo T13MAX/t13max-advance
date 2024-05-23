@@ -2,6 +2,8 @@ package com.t13max.fight.attr;
 
 import com.t13max.fight.FightHero;
 import com.t13max.game.exception.BattleException;
+import com.t13max.template.helper.HeroHelper;
+import com.t13max.template.manager.TemplateManager;
 import com.t13max.template.temp.TemplateHero;
 import lombok.Getter;
 
@@ -33,7 +35,8 @@ public class FightAttrManager {
 
     private void initAttr() {
         Random random = new Random();
-        TemplateHero template = TemplateHero.getTemplate(owner.getTemplateId());
+        HeroHelper heroHelper = TemplateManager.inst().helper(HeroHelper.class);
+        TemplateHero template = heroHelper.getTemplate(owner.getTemplateId());
         if (template == null) {
             throw new BattleException("TemplateHero为空, id=" + owner.getTemplateId());
         }

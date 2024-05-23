@@ -12,6 +12,8 @@ import com.t13max.fight.buff.effect.element.ElementEnum;
 import com.t13max.fight.damage.CommonDamageCalculator;
 import com.t13max.fight.damage.ElementDamageCalculator;
 import com.t13max.fight.event.ReadyToSubHpEvent;
+import com.t13max.template.helper.SkillHelper;
+import com.t13max.template.manager.TemplateManager;
 import com.t13max.template.temp.TemplateSkill;
 import lombok.extern.log4j.Log4j2;
 
@@ -38,7 +40,8 @@ public class Action_3_ElementAttack extends AbstractAction {
     @Override
     public void handleCreate() {
         super.handleCreate();
-        TemplateSkill template = TemplateSkill.getTemplate(getSkillId());
+        SkillHelper skillHelper = TemplateManager.inst().helper(SkillHelper.class);
+        TemplateSkill template = skillHelper.getTemplate(getSkillId());
         if (template == null) {
             log.error("TemplateSkill为空, id={}", getSkillId());
             return;

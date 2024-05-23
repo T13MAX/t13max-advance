@@ -7,6 +7,8 @@ import com.t13max.fight.log.FightLogManager;
 import com.t13max.fight.moveBar.ActionMoveBar;
 import com.t13max.fight.moveBar.MoveBarUnit;
 import com.t13max.fight.skill.FightSkill;
+import com.t13max.template.helper.SkillHelper;
+import com.t13max.template.manager.TemplateManager;
 import com.t13max.template.temp.TemplateSkill;
 import com.t13max.util.TimeUtil;
 import lombok.Data;
@@ -224,7 +226,8 @@ public class FightMatch {
             return false;
         }
 
-        TemplateSkill template = TemplateSkill.getTemplate(skillId);
+        SkillHelper skillHelper = TemplateManager.inst().helper(SkillHelper.class);
+        TemplateSkill template = skillHelper.getTemplate(skillId);
         if (template == null) {
             log.error("行动失败, 参数错误");
             return false;

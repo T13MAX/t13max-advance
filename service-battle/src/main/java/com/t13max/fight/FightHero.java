@@ -7,6 +7,9 @@ import com.t13max.fight.impact.ImpactFactory;
 import com.t13max.fight.member.FightMember;
 import com.t13max.fight.skill.FightSkill;
 import com.t13max.fight.skill.SkillManager;
+import com.t13max.template.helper.HeroHelper;
+import com.t13max.template.helper.SkillHelper;
+import com.t13max.template.manager.TemplateManager;
 import com.t13max.template.temp.TemplateHero;
 import com.t13max.template.temp.TemplateSkill;
 import com.t13max.util.RandomUtil;
@@ -56,7 +59,8 @@ public class FightHero {
 
     public ActionArgs runWithAI() {
         ActionArgs actionArgs = new ActionArgs(this.fightMember.getUid(), this.id);
-        TemplateHero template = TemplateHero.getTemplate(this.getTemplateId());
+        HeroHelper heroHelper = TemplateManager.inst().helper(HeroHelper.class);
+        TemplateHero template = heroHelper.getTemplate(this.getTemplateId());
         actionArgs.setSkillId(template.getSkill1());
         Map<Long, FightHero> targetMap = null;
         if (this.isAttacker()) {
@@ -80,8 +84,8 @@ public class FightHero {
             log.error("英雄没这个技能! heroId={}, skillId={}", this.id, skillId);
             return;
         }
-
-        TemplateSkill template = TemplateSkill.getTemplate(skillId);
+        SkillHelper skillHelper = TemplateManager.inst().helper(SkillHelper.class);
+        TemplateSkill template = skillHelper.getTemplate(skillId);
         if (template == null) {
             log.error("技能模板为空! skillId={}", skillId);
             return;

@@ -1,7 +1,9 @@
 package com.t13max.fight.moveBar;
 
 import com.t13max.fight.FightHero;
-import com.t13max.template.temp.TemplateConst;
+import com.t13max.template.helper.ConstHelper;
+import com.t13max.template.helper.HeroHelper;
+import com.t13max.template.manager.TemplateManager;
 import com.t13max.template.temp.TemplateHero;
 import lombok.extern.log4j.Log4j2;
 
@@ -22,13 +24,15 @@ public class ActionMoveBar {
 
     public ActionMoveBar(Map<Long, FightHero> attacker, Map<Long, FightHero> defender) {
         Map<Long, MoveBarUnit> actionUnitMap = new HashMap<>();
-        int actionDistance = TemplateConst.getInt(TemplateConst.ConstEnum.行动值, 100);
+        ConstHelper constHelper = TemplateManager.inst().helper(ConstHelper.class);
+        HeroHelper heroHelper = TemplateManager.inst().helper(HeroHelper.class);
+        int actionDistance = constHelper.getInt(ConstHelper.ConstEnum.行动值, 100);
         for (FightHero fightHero : attacker.values()) {
-            TemplateHero template = TemplateHero.getTemplate(fightHero.getTemplateId());
+            TemplateHero template = heroHelper.getTemplate(fightHero.getTemplateId());
             actionUnitMap.put(fightHero.getId(), new MoveBarUnit(fightHero.getId(), true, template.getSpeed(), 0, actionDistance));
         }
         for (FightHero fightHero : defender.values()) {
-            TemplateHero template = TemplateHero.getTemplate(fightHero.getTemplateId());
+            TemplateHero template = heroHelper.getTemplate(fightHero.getTemplateId());
             actionUnitMap.put(fightHero.getId(), new MoveBarUnit(fightHero.getId(), false, template.getSpeed(), 0, actionDistance));
         }
         this.actionUnitMap = actionUnitMap;

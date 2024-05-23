@@ -2,6 +2,9 @@ package com.t13max.fight;
 
 import com.t13max.fight.member.FightMember;
 import com.t13max.fight.moveBar.ActionMoveBar;
+import com.t13max.template.helper.BuffHelper;
+import com.t13max.template.helper.HeroHelper;
+import com.t13max.template.manager.TemplateManager;
 import com.t13max.template.temp.TemplateHero;
 import com.t13max.util.RandomUtil;
 import com.t13max.util.UuidUtil;
@@ -49,7 +52,8 @@ public class FightFactory {
 
     public Map<Long, FightHero> quickGenHero(FightMember fightMember, FightMatch fight) {
         Map<Long, FightHero> result = new HashMap<>();
-        ArrayList<TemplateHero> templateHeroes = new ArrayList<>(TemplateHero.getAll());
+        HeroHelper heroHelper = TemplateManager.inst().helper(HeroHelper.class);
+        ArrayList<TemplateHero> templateHeroes = new ArrayList<>(heroHelper.getAll());
         for (int i = 0; i < 5; i++) {
             TemplateHero templateHero = RandomUtil.random(templateHeroes);
             FightHero fightHero = new FightHero(UuidUtil.getNextId(), fightMember, templateHero.getId(), fight);
