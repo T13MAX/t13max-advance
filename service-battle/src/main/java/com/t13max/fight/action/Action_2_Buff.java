@@ -5,9 +5,7 @@ import com.t13max.fight.FightImpl;
 import com.t13max.fight.FightTimeMachine;
 import com.t13max.fight.buff.BuffBoxImpl;
 import com.t13max.fight.buff.BuffFactory;
-import com.t13max.fight.damage.CommonDamageCalculator;
-import com.t13max.fight.event.ReadyToSubHpEvent;
-import com.t13max.template.TemplateSkill;
+import com.t13max.template.temp.TemplateSkill;
 import lombok.extern.log4j.Log4j2;
 
 import java.util.*;

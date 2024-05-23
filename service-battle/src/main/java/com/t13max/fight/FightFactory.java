@@ -2,7 +2,7 @@ package com.t13max.fight;
 
 import com.t13max.fight.member.FightMember;
 import com.t13max.fight.moveBar.ActionMoveBar;
-import com.t13max.template.TemplateHero;
+import com.t13max.template.temp.TemplateHero;
 import com.t13max.util.RandomUtil;
 import com.t13max.util.UuidUtil;
 import lombok.experimental.UtilityClass;

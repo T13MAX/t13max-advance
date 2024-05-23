@@ -7,7 +7,7 @@ import com.t13max.fight.buff.condition.IEventCondition;
 import com.t13max.fight.buff.effect.AbstractEffect;
 import com.t13max.fight.buff.effect.BuffEffectEnum;
 import com.t13max.fight.buff.effect.IBuffEffect;
-import com.t13max.template.TemplateBuff;
+import com.t13max.template.temp.TemplateBuff;
 import lombok.experimental.UtilityClass;
 import lombok.extern.log4j.Log4j2;
 

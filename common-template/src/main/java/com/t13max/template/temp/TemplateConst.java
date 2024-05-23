@@ -1,5 +1,7 @@
-package com.t13max.template;
+package com.t13max.template.temp;
 
+import com.t13max.template.ITemplate;
+import com.t13max.template.util.JsonUtils;
 import lombok.Data;
 import lombok.Getter;
 

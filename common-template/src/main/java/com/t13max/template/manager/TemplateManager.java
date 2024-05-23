@@ -1,9 +1,9 @@
-package com.t13max.game.manager;
+package com.t13max.template.manager;
 
 
-import com.t13max.template.TemplateBuff;
-import com.t13max.template.TemplateHero;
-import com.t13max.template.TemplateSkill;
+import com.t13max.template.temp.TemplateBuff;
+import com.t13max.template.temp.TemplateHero;
+import com.t13max.template.temp.TemplateSkill;
 
 /**
  * @author: t13max

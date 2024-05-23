@@ -1,8 +1,8 @@
 package com.t13max.fight.moveBar;
 
 import com.t13max.fight.FightHero;
-import com.t13max.template.TemplateConst;
-import com.t13max.template.TemplateHero;
+import com.t13max.template.temp.TemplateConst;
+import com.t13max.template.temp.TemplateHero;
 import lombok.extern.log4j.Log4j2;
 
 import java.util.*;

@@ -2,7 +2,7 @@ package com.t13max.fight.attr;
 
 import com.t13max.fight.FightHero;
 import com.t13max.game.exception.BattleException;
-import com.t13max.template.TemplateHero;
+import com.t13max.template.temp.TemplateHero;
 import lombok.Getter;
 
 import java.util.HashMap;

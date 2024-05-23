@@ -1,10 +1,9 @@
 package com.t13max.fight.skill;
 
 import com.t13max.fight.FightHero;
-import com.t13max.fight.buff.IBuffBox;
 import com.t13max.game.exception.BattleException;
-import com.t13max.template.TemplateHero;
-import com.t13max.template.TemplateSkill;
+import com.t13max.template.temp.TemplateHero;
+import com.t13max.template.temp.TemplateSkill;
 
 import java.util.HashMap;
 import java.util.Map;

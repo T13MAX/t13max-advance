@@ -7,7 +7,7 @@ import com.t13max.fight.log.FightLogManager;
 import com.t13max.fight.moveBar.ActionMoveBar;
 import com.t13max.fight.moveBar.MoveBarUnit;
 import com.t13max.fight.skill.SkillImpl;
-import com.t13max.template.TemplateSkill;
+import com.t13max.template.temp.TemplateSkill;
 import com.t13max.util.TimeUtil;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,7 +16,6 @@ import lombok.extern.log4j.Log4j2;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * @author: t13max

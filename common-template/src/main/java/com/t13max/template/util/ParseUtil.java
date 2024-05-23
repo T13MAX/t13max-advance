@@ -1,4 +1,4 @@
-package com.t13max.template;
+package com.t13max.template.util;
 
 import lombok.experimental.UtilityClass;
 

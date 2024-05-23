@@ -1,8 +1,8 @@
-package com.t13max.template;
+package com.t13max.template.util;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
+import com.t13max.template.ITemplate;
 import lombok.experimental.UtilityClass;
 import lombok.extern.log4j.Log4j2;
 

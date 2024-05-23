@@ -1,6 +1,6 @@
 package com.t13max.fight.skill;
 
-import com.t13max.template.TemplateSkill;
+import com.t13max.template.temp.TemplateSkill;
 import lombok.Data;
 
 /**
