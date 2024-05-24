@@ -126,5 +126,21 @@ public class FightAttrManager {
         this.valueAttrMap.put(attrEnum, newValue);
     }
 
+    public void modifyAttr(String param, boolean add) {
+        String[] split = param.split(";");
+        for (String string : split) {
+            String[] split1 = string.split(",");
+            int attr = Integer.parseInt(split1[0]);
+            int rate = Integer.parseInt(split1[1]);
+            int value = Integer.parseInt(split1[2]);
+            FightAttrEnum fightAttrEnum = FightAttrEnum.getFightAttrEnum(attr);
+            if (rate == 0) {
+                modifyValueAttr(fightAttrEnum, value, add);
+            } else if (rate == 1) {
+                modifyRateAttr(fightAttrEnum, value, add);
+            }
+        }
+    }
+
 }
 

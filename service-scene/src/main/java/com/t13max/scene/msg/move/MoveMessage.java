@@ -1,6 +1,5 @@
 package com.t13max.scene.msg.move;
 
-import com.t13max.game.msg.AbstractMessage;
 
 /**
  * @author: t13max

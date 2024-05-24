@@ -18,13 +18,13 @@ import java.util.Set;
 @Data
 public class AbstractEffect extends AbstractEventListener implements IBuffEffect {
 
-    private BuffBoxImpl buffBox;
+    protected BuffBoxImpl buffBox;
 
-    private BuffStatus buffStatus = BuffStatus.IDLE;
+    protected BuffStatus buffStatus = BuffStatus.IDLE;
 
-    private Set<IEventCondition> activeConditions = new HashSet<>();
+    protected Set<IEventCondition> activeConditions = new HashSet<>();
 
-    private Set<IEventCondition> disposedConditions = new HashSet<>();
+    protected Set<IEventCondition> disposedConditions = new HashSet<>();
 
     protected String param;
 

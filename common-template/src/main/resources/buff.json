@@ -3,32 +3,20 @@
     "id": 120001,
     "activeCondition": 0,
     "disposedCondition": 2,
-    "effect": "2",
-    "params": "1,10",
-    "des": "挂10单位的水"
+    "effect": [3],
+    "duration": 3,
+    "overlay": 1,
+    "params": "30",
+    "des": "持续三回合30%反伤, 多次效果回合数累加"
   },
   {
     "id": 120002,
     "activeCondition": 0,
-    "disposedCondition": 2,
-    "effect": "2",
-    "params": "1,4",
-    "des": "挂4单位的水"
-  },
-  {
-    "id": 120003,
-    "activeCondition": 0,
-    "disposedCondition": 2,
-    "effect": "2",
-    "params": "2,4",
-    "des": "挂4单位的火"
-  },
-  {
-    "id": 120004,
-    "activeCondition": 0,
-    "disposedCondition": 2,
-    "effect": "2",
-    "params": "3,4",
-    "des": "挂4单位的雷"
+    "disposedCondition": 3,
+    "effect": [1,4],
+    "duration": -1,
+    "overlay": 2,
+    "params": ["80,0,10","10,10"],
+    "des": "施加泯灭效果(受到伤害提升 层数x10%), 每回合受到攻击者的攻击力x层数x10%的伤害, 多次效果层数累加"
   }
 ]

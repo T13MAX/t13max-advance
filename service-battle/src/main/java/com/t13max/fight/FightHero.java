@@ -12,6 +12,7 @@ import com.t13max.template.helper.SkillHelper;
 import com.t13max.template.manager.TemplateManager;
 import com.t13max.template.temp.TemplateHero;
 import com.t13max.template.temp.TemplateSkill;
+import com.t13max.util.Log;
 import com.t13max.util.RandomUtil;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
@@ -90,23 +91,44 @@ public class FightHero {
             log.error("技能模板为空! skillId={}", skillId);
             return;
         }
+
+        if (checkTargetValid(template, targetIds)) {
+            Log.battle.error("目标不合法, skillId={}, targetIds={}", skillId, targetIds);
+            return;
+        }
+
         FightTimeMachine fightTimeMachine = fight.getFightTimeMachine();
-        List<Integer> toSelfImpacts = template.getToSelfImpacts();
-        for (Integer impactId : toSelfImpacts) {
-            IImpact impact = ImpactFactory.createImpact(this.getId(), skillId, impactId, this.isAttacker(), 0, fight.getRound(), Collections.singletonList(this.id), fightTimeMachine);
+
+        int[] toSelfImpacts = template.getToSelfImpacts();
+        String[] selfParams = template.getSelfParams();
+        for (int i = 0; i < toSelfImpacts.length; i++) {
+            int impactId = toSelfImpacts[i];
+            IImpact impact = ImpactFactory.createImpact(this.getId(), skillId, selfParams[i], impactId, this.isAttacker(), 0, fight.getRound(), Collections.singletonList(this.id), fightTimeMachine);
             if (impact != null) {
                 fightTimeMachine.addImpactToTimeLine(impact);
             }
         }
 
-        List<Integer> toOtherImpacts = template.getToOtherImpacts();
-        for (Integer impactId : toOtherImpacts) {
-            IImpact impact = ImpactFactory.createImpact(this.getId(), skillId, impactId, this.isAttacker(), 0, fight.getRound(), targetIds, fightTimeMachine);
+        int[] toOtherImpacts = template.getToOtherImpacts();
+        String[] otherParams = template.getOtherParams();
+        for (int i = 0; i < toOtherImpacts.length; i++) {
+            int impactId = toOtherImpacts[i];
+            IImpact impact = ImpactFactory.createImpact(this.getId(), skillId, otherParams[i], impactId, this.isAttacker(), 0, fight.getRound(), targetIds, fightTimeMachine);
             if (impact != null) {
                 fightTimeMachine.addImpactToTimeLine(impact);
             }
         }
 
+    }
+
+    /**
+     * 校验目标合法性 暂不校验
+     *
+     * @Author t13max
+     * @Date 15:05 2024/5/24
+     */
+    private boolean checkTargetValid(TemplateSkill template, List<Long> targetIds) {
+        return true;
     }
 
     public boolean isDie() {

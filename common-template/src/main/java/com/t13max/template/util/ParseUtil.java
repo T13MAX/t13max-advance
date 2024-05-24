@@ -14,7 +14,11 @@ public class ParseUtil {
 
     public static final String PART = ";";
 
-    public static List<Integer> getIntList(String str,String separation) {
+    public static List<Integer> getIntList(String str) {
+        return getIntList(str, ",");
+    }
+
+    public static List<Integer> getIntList(String str, String separation) {
         String[] split = str.split(separation);
         List<Integer> result = new LinkedList<>();
         for (String item : split) {

@@ -9,6 +9,7 @@ import com.t13max.fight.buff.effect.element.ElementEnum;
  * @author: t13max
  * @since: 18:30 2024/4/15
  */
+@Deprecated
 public class ElementDamageCalculator {
 
     private FightHero attacker;

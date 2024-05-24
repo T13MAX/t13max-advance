@@ -14,20 +14,22 @@ import java.util.List;
 @Data
 public abstract class AbstractImpact extends AbstractEventListener implements IImpact {
 
-    private FightTimeMachine fightTimeMachine;
+    protected FightTimeMachine fightTimeMachine;
 
-    private ImpactEnum impactEnum;
+    protected ImpactEnum impactEnum;
 
-    private int skillId;
+    protected int skillId;
 
-    private long generator;
+    protected String param;
 
-    private List<Long> targetHeroIds;
+    protected long generator;
 
-    private boolean attacker;
+    protected List<Long> targetHeroIds;
 
-    private int delayTime;
+    protected boolean attacker;
 
-    private int generateRound;
+    protected int delayTime;
+
+    protected int generateRound;
 
 }

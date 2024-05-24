@@ -22,6 +22,8 @@ public class BuffBoxImpl extends AbstractEventListener implements IBuffBox {
 
     private Set<IBuffEffect> buffEffects;
 
+    private int layer;
+
     private int life;
 
     protected transient FightEventBus fightEventBus;
@@ -62,7 +64,7 @@ public class BuffBoxImpl extends AbstractEventListener implements IBuffBox {
 
     @Override
     public void onCreate() {
-
+        this.buffEffects.forEach(IBuffEffect::onCreate);
     }
 
     @Override
@@ -71,5 +73,8 @@ public class BuffBoxImpl extends AbstractEventListener implements IBuffBox {
         this.buffEffects.forEach(e -> e.onDestroy(reason));
     }
 
+    public void merge(BuffBoxImpl buffBox){
+
+    }
 
 }

@@ -13,19 +13,23 @@ import java.util.Map;
 @Getter
 public enum ElementEnum {
 
-    WATER(1),
+    ANY(0),
 
-    FIRE(2),
+    WATER(1),//水 生命
 
-    RAY(3),
+    FIRE(2),//火 攻击
 
-    //GRASS(4),
+    RAY(3),//雷 充能(减冷却)
 
-    //WIND(5),
+    GRASS(4),//草
 
-    //ICE(6),
+    WIND(5),//风 (扩散)
 
-    //ROCK(7),
+    LIGHT(6),//光
+
+    DARK(7),//暗
+
+
     ;
 
     private static Map<Integer, ElementEnum> ELEMENT_MAP = new HashMap<>();

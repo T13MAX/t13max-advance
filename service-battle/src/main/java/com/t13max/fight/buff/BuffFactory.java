@@ -11,10 +11,12 @@ import com.t13max.template.helper.BuffHelper;
 import com.t13max.template.helper.SkillHelper;
 import com.t13max.template.manager.TemplateManager;
 import com.t13max.template.temp.TemplateBuff;
+import com.t13max.template.util.ParseUtil;
 import lombok.experimental.UtilityClass;
 import lombok.extern.log4j.Log4j2;
 
 import java.lang.reflect.Constructor;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +42,10 @@ public class BuffFactory {
         return CONDITION_MAP.get(id);
     }
 
+    public BuffBoxImpl createBuffBoxImpl(FightHero owner, String param) {
+        return createBuffBoxImpl(owner, ParseUtil.getIntList(param));
+    }
+
     public BuffBoxImpl createBuffBoxImpl(FightHero owner, List<Integer> buffIds) {
 
         BuffBoxImpl buffBox = new BuffBoxImpl();
@@ -56,11 +62,12 @@ public class BuffFactory {
             buffBox.getBuffEffects().add(buffEffect);
         }
 
+        buffBox.onCreate();
         return buffBox;
     }
 
-    public IBuffEffect createBuffEffect(TemplateBuff template) {
-        BuffEffectEnum buffEffectEnum = BuffEffectEnum.getEffect(template.getEffect());
+    public IBuffEffect createBuffEffect(int effectId,String param) {
+        BuffEffectEnum buffEffectEnum = BuffEffectEnum.getEffect(effectId);
         if (buffEffectEnum == null) {
             return null;
         }
@@ -74,11 +81,9 @@ public class BuffFactory {
             exception.printStackTrace();
             return null;
         }
-
+        result.setParam(param);
         result.getActiveConditions().add(getCondition(Integer.parseInt(template.getActiveCondition())));
         result.getDisposedConditions().add(getCondition(Integer.parseInt(template.getDisposedCondition())));
-
-        result.onCreate();
 
         return result;
     }

@@ -15,28 +15,10 @@ import java.util.*;
 public class TemplateSkill implements ITemplate {
 
     private int id;
-    private int type;
-    private String toSelfImpacts;
-    private String toOtherImpacts;
-    private String params;
+    private int[] toSelfImpacts;
+    private int[] toOtherImpacts;
+    private String[] selfParams;
+    private String[] otherParams;
     private String des;
-
-    public List<Integer> getToSelfImpacts() {
-        if (toSelfImpacts == null || toSelfImpacts.isEmpty()) {
-            return Collections.emptyList();
-        }
-        return ParseUtil.getIntList(this.toSelfImpacts, ";");
-    }
-
-    public List<Integer> getToOtherImpacts() {
-        if (toOtherImpacts == null || toOtherImpacts.isEmpty()) {
-            return Collections.emptyList();
-        }
-        return ParseUtil.getIntList(this.toOtherImpacts, ";");
-    }
-
-    public List<Integer> getIntListParam() {
-        return ParseUtil.getIntList(this.params, ",");
-    }
 }
 

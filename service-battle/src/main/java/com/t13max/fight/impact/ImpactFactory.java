@@ -17,7 +17,7 @@ import java.util.List;
 @Log4j2
 public class ImpactFactory {
 
-    public static IImpact createImpact(long generatorId, int skillId, int impactId, boolean attacker, int delayTime, int generateRound, List<Long> targetIds, FightTimeMachine fightTimeMachine) {
+    public static IImpact createImpact(long generatorId, int skillId, String param, int impactId, boolean attacker, int delayTime, int generateRound, List<Long> targetIds, FightTimeMachine fightTimeMachine) {
         ImpactEnum impactEnum = ImpactEnum.getImpact(impactId);
         if (impactEnum == null) {
             return null;
@@ -38,6 +38,7 @@ public class ImpactFactory {
         result.setGenerator(generatorId);
         result.setImpactEnum(impactEnum);
         result.setSkillId(skillId);
+        result.setParam(param);
         result.setAttacker(attacker);
         result.setDelayTime(delayTime);
         result.setGenerateRound(generateRound);

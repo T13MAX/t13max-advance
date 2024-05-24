@@ -1,26 +1,53 @@
 [
   {
-    "id": 110001,
-    "type": 0,
-    "toSelfImpacts": "",
-    "toOtherImpacts": "1",
-    "params": "",
-    "des": "平A"
+    "id": 110000,
+    "toSelfImpacts": [],
+    "toOtherImpacts": [
+      1
+    ],
+    "coldDown": 1,
+    "selfParams": [],
+    "otherParams": [
+      "10,100"
+    ],
+    "selfSelector": 1,
+    "otherSelector": 2,
+    "des": "保底平A"
   },
   {
-    "id": 110002,
-    "type": 0,
-    "toSelfImpacts": "",
-    "toOtherImpacts": "2",
-    "params": "120001",
-    "des": "挂水"
+    "id": 110011,
+    "toSelfImpacts": [
+      2
+    ],
+    "toOtherImpacts": [
+      1
+    ],
+    "coldDown": 1,
+    "selfParams": [
+      "120001"
+    ],
+    "otherParams": [
+      "10,200"
+    ],
+    "selfSelector": 1,
+    "otherSelector": 2,
+    "des": "傻呆呆平A, 给自己挂一个反伤持续一回合的反伤, 反伤为受到伤害的30%(作为真实伤害), 造成 攻击力 的 200% "
   },
   {
-    "id": 110003,
-    "type": 0,
-    "toSelfImpacts": "",
-    "toOtherImpacts": "3",
-    "params": "2,2,120003",
-    "des": "2单位火属性攻击, 不反应则挂120003"
+    "id": 110012,
+    "toSelfImpacts": [],
+    "toOtherImpacts": [
+      1,
+      2
+    ],
+    "coldDown": 3,
+    "selfParams": [],
+    "otherParams": [
+      "10,150",
+      "120002"
+    ],
+    "selfSelector": 1,
+    "otherSelector": 2,
+    "des": "傻呆呆小技能, 对所有敌人造成攻击力150%的伤害, 同时施加泯灭效果"
   }
 ]

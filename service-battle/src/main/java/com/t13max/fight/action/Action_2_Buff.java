@@ -31,26 +31,13 @@ public class Action_2_Buff extends AbstractAction {
         FightTimeMachine fightTimeMachine = this.getFightTimeMachine();
         FightMatch fight = fightTimeMachine.getFight();
 
-        SkillHelper skillHelper = TemplateManager.inst().helper(SkillHelper.class);
-        TemplateSkill template = skillHelper.getTemplate(getSkillId());
-        if (template == null) {
-            log.error("TemplateSkill为空, skillId={}", getSkillId());
-            return;
-        }
-
-        List<Integer> intListParam = template.getIntListParam();
-        if (intListParam.isEmpty()) {
-            log.error("intListParam为空, skillId={}", getSkillId());
-            return;
-        }
-
         for (Long targetHeroId : this.getTargetHeroIds()) {
             FightHero fightHero = fight.getFightHero(targetHeroId, !this.isAttacker());
             if (fightHero == null) {
                 continue;
             }
 
-            BuffBoxImpl buffBoxImpl = BuffFactory.createBuffBoxImpl(fightHero, intListParam);
+            BuffBoxImpl buffBoxImpl = BuffFactory.createBuffBoxImpl(fightHero, this.param);
             fightHero.getBuffManager().addBuff(buffBoxImpl);
         }
     }

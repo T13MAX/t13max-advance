@@ -14,20 +14,29 @@ public class CommonDamageCalculator {
 
     private FightHero defender;
 
-    public CommonDamageCalculator(FightHero attacker, FightHero defender) {
+    private String param;
+
+    public CommonDamageCalculator(FightHero attacker, FightHero defender, String param) {
         this.attacker = attacker;
         this.defender = defender;
+        this.param = param;
     }
 
     public double calcDamage() {
 
         FightAttrManager fightAttrManager = attacker.getFightAttrManager();
-        Double atkValue = fightAttrManager.getFinalAttr(FightAttrEnum.ATTACK);
 
         FightAttrManager targetAttrManager = defender.getFightAttrManager();
         Double defValue = targetAttrManager.getFinalAttr(FightAttrEnum.DEF);
 
-        double finalDamage = Math.max(1, atkValue - defValue);
+        String[] split = param.split(",");
+        int attr = Integer.parseInt(split[0]);
+
+        FightAttrEnum fightAttrEnum = FightAttrEnum.getFightAttrEnum(attr);
+        Double atkValue = fightAttrManager.getFinalAttr(fightAttrEnum);
+
+        int rate = Integer.parseInt(split[1]);
+        double finalDamage = Math.max(1, atkValue * (rate / CalcConst.MAX_RATE) - defValue);
         //一系列复杂的计算
 
         return finalDamage;

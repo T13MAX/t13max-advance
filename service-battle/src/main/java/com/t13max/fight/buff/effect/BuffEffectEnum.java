@@ -17,6 +17,8 @@ public enum BuffEffectEnum {
 
     ELEMENT(2, Buff_Effect_2_Element.class),
 
+    COUNTER_WOUND(3, Buff_Effect_3_CounterWound.class),
+
 
     ;
 
