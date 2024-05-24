@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option java_package = "message.id";
+option java_multiple_files = true;
+
+/**
+ game的消息id
+ 10000以下为特殊消息
+ 10000-29999 game服
+ 30000-39999 battle服
+ 40000-49999 scene服
+
+ */
+enum MessageId{
+
+  NONE = 0;
+
+  //game服登录
+  C_LOGIN_GAME = 10001;
+  S_LOGIN_GAME = 10002;
+}

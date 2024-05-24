@@ -1,6 +1,4 @@
-package com.t13max.game.run;
-
-import com.t13max.game.server.BaseServer;
+package com.t13max.game.msg;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -9,7 +7,7 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface NettyServer {
+public @interface Message {
 
-    Class<? extends BaseServer> serverClazz();
+    int value();
 }

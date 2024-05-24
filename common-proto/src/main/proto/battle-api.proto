@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+option java_package = "battle.api";
+option java_multiple_files = true;
+
+import "battle-entity.proto";
+
+message JoinFightMatchReq{
+  uint64 matchId = 1;
+}
+
+message JoinFightMatchResp{
+  FightMatchPb fightMatchPb = 1;
+}

@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+
+option java_package = "battle.entity";
+option java_multiple_files = true;
+
+message FightMatchPb{
+  uint64 matchId = 1;
+}

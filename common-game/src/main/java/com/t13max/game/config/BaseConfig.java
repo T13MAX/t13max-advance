@@ -22,6 +22,9 @@ public class BaseConfig {
     //netty配置
     protected NettyConfig netty;
 
+    //业务线程池配置
+    protected ActionConfig action;
+
 
     /**
      * 校验数据
@@ -30,6 +33,6 @@ public class BaseConfig {
      * @Date 18:59 2024/5/23
      */
     public boolean check() {
-        return false;
+        return true;
     }
 }

@@ -2,7 +2,6 @@ package com.t13max.fight;
 
 import com.t13max.fight.enums.FightEnum;
 import com.t13max.game.manager.ManagerBase;
-import com.t13max.template.manager.TemplateManager;
 import com.t13max.util.Log;
 import com.t13max.util.ThreadNameFactory;
 import com.t13max.util.TimeUtil;
@@ -18,7 +17,7 @@ import java.util.concurrent.*;
  * @since: 13:41 2024/4/11
  */
 @Log4j2
-public class FightManager extends ManagerBase {
+public class MatchManager extends ManagerBase {
 
     private ExecutorService fightExecutor;
 
@@ -32,7 +31,7 @@ public class FightManager extends ManagerBase {
 
     private boolean init;
 
-    public FightManager() {
+    public MatchManager() {
 
     }
 
@@ -42,8 +41,8 @@ public class FightManager extends ManagerBase {
      * @Author t13max
      * @Date 16:44 2024/5/23
      */
-    public static FightManager inst() {
-        return ManagerBase.inst(FightManager.class);
+    public static MatchManager inst() {
+        return ManagerBase.inst(MatchManager.class);
     }
 
     @Override
@@ -139,6 +138,10 @@ public class FightManager extends ManagerBase {
 
     public void removeFightMatch(FightMatch fightMatch) {
         this.fightMatchMap.remove(fightMatch.getId());
+    }
+
+    public FightMatch getFightMatch(long matchId) {
+        return this.fightMatchMap.get(matchId);
     }
 
     public void quickStart() {

@@ -1,11 +1,11 @@
-#scene
+#battle
 
 #实例id
-instanceId: scene-101
+instanceId: battle-101
 #是否阻塞主线程
 park: false
-#对外端口
-port: 13000
+
+#业务线程池配置
 action:
   core: 1
   max: 1
