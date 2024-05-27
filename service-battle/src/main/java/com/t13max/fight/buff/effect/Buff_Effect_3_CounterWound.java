@@ -15,8 +15,7 @@ public class Buff_Effect_3_CounterWound extends AbstractEffect {
     private int rate;
 
     @Override
-    public void onCreate() {
-        super.onCreate();
+    protected void onInit() {
         this.rate = Integer.parseInt(this.param);
     }
 }

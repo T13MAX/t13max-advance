@@ -1,6 +1,5 @@
 package com.t13max.fight.buff.effect;
 
-import com.t13max.fight.impact.ImpactEnum;
 import lombok.Getter;
 
 import java.util.HashMap;

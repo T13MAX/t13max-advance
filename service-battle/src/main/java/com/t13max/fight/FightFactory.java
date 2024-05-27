@@ -1,5 +1,12 @@
 package com.t13max.fight;
 
+import battle.api.CreateFightMatchReq;
+import battle.entity.FightHeroInfoPb;
+import battle.entity.FightPlayerInfoPb;
+import com.t13max.fight.enums.FightEnum;
+import com.t13max.fight.enums.SmallRoundEnum;
+import com.t13max.fight.event.FightEventBus;
+import com.t13max.fight.log.FightLogManager;
 import com.t13max.fight.member.FightMember;
 import com.t13max.fight.moveBar.ActionMoveBar;
 import com.t13max.template.helper.BuffHelper;
@@ -7,6 +14,7 @@ import com.t13max.template.helper.HeroHelper;
 import com.t13max.template.manager.TemplateManager;
 import com.t13max.template.temp.TemplateHero;
 import com.t13max.util.RandomUtil;
+import com.t13max.util.TimeUtil;
 import com.t13max.util.UuidUtil;
 import lombok.experimental.UtilityClass;
 
@@ -21,44 +29,76 @@ import java.util.Map;
 @UtilityClass
 public class FightFactory {
 
-    public FightMatch createFightImpl() {
-        FightMatch fight = new FightMatch();
-        return fight;
-    }
+    public FightMatch createFightMatch(CreateFightMatchReq message) {
 
-    public FightMatch quickCreateFightImpl() {
-        FightMatch fight = null;
+        long matchId = message.getMatchId();
+        FightPlayerInfoPb attackerPb = message.getAttacker();
+        FightPlayerInfoPb defenderPb = message.getDefender();
+        FightMatch fightMatch = null;
         try {
 
-            fight = new FightMatch(UuidUtil.getNextId());
+            fightMatch = new FightMatch(matchId);
 
-            Map<Long, FightHero> attacker = quickGenHero(createFightMember(UuidUtil.getNextId(), true), fight);
-            Map<Long, FightHero> defender = quickGenHero(createFightMember(UuidUtil.getNextId(), false), fight);
+            //创建战斗上下文
+            FightContext fightContext = new FightContext();
 
-            fight.setAttacker(attacker);
-            fight.setDefender(defender);
-            fight.setActionMoveBar(new ActionMoveBar(attacker, defender));
+            initFightContext(fightContext);
+
+            //战斗上下文初始化后
+            fightContext.setFightMatch(fightMatch);
+            fightContext.getFightEventBus().register(fightContext.getFightLogManager());
+
+            Map<Long, FightHero> attacker = createHeroMap(fightContext, createFightMember(attackerPb.getPlayerId(), true), attackerPb);
+            Map<Long, FightHero> defender = createHeroMap(fightContext, createFightMember(defenderPb.getPlayerId(), false), defenderPb);
+
+            fightMatch.getHeroMap().putAll(attacker);
+            fightMatch.getHeroMap().putAll(defender);
+
+            fightMatch.setActionMoveBar(new ActionMoveBar(attacker, defender));
 
         } catch (Exception exception) {
             exception.printStackTrace();
         }
 
-        return fight;
+        return fightMatch;
     }
 
+    /**
+     * 初始化战斗上下文 其他地方都从上下文获取 防止东西太多 注来注入的
+     *
+     * @Author t13max
+     * @Date 15:42 2024/5/27
+     */
+    private void initFightContext(FightContext fightContext) {
+        fightContext.setFightEventBus(new FightEventBus(fightContext));
+        fightContext.setFightTimeMachine(new FightTimeMachine(fightContext));
+        fightContext.setFightLogManager(new FightLogManager(fightContext));
+    }
+
+    /**
+     * 创建Member信息
+     *
+     * @Author t13max
+     * @Date 16:11 2024/5/27
+     */
     public FightMember createFightMember(long uid, boolean attacker) {
         return new FightMember(uid, attacker);
     }
 
-    public Map<Long, FightHero> quickGenHero(FightMember fightMember, FightMatch fight) {
+    private static Map<Long, FightHero> createHeroMap(FightContext fightContext, FightMember fightMember, FightPlayerInfoPb playerInfoPb) {
         Map<Long, FightHero> result = new HashMap<>();
-        HeroHelper heroHelper = TemplateManager.inst().helper(HeroHelper.class);
-        ArrayList<TemplateHero> templateHeroes = new ArrayList<>(heroHelper.getAll());
-        for (int i = 0; i < 5; i++) {
-            TemplateHero templateHero = RandomUtil.random(templateHeroes);
-            FightHero fightHero = new FightHero(UuidUtil.getNextId(), fightMember, templateHero.getId(), fight);
+        for (FightHeroInfoPb fightHeroInfoPb : playerInfoPb.getHeroListList()) {
+            FightHero fightHero = createHero(fightContext, fightMember, fightHeroInfoPb.getHeroId(), fightHeroInfoPb.getTemplateId());
             result.put(fightHero.getId(), fightHero);
         }
         return result;
     }
+
+    public FightHero createHero(FightContext fightContext, FightMember fightMember, long heroId, int template) {
+        HeroHelper heroHelper = TemplateManager.inst().helper(HeroHelper.class);
+        TemplateHero templateHero = heroHelper.getTemplate(template);
+        FightHero fightHero = FightHero.createFightHero(fightContext, UuidUtil.getNextId(), templateHero.getId(), fightMember);
+        return fightHero;
+    }
+
 }

@@ -64,7 +64,7 @@ public class LifecycleObserver implements IFightEventListener {
         if (!unitDeadEvent.getDeadList().contains(this.fightHero.getId())) {
             return;
         }
-        this.fightHero.getFight().unitDead(this.fightHero);
+        this.fightHero.getFightContext().getFightMatch().unitDead(this.fightHero);
     }
 
     private void handleSubHp(ReadyToSubHpEvent readyToSubHpEvent) {
@@ -78,10 +78,10 @@ public class LifecycleObserver implements IFightEventListener {
         }
         fightHero.getFightAttrManager().subHp(subValue);
 
-        fightHero.getFight().getFightEventBus().postEvent(new AttributeUpdateEvent(readyToSubHpEvent.getGenerateHeroId(), fightHero.getId(), FightAttrEnum.CUR_HP, oldValue, subValue, false));
+        this.fightHero.getFightContext().getFightEventBus().postEvent(new AttributeUpdateEvent(readyToSubHpEvent.getGenerateHeroId(), fightHero.getId(), FightAttrEnum.CUR_HP, oldValue, subValue, false));
 
         if (fightHero.isDie()) {
-            fightHero.getFight().getFightEventBus().postEvent(new UnitDeadEvent(Collections.singletonList(this.fightHero.getId())));
+            this.fightHero.getFightContext().getFightEventBus().postEvent(new UnitDeadEvent(Collections.singletonList(this.fightHero.getId())));
         }
     }
 

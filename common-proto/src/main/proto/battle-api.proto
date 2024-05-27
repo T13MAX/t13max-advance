@@ -5,6 +5,19 @@ option java_multiple_files = true;
 
 import "battle-entity.proto";
 
+message CreateFightMatchReq{
+  //战斗唯一id
+  uint64 matchId = 1;
+  //进攻方
+  FightPlayerInfoPb attacker = 2;
+  //防守方
+  FightPlayerInfoPb defender = 3;
+}
+
+message CreateFightMatchResp{
+
+}
+
 message JoinFightMatchReq{
   uint64 matchId = 1;
 }

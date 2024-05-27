@@ -1,9 +1,14 @@
 package com.t13max.fight.buff;
 
+import com.t13max.fight.FightContext;
 import com.t13max.fight.FightHero;
 import com.t13max.fight.buff.condition.IEventCondition;
 import com.t13max.fight.buff.effect.IBuffEffect;
 import com.t13max.fight.event.*;
+import com.t13max.template.helper.BuffHelper;
+import com.t13max.template.manager.TemplateManager;
+import com.t13max.template.temp.TemplateBuff;
+import com.t13max.util.Log;
 import lombok.Data;
 
 import java.util.HashSet;
@@ -18,23 +23,58 @@ public class BuffBoxImpl extends AbstractEventListener implements IBuffBox {
 
     private long id;
 
-    private FightHero owner;
+    private long ownerId;
+
+    private BuffStatus buffStatus;
+
+    private DisposedRule disposedRule;
+
+    private int buffId;
 
     private Set<IBuffEffect> buffEffects;
 
     private int layer;
 
-    private int life;
-
-    protected transient FightEventBus fightEventBus;
+    protected transient FightContext fightContext;
 
     @Override
     public void onEvent(IFightEvent event) {
         switch (event.getFightEventEnum()) {
             case SMALL_ROUND_END -> {
-                this.reduceLife(1);
-                if (checkLife()) {
-                    this.onDestroy(RemoveReason.DISPOSED);
+                //this.reduceLife(1);
+            }
+            case BUFF_EFFECT_CAN_ACTIVE -> {
+                if (buffStatus == BuffStatus.IDLE) {
+                    // 任意一个效果满足生效条件, 盒子就生效
+                    if (buffEffects.stream().anyMatch(buffEffect -> buffEffect.getBuffStatus() == BuffStatus.ACTIVE)) {
+                        switchBuffStatus(BuffStatus.ACTIVE, null);
+                    }
+                }
+            }
+            case BUFF_EFFECT_CAN_DISPOSED -> {
+                if (buffStatus == BuffStatus.ACTIVE) {
+                    BuffEffectCanDisposedEvent buffEffectCanDisposedEvent = (BuffEffectCanDisposedEvent) event;
+
+                    // 按配置规则判断是否可消散
+                    boolean canDisposed = false;
+
+                    if (disposedRule == DisposedRule.ANY) {
+                        if (buffEffects.stream()
+                                .anyMatch(buffEffect -> buffEffect.getBuffStatus() == BuffStatus.DISPOSED)) {
+                            canDisposed = true;
+                        }
+                    } else if (disposedRule == DisposedRule.ALL) {
+                        if (buffEffects.stream()
+                                .allMatch(buffEffect -> buffEffect.getBuffStatus() == BuffStatus.DISPOSED)) {
+                            canDisposed = true;
+                        }
+                    }
+
+                    if (canDisposed) {
+                        switchBuffStatus(BuffStatus.DISPOSED, buffEffectCanDisposedEvent.getRemoveReason());
+                    } else {
+
+                    }
                 }
             }
             default -> {
@@ -43,38 +83,94 @@ public class BuffBoxImpl extends AbstractEventListener implements IBuffBox {
         }
     }
 
-    private boolean checkLife() {
-        return life > 0;
-    }
-
     @Override
     public int getLife() {
-        return life;
+        int maxLife = 0;
+        for (IBuffEffect buffEffect : buffEffects) {
+            if (buffEffect.getBuffStatus() == BuffStatus.ACTIVE) {
+                maxLife = Math.max(maxLife, buffEffect.getLife());
+            }
+        }
+        return maxLife;
     }
 
     @Override
-    public int reduceLife(int reduce) {
-        return life -= reduce;
+    public int reduceLife(int life) {
+        return changeLife(life, false);
     }
 
     @Override
-    public int increaseLife(int increase) {
-        return life += increase;
+    public int increaseLife(int life) {
+        return changeLife(life, true);
+    }
+
+    private int changeLife(int life, boolean isIncrease) {
+        FightEventBus fightEventBus = fightContext.getFightEventBus();
+        if (life > 0) {
+            for (IBuffEffect buffEffect : buffEffects) {
+                if (buffEffect.getBuffStatus() == BuffStatus.ACTIVE) {
+                    if (isIncrease) {
+                        buffEffect.increaseLife(life);
+                    } else {
+                        buffEffect.reduceLife(life);
+                    }
+                }
+            }
+
+            fightEventBus.postEvent(new BuffUpdateEvent(this));
+        }
+        return getLife();
     }
 
     @Override
     public void onCreate() {
+
+        subscribeEvent(FightEventEnum.SMALL_ROUND_END);
+        subscribeEvent(FightEventEnum.BUFF_EFFECT_CAN_ACTIVE);
+        subscribeEvent(FightEventEnum.BUFF_EFFECT_CAN_DISPOSED);
+
+        TemplateBuff templateBuff = TemplateManager.inst().helper(BuffHelper.class).getTemplate(buffId);
+        if (templateBuff == null) {
+            Log.battle.error("createBuffBoxImpl, buff不存在, buffId={}", buffId);
+            return;
+        }
+        int[] effect = templateBuff.getEffect();
+        String[] params = templateBuff.getParams();
+        String[] activeConditions = templateBuff.getActiveCondition();
+        String[] disposedConditions = templateBuff.getDisposedCondition();
+
+        for (int i = 0; i < effect.length; i++) {
+            int effectId = effect[i];
+            String param = params[i];
+            String activeCondition = activeConditions[i];
+            String disposedCondition = disposedConditions[i];
+            IBuffEffect buffEffect = BuffFactory.createBuffEffect(effectId, param, activeCondition, disposedCondition);
+            this.buffEffects.add(buffEffect);
+        }
+
         this.buffEffects.forEach(IBuffEffect::onCreate);
     }
 
     @Override
     public void onDestroy(RemoveReason reason) {
-        this.owner.getBuffManager().removeBuff(this.id);
         this.buffEffects.forEach(e -> e.onDestroy(reason));
     }
 
-    public void merge(BuffBoxImpl buffBox){
+    private void switchBuffStatus(BuffStatus nextStatus, RemoveReason removeReason) {
 
+        BuffStatus prevStatus = buffStatus;
+        buffStatus = nextStatus;
+
+        Log.battle.info("switchBuffStatus, pre={}, now={}, removeReason={}", prevStatus, nextStatus, removeReason);
+
+        switch (nextStatus) {
+            case ACTIVE:
+                // 盒子激活
+                fightContext.getFightEventBus().postEvent(new BuffSwitchToActiveEvent(this));
+                break;
+            case DISPOSED:
+                fightContext.getFightMatch().getFightHero(this.ownerId).getBuffManager().removeBuff(this.id);
+                break;
+        }
     }
-
 }

@@ -1,5 +1,6 @@
 package com.t13max.fight.log;
 
+import com.t13max.fight.FightContext;
 import com.t13max.fight.FightHero;
 import com.t13max.fight.FightMatch;
 import com.t13max.fight.event.*;
@@ -19,6 +20,8 @@ public class FightLogManager extends AbstractEventListener {
 
     public static final DecimalFormat DF = new DecimalFormat("#.00");
 
+    private FightContext fightContext;
+
     private List<RoundLogEntity> logList = new LinkedList<>();
 
     private RoundLogEntity curRoundLogEntity;
@@ -27,6 +30,10 @@ public class FightLogManager extends AbstractEventListener {
 
     public FightLogManager() {
         subscribeEvent(FightEventEnum.values());
+    }
+
+    public FightLogManager(FightContext fightContext) {
+        this.fightContext = fightContext;
     }
 
     public void printLog() {
@@ -74,10 +81,7 @@ public class FightLogManager extends AbstractEventListener {
             case FOOT_UP -> {
                 FootUpEvent footUpEvent = (FootUpEvent) event;
                 FightMatch fight = footUpEvent.getFight();
-                Map<Long, FightHero> winMap = fight.getAttacker();
-                if (winMap.isEmpty()) {
-                    winMap = fight.getDefender();
-                }
+                Map<Long, FightHero> winMap = fight.getHeroMap();
                 this.footUpLog = new FootUpLog(winMap);
             }
         }

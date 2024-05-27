@@ -9,4 +9,8 @@ public class BattleException extends CommonException{
     public BattleException(String message) {
         super(message);
     }
+
+    public BattleException(Throwable cause) {
+        super(cause);
+    }
 }

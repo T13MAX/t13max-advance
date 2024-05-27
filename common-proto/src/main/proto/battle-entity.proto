@@ -7,3 +7,18 @@ option java_multiple_files = true;
 message FightMatchPb{
   uint64 matchId = 1;
 }
+
+message FightPlayerInfoPb{
+  //玩家id
+  uint64 playerId = 1;
+  //英雄信息
+  repeated FightHeroInfoPb heroList = 2;
+}
+
+message FightHeroInfoPb{
+  //英雄唯一id
+  uint64 heroId = 1;
+  //英雄模板id
+  uint32 templateId = 2;
+  //其他参数
+}

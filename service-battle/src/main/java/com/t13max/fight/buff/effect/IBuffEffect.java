@@ -1,6 +1,7 @@
 package com.t13max.fight.buff.effect;
 
 
+import com.t13max.fight.buff.BuffStatus;
 import com.t13max.fight.buff.RemoveReason;
 
 /**
@@ -18,6 +19,9 @@ public interface IBuffEffect {
 
     //增加持续时间
     int increaseLife(int increase);
+
+    //获取buff状态
+    BuffStatus getBuffStatus();
 
     //创建
     void onCreate();

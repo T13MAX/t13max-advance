@@ -43,7 +43,7 @@ public class ActionQueue {
     }
 
     public void execute(Runnable action) {
-        this.execute(JobName.NONAME, action);
+        this.execute(JobName.DEF, action);
     }
 
     private Runnable execNext() {

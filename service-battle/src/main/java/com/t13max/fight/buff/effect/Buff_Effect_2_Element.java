@@ -26,8 +26,7 @@ public class Buff_Effect_2_Element extends AbstractEffect {
     private double amount;
 
     @Override
-    public void onCreate() {
-        super.onCreate();
+    protected void onInit() {
 
         //订阅小回合结束事件 每回合结束减少元素量
         subscribeEvent(FightEventEnum.SMALL_ROUND_END);

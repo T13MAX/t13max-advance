@@ -13,6 +13,9 @@ public enum FightEventEnum {
     SMALL_ROUND_END,
     FOOT_UP,
 
+    BUFF_UPDATE,
+    BUFF_SWITCH_TO_ACTIVE,
+
     BUFF_EFFECT_CAN_ACTIVE,
     BUFF_EFFECT_CAN_DISPOSED,
 

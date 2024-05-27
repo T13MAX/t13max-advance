@@ -1,5 +1,6 @@
 package com.t13max.fight.impact;
 
+import com.t13max.fight.FightContext;
 import com.t13max.fight.FightTimeMachine;
 import com.t13max.fight.action.AbstractAction;
 import com.t13max.fight.action.IAction;
@@ -17,7 +18,7 @@ import java.util.List;
 @Log4j2
 public class ImpactFactory {
 
-    public static IImpact createImpact(long generatorId, int skillId, String param, int impactId, boolean attacker, int delayTime, int generateRound, List<Long> targetIds, FightTimeMachine fightTimeMachine) {
+    public static IImpact createImpact(FightContext fightContext,long generatorId, int skillId, String param, int impactId, boolean attacker, int delayTime, int generateRound, List<Long> targetIds) {
         ImpactEnum impactEnum = ImpactEnum.getImpact(impactId);
         if (impactEnum == null) {
             return null;
@@ -33,7 +34,7 @@ public class ImpactFactory {
             return null;
         }
 
-        result.setFightTimeMachine(fightTimeMachine);
+        result.setFightContext(fightContext);
         result.setTargetHeroIds(targetIds);
         result.setGenerator(generatorId);
         result.setImpactEnum(impactEnum);

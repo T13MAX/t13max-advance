@@ -16,10 +16,10 @@ public class FightTimeMachine {
     private TriggerTimeline triggerTimeline;
 
     @Getter
-    private FightMatch fight;
+    private FightContext fightContext;
 
-    public FightTimeMachine(FightMatch fight) {
-        this.fight = fight;
+    public FightTimeMachine(FightContext fightContext) {
+        this.fightContext = fightContext;
         this.triggerTimeline = new TriggerTimeline();
     }
 

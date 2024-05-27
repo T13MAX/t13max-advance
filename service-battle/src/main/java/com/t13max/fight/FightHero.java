@@ -41,35 +41,42 @@ public class FightHero {
 
     private SkillManager skillManager;
 
-    private FightMatch fight;
-
     private LifecycleObserver lifecycleObserver;
 
-    public FightHero(long id, FightMember fightMember, int templateId, FightMatch fight) {
-        this.id = id;
-        this.fightMember = fightMember;
-        this.templateId = templateId;
-        this.fightAttrManager = new FightAttrManager(this);
-        this.buffManager = new BuffManager(this);
-        this.skillManager = new SkillManager(this);
-        this.lifecycleObserver = new LifecycleObserver(this);
-        fight.getFightEventBus().register(this.lifecycleObserver);
-        this.fight = fight;
+    private transient FightContext fightContext;
+
+    public FightHero() {
     }
 
+    public static final FightHero createFightHero(FightContext fightContext, long id, int templateId, FightMember fightMember) {
+        FightHero fightHero = new FightHero();
+
+        try {
+            fightHero.fightContext = fightContext;
+            fightHero.id = id;
+            fightHero.fightMember = fightMember;
+            fightHero.templateId = templateId;
+            fightHero.fightAttrManager = new FightAttrManager(fightHero);
+            fightHero.buffManager = new BuffManager(fightHero);
+            fightHero.skillManager = new SkillManager(fightHero);
+            fightHero.lifecycleObserver = new LifecycleObserver(fightHero);
+            fightContext.getFightEventBus().register(fightHero.lifecycleObserver);
+
+        } catch (Exception e) {
+            Log.battle.error("英雄创建失败, error={}", e.getMessage());
+            //异常处理
+        }
+
+        return fightHero;
+    }
 
     public ActionArgs runWithAI() {
         ActionArgs actionArgs = new ActionArgs(this.fightMember.getUid(), this.id);
         HeroHelper heroHelper = TemplateManager.inst().helper(HeroHelper.class);
         TemplateHero template = heroHelper.getTemplate(this.getTemplateId());
         actionArgs.setSkillId(template.getSkill1());
-        Map<Long, FightHero> targetMap = null;
-        if (this.isAttacker()) {
-            targetMap = this.fight.getDefender();
-        } else {
-            targetMap = this.fight.getAttacker();
-        }
-        FightHero random = RandomUtil.random(targetMap.values().stream().filter(e -> !e.isDie()).toList());
+        List<FightHero> heroList  = this.fightContext.getFightMatch().getTargetHeroList(this.isAttacker());
+        FightHero random = RandomUtil.random(heroList);
         actionArgs.setTargetIds(Collections.singletonList(random.getId()));
         return actionArgs;
     }
@@ -97,13 +104,13 @@ public class FightHero {
             return;
         }
 
-        FightTimeMachine fightTimeMachine = fight.getFightTimeMachine();
+        FightTimeMachine fightTimeMachine = fightContext.getFightTimeMachine();
 
         int[] toSelfImpacts = template.getToSelfImpacts();
         String[] selfParams = template.getSelfParams();
         for (int i = 0; i < toSelfImpacts.length; i++) {
             int impactId = toSelfImpacts[i];
-            IImpact impact = ImpactFactory.createImpact(this.getId(), skillId, selfParams[i], impactId, this.isAttacker(), 0, fight.getRound(), Collections.singletonList(this.id), fightTimeMachine);
+            IImpact impact = ImpactFactory.createImpact(fightContext,this.getId(), skillId, selfParams[i], impactId, this.isAttacker(), 0, fight.getRound(), Collections.singletonList(this.id));
             if (impact != null) {
                 fightTimeMachine.addImpactToTimeLine(impact);
             }
@@ -113,7 +120,7 @@ public class FightHero {
         String[] otherParams = template.getOtherParams();
         for (int i = 0; i < toOtherImpacts.length; i++) {
             int impactId = toOtherImpacts[i];
-            IImpact impact = ImpactFactory.createImpact(this.getId(), skillId, otherParams[i], impactId, this.isAttacker(), 0, fight.getRound(), targetIds, fightTimeMachine);
+            IImpact impact = ImpactFactory.createImpact(fightContext,this.getId(), skillId, otherParams[i], impactId, this.isAttacker(), 0, fight.getRound(), targetIds);
             if (impact != null) {
                 fightTimeMachine.addImpactToTimeLine(impact);
             }

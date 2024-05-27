@@ -5,6 +5,7 @@ import com.t13max.fight.FightMatch;
 import com.t13max.fight.FightTimeMachine;
 import com.t13max.fight.buff.BuffBoxImpl;
 import com.t13max.fight.buff.BuffFactory;
+import com.t13max.fight.event.FightEventBus;
 import com.t13max.template.helper.SkillHelper;
 import com.t13max.template.manager.TemplateManager;
 import com.t13max.template.temp.TemplateSkill;
@@ -28,17 +29,17 @@ public class Action_2_Buff extends AbstractAction {
 
     @Override
     public void onTimeIsUp() {
-        FightTimeMachine fightTimeMachine = this.getFightTimeMachine();
-        FightMatch fight = fightTimeMachine.getFight();
-
+        FightMatch fightMatch = fightContext.getFightMatch();
+        FightEventBus fightEventBus = fightContext.getFightEventBus();
         for (Long targetHeroId : this.getTargetHeroIds()) {
-            FightHero fightHero = fight.getFightHero(targetHeroId, !this.isAttacker());
+            FightHero fightHero = fightMatch.getFightHero(targetHeroId);
             if (fightHero == null) {
                 continue;
             }
 
-            BuffBoxImpl buffBoxImpl = BuffFactory.createBuffBoxImpl(fightHero, this.param);
+            BuffBoxImpl buffBoxImpl = BuffFactory.createBuffBoxImpl(fightContext,fightHero.getId(), this.param);
             fightHero.getBuffManager().addBuff(buffBoxImpl);
+            fightEventBus.register(buffBoxImpl);
         }
     }
 

@@ -3,12 +3,8 @@ package com.t13max.fight.action;
 import com.t13max.fight.FightHero;
 import com.t13max.fight.FightMatch;
 import com.t13max.fight.FightTimeMachine;
-import com.t13max.fight.damage.CommonDamageCalculator;
+import com.t13max.fight.damage.DefaultDamageCalculator;
 import com.t13max.fight.event.ReadyToSubHpEvent;
-import com.t13max.template.helper.SkillHelper;
-import com.t13max.template.manager.TemplateManager;
-import com.t13max.template.temp.TemplateSkill;
-import com.t13max.util.Log;
 
 import java.util.HashMap;
 import java.util.List;
@@ -29,15 +25,14 @@ public class Action_1_Attack extends AbstractAction {
 
     @Override
     public void onTimeIsUp() {
-        FightTimeMachine fightTimeMachine = this.getFightTimeMachine();
-        FightMatch fight = fightTimeMachine.getFight();
-        FightHero fightHero = fight.getFightHero(this.getGenerator(), this.isAttacker());
+        FightMatch fightMatch = fightContext.getFightMatch();
+        FightHero fightHero = fightMatch.getFightHero(this.getGenerator());
         List<Long> targetHeroIds = this.getTargetHeroIds();
         Map<Long, Double> damageMap = new HashMap<>();
 
         for (Long targetHeroId : targetHeroIds) {
-            FightHero targetHero = fight.getFightHero(targetHeroId, !this.isAttacker());
-            double damage = new CommonDamageCalculator(fightHero, targetHero,this.param).calcDamage();
+            FightHero targetHero = fightMatch.getFightHero(targetHeroId);
+            double damage = new DefaultDamageCalculator(fightHero, targetHero,this.param).calcDamage();
             damageMap.put(targetHeroId, damage);
         }
 

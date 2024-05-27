@@ -1,6 +1,5 @@
 package com.t13max.fight.buff.effect;
 
-import com.t13max.fight.FightTimeMachine;
 import com.t13max.fight.buff.BuffBoxImpl;
 import com.t13max.fight.buff.BuffStatus;
 import com.t13max.fight.buff.RemoveReason;
@@ -16,11 +15,13 @@ import java.util.Set;
  * @since: 11:19 2024/4/11
  */
 @Data
-public class AbstractEffect extends AbstractEventListener implements IBuffEffect {
+public abstract class AbstractEffect extends AbstractEventListener implements IBuffEffect {
 
     protected BuffBoxImpl buffBox;
 
     protected BuffStatus buffStatus = BuffStatus.IDLE;
+
+    protected Set<BuffAffectType> buffAffectTypes = new HashSet<>();
 
     protected Set<IEventCondition> activeConditions = new HashSet<>();
 
@@ -28,11 +29,11 @@ public class AbstractEffect extends AbstractEventListener implements IBuffEffect
 
     protected String param;
 
-    private boolean checkAnyConditionMatched(Set<IEventCondition> conditions, IFightEvent event) {
-        return conditions.stream().anyMatch(eventCondition -> eventCondition.isMatch(this, event));
-    }
-
     private int life;
+
+    private boolean checkAnyConditionMatched(Set<IEventCondition> conditions, IFightEvent event) {
+        return conditions.stream().anyMatch(eventCondition -> eventCondition.isMatch(event));
+    }
 
     @Override
     public int reduceLife(int reduce) {
@@ -45,9 +46,13 @@ public class AbstractEffect extends AbstractEventListener implements IBuffEffect
     }
 
     @Override
-    public void onCreate() {
+    public final void onCreate() {
+        buffStatus = BuffStatus.IDLE;
 
+        onInit();
     }
+
+    protected abstract void onInit();
 
     @Override
     public void onDestroy(RemoveReason reason) {
@@ -70,7 +75,7 @@ public class AbstractEffect extends AbstractEventListener implements IBuffEffect
 
             if (canActive) {
                 buffStatus = BuffStatus.ACTIVE;
-                buffBox.getFightEventBus().postEvent(new BuffEffectCanActiveEvent(this));
+                buffBox.getFightContext().getFightEventBus().postEvent(new BuffEffectCanActiveEvent(this));
                 handleActive();
             }
         }
@@ -96,8 +101,32 @@ public class AbstractEffect extends AbstractEventListener implements IBuffEffect
 
     }
 
+    protected void onAddon(IBuffEffect addonEffect){
+
+    }
+
     protected final void disposed(RemoveReason removeReason) {
         buffStatus = BuffStatus.DISPOSED;
-        buffBox.getFightEventBus().postEvent(new BuffEffectCanDisposedEvent(this, removeReason));
+        buffBox.getFightContext().getFightEventBus().postEvent(new BuffEffectCanDisposedEvent(this, removeReason));
+    }
+
+    protected final void addDisposedCondition(IEventCondition... eventConditions) {
+        if (eventConditions != null) {
+            for (IEventCondition eventCondition : eventConditions) {
+                this.disposedConditions.add(eventCondition);
+
+                subscribeEvent(eventCondition.getFightEventEnum());
+            }
+        }
+    }
+
+    protected final void addActiveCondition(IEventCondition... eventConditions) {
+        if (eventConditions != null) {
+            for (IEventCondition eventCondition : eventConditions) {
+                this.activeConditions.add(eventCondition);
+
+                subscribeEvent(eventCondition.getFightEventEnum());
+            }
+        }
     }
 }

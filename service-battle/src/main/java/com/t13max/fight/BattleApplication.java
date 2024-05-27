@@ -1,10 +1,13 @@
 package com.t13max.fight;
 
+import battle.api.CreateFightMatchReq;
+import battle.entity.FightHeroInfoPb;
+import battle.entity.FightPlayerInfoPb;
 import com.t13max.game.config.BattleConfig;
-import com.t13max.game.manager.ManagerBase;
 import com.t13max.game.run.Application;
 import com.t13max.game.run.ServerConfig;
 import com.t13max.util.Log;
+import com.t13max.util.UuidUtil;
 
 import java.util.concurrent.locks.LockSupport;
 

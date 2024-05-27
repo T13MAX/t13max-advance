@@ -1,5 +1,7 @@
 package com.t13max.fight.buff.effect;
 
+import com.t13max.fight.FightContext;
+import com.t13max.fight.FightHero;
 import com.t13max.fight.buff.RemoveReason;
 
 /**
@@ -11,14 +13,19 @@ import com.t13max.fight.buff.RemoveReason;
 public class Buff_Effect_1_Attr extends AbstractEffect {
 
     @Override
-    public void onCreate() {
-        super.onCreate();
-        this.buffBox.getOwner().getFightAttrManager().modifyAttr( this.param, true);
+    protected void onInit() {
+        modify(true);
     }
 
     @Override
     public void onDestroy(RemoveReason reason) {
         super.onDestroy(reason);
-        this.buffBox.getOwner().getFightAttrManager().modifyAttr( this.param, false);
+        modify(false);
+    }
+
+    private void modify(boolean add) {
+        FightContext fightContext = this.buffBox.getFightContext();
+        FightHero fightHero = fightContext.getFightMatch().getFightHero(buffBox.getOwnerId());
+        fightHero.getFightAttrManager().modifyAttr(this.param, add);
     }
 }

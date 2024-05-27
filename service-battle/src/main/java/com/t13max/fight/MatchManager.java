@@ -1,10 +1,14 @@
 package com.t13max.fight;
 
+import battle.api.CreateFightMatchReq;
+import battle.entity.FightHeroInfoPb;
+import battle.entity.FightPlayerInfoPb;
 import com.t13max.fight.enums.FightEnum;
 import com.t13max.game.manager.ManagerBase;
 import com.t13max.util.Log;
 import com.t13max.util.ThreadNameFactory;
 import com.t13max.util.TimeUtil;
+import com.t13max.util.UuidUtil;
 import lombok.extern.log4j.Log4j2;
 
 import java.util.HashSet;
@@ -98,7 +102,7 @@ public class MatchManager extends ManagerBase {
                     }
                 } catch (Exception exception) {
                     exception.printStackTrace();
-                    fightMatch.getFightLogManager().forcePrint();
+                    fightMatch.getFightContext().getFightLogManager().forcePrint();
                     this.finishedList.add(fightMatch);
                 }
             }
@@ -144,8 +148,4 @@ public class MatchManager extends ManagerBase {
         return this.fightMatchMap.get(matchId);
     }
 
-    public void quickStart() {
-        FightMatch fightMatch = FightFactory.quickCreateFightImpl();
-        this.addFightMatch(fightMatch);
-    }
 }

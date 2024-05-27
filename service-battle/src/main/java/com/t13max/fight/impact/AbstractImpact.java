@@ -1,5 +1,6 @@
 package com.t13max.fight.impact;
 
+import com.t13max.fight.FightContext;
 import com.t13max.fight.FightTimeMachine;
 import com.t13max.fight.event.AbstractEventListener;
 import com.t13max.fight.event.IFightEventListener;
@@ -14,7 +15,7 @@ import java.util.List;
 @Data
 public abstract class AbstractImpact extends AbstractEventListener implements IImpact {
 
-    protected FightTimeMachine fightTimeMachine;
+    protected transient FightContext fightContext;
 
     protected ImpactEnum impactEnum;
 

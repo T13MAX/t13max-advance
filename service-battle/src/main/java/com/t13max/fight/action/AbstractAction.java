@@ -33,6 +33,6 @@ public abstract class AbstractAction extends AbstractImpact implements IAction {
     }
 
     public void postEvent(IFightEvent event) {
-        this.getFightTimeMachine().getFight().getFightEventBus().postEvent(event);
+        this.fightContext.getFightEventBus().postEvent(event);
     }
 }

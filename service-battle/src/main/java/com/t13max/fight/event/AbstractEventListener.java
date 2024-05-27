@@ -1,9 +1,6 @@
 package com.t13max.fight.event;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author: t13max
@@ -13,12 +10,18 @@ public abstract class AbstractEventListener implements IFightEventListener {
 
     private Set<FightEventEnum> interestedEvent = new HashSet<>();
 
-    protected void subscribeEvent(FightEventEnum... enums) {
-        if (Objects.nonNull(enums)) {
-            if (enums.length > 0) {
-                Collections.addAll(interestedEvent, enums);
-            }
+    protected void subscribeEvent(List<FightEventEnum> enums) {
+        if (enums == null || enums.isEmpty()) {
+            return;
         }
+        interestedEvent.addAll(enums);
+    }
+
+    protected void subscribeEvent(FightEventEnum... enums) {
+        if (enums == null || enums.length == 0) {
+            return;
+        }
+        Collections.addAll(interestedEvent, enums);
     }
 
     @Override

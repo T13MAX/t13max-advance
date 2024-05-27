@@ -1,5 +1,7 @@
 package com.t13max.fight.event;
 
+import com.t13max.fight.FightContext;
+
 import java.util.*;
 
 /**
@@ -7,6 +9,12 @@ import java.util.*;
  * @since: 16:49 2024/4/15
  */
 public class FightEventBus {
+
+    private FightContext fightContext;
+
+    public FightEventBus(FightContext fightContext) {
+        this.fightContext = fightContext;
+    }
 
     private Map<FightEventEnum, LinkedList<IFightEventListener>> listenersMap = new HashMap<>();
 

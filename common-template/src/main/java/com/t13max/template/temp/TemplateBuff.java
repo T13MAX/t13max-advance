@@ -17,12 +17,12 @@ public class TemplateBuff implements ITemplate{
 
     private int id;
 
-    private String activeCondition;
+    private String[] activeCondition;
 
-    private String disposedCondition;
+    private String[] disposedCondition;
 
-    private int effect;
+    private int[] effect;
 
-    private String params;
+    private String[] params;
 
 }

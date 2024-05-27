@@ -18,4 +18,17 @@ enum MessageId{
   //game服登录
   C_LOGIN_GAME = 10001;
   S_LOGIN_GAME = 10002;
+
+
+  //********************//
+
+  //创建战斗
+  C_CREATE_MATCH = 30001;
+  S_CREATE_MATCH = 30002;
+  //玩家登入战斗
+  C_JOIN_MATCH = 30003;
+  S_JOIN_MATCH = 30004;
+  //玩家战斗行动操作
+  C_MATCH_ACTION = 30005;
+  S_MATCH_ACTION = 30006;
 }

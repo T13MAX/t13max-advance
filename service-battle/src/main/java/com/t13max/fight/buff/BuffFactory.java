@@ -1,25 +1,20 @@
 package com.t13max.fight.buff;
 
+import com.t13max.fight.FightContext;
 import com.t13max.fight.FightHero;
-import com.t13max.fight.buff.condition.Condition_0_Active;
-import com.t13max.fight.buff.condition.Condition_2_Element;
 import com.t13max.fight.buff.condition.IEventCondition;
 import com.t13max.fight.buff.effect.AbstractEffect;
 import com.t13max.fight.buff.effect.BuffEffectEnum;
 import com.t13max.fight.buff.effect.IBuffEffect;
-import com.t13max.template.helper.BuffHelper;
-import com.t13max.template.helper.SkillHelper;
-import com.t13max.template.manager.TemplateManager;
-import com.t13max.template.temp.TemplateBuff;
-import com.t13max.template.util.ParseUtil;
+import com.t13max.game.exception.BattleException;
+import com.t13max.util.Log;
+import com.t13max.util.PackageUtil;
+import com.t13max.util.UuidUtil;
 import lombok.experimental.UtilityClass;
 import lombok.extern.log4j.Log4j2;
 
 import java.lang.reflect.Constructor;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author: t13max
@@ -29,44 +24,22 @@ import java.util.Map;
 @Log4j2
 public class BuffFactory {
 
-    private final static Map<Integer, IEventCondition> CONDITION_MAP = new HashMap<>();
-
-    static {
-        //先不扫包了 手动创建吧
-        CONDITION_MAP.put(0, new Condition_0_Active());
-        CONDITION_MAP.put(2, new Condition_2_Element());
-
+    public BuffBoxImpl createBuffBoxImpl(FightContext fightContext, long ownerId, String param) {
+        return createBuffBoxImpl(fightContext, ownerId, Integer.parseInt(param));
     }
 
-    public static IEventCondition getCondition(int id) {
-        return CONDITION_MAP.get(id);
-    }
-
-    public BuffBoxImpl createBuffBoxImpl(FightHero owner, String param) {
-        return createBuffBoxImpl(owner, ParseUtil.getIntList(param));
-    }
-
-    public BuffBoxImpl createBuffBoxImpl(FightHero owner, List<Integer> buffIds) {
+    public BuffBoxImpl createBuffBoxImpl(FightContext fightContext, long ownerId, int buffId) {
 
         BuffBoxImpl buffBox = new BuffBoxImpl();
-        buffBox.setOwner(owner);
-
-        for (Integer buffId : buffIds) {
-            BuffHelper buffHelper = TemplateManager.inst().helper(BuffHelper.class);
-            TemplateBuff template = buffHelper.getTemplate(buffId);
-            if (template == null) {
-                log.error("createBuffBoxImpl, buff不存在, buffId={}", buffId);
-                continue;
-            }
-            IBuffEffect buffEffect = createBuffEffect(template);
-            buffBox.getBuffEffects().add(buffEffect);
-        }
-
+        buffBox.setId(UuidUtil.getNextId());
+        buffBox.setFightContext(fightContext);
+        buffBox.setOwnerId(ownerId);
+        buffBox.setBuffId(buffId);
         buffBox.onCreate();
         return buffBox;
     }
 
-    public IBuffEffect createBuffEffect(int effectId,String param) {
+    public IBuffEffect createBuffEffect(int effectId, String param, String activeCondition, String disposedCondition) {
         BuffEffectEnum buffEffectEnum = BuffEffectEnum.getEffect(effectId);
         if (buffEffectEnum == null) {
             return null;
@@ -77,15 +50,53 @@ public class BuffFactory {
             Constructor<? extends IBuffEffect> constructor = buffEffectEnum.getClazz().getConstructor();
             result = (AbstractEffect) constructor.newInstance();
         } catch (Exception exception) {
-            log.error("action创建出错");
+            Log.battle.error("buffEffect创建失败");
             exception.printStackTrace();
             return null;
         }
         result.setParam(param);
-        result.getActiveConditions().add(getCondition(Integer.parseInt(template.getActiveCondition())));
-        result.getDisposedConditions().add(getCondition(Integer.parseInt(template.getDisposedCondition())));
+
+        //填充 常规生效消散条件 (还有一些特殊条件是自己实现的 不在通用部分) 目前没有复杂的条件处理 只是多个或关系的用;分隔 一个条件用,分隔id和参数 后续优化
+        List<IEventCondition> activeConditionList = ConditionFactory.createEventConditionList(activeCondition);
+        result.getActiveConditions().addAll(activeConditionList);
+
+        List<IEventCondition> dispossedConditionList = ConditionFactory.createEventConditionList(disposedCondition);
+        result.getDisposedConditions().addAll(dispossedConditionList);
 
         return result;
     }
 
+
 }
+
+
+/**
+ * private final static Map<Integer, IEventCondition> CONDITION_MAP = new HashMap<>();
+ * <p>
+ * static {
+ * Set<Class<?>> classSet = PackageUtil.scan("com.t13max.fight.buff.condition");
+ * for (Class<?> clazz : classSet) {
+ * if (!IEventCondition.class.isAssignableFrom(clazz)) {
+ * continue;
+ * }
+ * <p>
+ * if (clazz.isInterface()) {
+ * continue;
+ * }
+ * <p>
+ * IEventCondition condition = null;
+ * try {
+ * Constructor<?> constructor = clazz.getConstructor();
+ * condition = (IEventCondition) constructor.newInstance();
+ * } catch (Exception e) {
+ * throw new BattleException(e);
+ * }
+ * <p>
+ * CONDITION_MAP.put(condition.getConditionEnum().getId(), condition);
+ * }
+ * }
+ * <p>
+ * public static IEventCondition getCondition(int id) {
+ * return CONDITION_MAP.get(id);
+ * }
+ */

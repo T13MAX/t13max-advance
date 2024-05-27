@@ -1,22 +1,38 @@
 [
   {
     "id": 120001,
-    "activeCondition": 0,
-    "disposedCondition": 2,
-    "effect": [3],
-    "duration": 3,
-    "overlay": 1,
-    "params": "30",
+    "disposedRule": 0,
+    "activeCondition": [
+      "0"
+    ],
+    "disposedCondition": [
+      "1,3"
+    ],
+    "effect": [
+      3
+    ],
+    "params": [
+      "30"
+    ],
     "des": "持续三回合30%反伤, 多次效果回合数累加"
   },
   {
     "id": 120002,
-    "activeCondition": 0,
-    "disposedCondition": 3,
-    "effect": [1,4],
-    "duration": -1,
-    "overlay": 2,
-    "params": ["80,0,10","10,10"],
+    "disposedRule": 0,
+    "activeCondition": [
+      "0"
+    ],
+    "disposedCondition": [
+      "2"
+    ],
+    "effect": [
+      1,
+      4
+    ],
+    "params": [
+      "80,0,10",
+      "10,10"
+    ],
     "des": "施加泯灭效果(受到伤害提升 层数x10%), 每回合受到攻击者的攻击力x层数x10%的伤害, 多次效果层数累加"
   }
 ]

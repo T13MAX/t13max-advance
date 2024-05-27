@@ -3,13 +3,13 @@ package com.t13max.fight;
 import com.t13max.fight.enums.FightEnum;
 import com.t13max.fight.enums.SmallRoundEnum;
 import com.t13max.fight.event.*;
-import com.t13max.fight.log.FightLogManager;
 import com.t13max.fight.moveBar.ActionMoveBar;
 import com.t13max.fight.moveBar.MoveBarUnit;
 import com.t13max.fight.skill.FightSkill;
 import com.t13max.template.helper.SkillHelper;
 import com.t13max.template.manager.TemplateManager;
 import com.t13max.template.temp.TemplateSkill;
+import com.t13max.util.Log;
 import com.t13max.util.TimeUtil;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,8 +18,11 @@ import lombok.extern.log4j.Log4j2;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
+ * 战斗类
+ *
  * @author: t13max
  * @since: 14:53 2024/4/10
  */
@@ -34,9 +37,7 @@ public class FightMatch {
 
     private SmallRoundEnum smallRoundEnum;
 
-    private Map<Long, FightHero> attacker;
-
-    private Map<Long, FightHero> defender;
+    private Map<Long, FightHero> heroMap;
 
     private ActionMoveBar actionMoveBar;
 
@@ -46,25 +47,23 @@ public class FightMatch {
 
     private LinkedList<ActionArgs> extraActionList = new LinkedList<>();
 
-    private FightTimeMachine fightTimeMachine;
-
-    private FightLogManager fightLogManager;
-
-    private FightEventBus fightEventBus;
+    private FightContext fightContext;
 
     private int round;
 
     private long lastFightStatusChangeMills;
 
+    /**
+     * 构造方法 只初始化一些基本的数据
+     *
+     * @Author t13max
+     * @Date 15:59 2024/5/27
+     */
     public FightMatch(long id) {
         this.id = id;
         this.fightEnum = FightEnum.INIT;
         this.smallRoundEnum = SmallRoundEnum.DETERMINE_NEXT_ACTION_UNIT;
         this.round = 0;
-        this.fightEventBus = new FightEventBus();
-        this.fightTimeMachine = new FightTimeMachine(this);
-        this.fightLogManager = new FightLogManager();
-        this.fightEventBus.register(this.fightLogManager);
         this.lastFightStatusChangeMills = TimeUtil.nowMills();
     }
 
@@ -95,7 +94,7 @@ public class FightMatch {
 
     private void footUp() {
 
-        fightEventBus.postEvent(new FootUpEvent(this));
+        fightContext.getFightEventBus().postEvent(new FootUpEvent(this));
 
         changeFightState(FightEnum.FINISHED);
     }
@@ -183,11 +182,10 @@ public class FightMatch {
 
     private boolean tryFootUp() {
 
-        if (this.attacker.isEmpty()) {
-            return true;
-        }
+        //只剩下一方的人了
+        boolean finished = heroMap.values().stream().allMatch(e -> e.isAttacker() || !e.isAttacker());
 
-        if (this.defender.isEmpty()) {
+        if (finished) {
             return true;
         }
 
@@ -199,8 +197,8 @@ public class FightMatch {
 
 
     private void smallRoundEnd() {
-        fightEventBus.postEvent(new SmallRoundEndEvent());
-        fightTimeMachine.roll();
+        fightContext.getFightEventBus().postEvent(new SmallRoundEndEvent());
+        fightContext.getFightTimeMachine().roll();
         this.changeSmallRoundState(SmallRoundEnum.JUDGE);
     }
 
@@ -237,8 +235,8 @@ public class FightMatch {
 
         //行动开始前事件
         BeforeActionEvent beforeActionEvent = new BeforeActionEvent();
-        fightEventBus.postEvent(beforeActionEvent);
-        fightTimeMachine.roll();
+        fightContext.getFightEventBus().postEvent(beforeActionEvent);
+        fightContext.getFightTimeMachine().roll();
 
         if (!curActionHero.isCanDoAction()) {
             return false;
@@ -250,14 +248,14 @@ public class FightMatch {
 
         //行动事件
         DoActionEvent actionEvent = new DoActionEvent(heroId, curActionHero.isAttacker(), skillId, targetIds);
-        fightEventBus.postEvent(actionEvent);
+        fightContext.getFightEventBus().postEvent(actionEvent);
 
         //释放技能!
         curActionHero.emitSkill(skillId, targetIds, this);
-        fightTimeMachine.roll();
+        fightContext.getFightTimeMachine().roll();
 
-        fightEventBus.postEvent(new AfterActionEvent());
-        fightTimeMachine.roll();
+        fightContext.getFightEventBus().postEvent(new AfterActionEvent());
+        fightContext.getFightTimeMachine().roll();
 
         return true;
     }
@@ -270,8 +268,8 @@ public class FightMatch {
         actionMoveBarUnit.doAction();
 
         //抛出小回合开始事件
-        fightEventBus.postEvent(new SmallRoundBeginEvent(curActionHero.getId(), round));
-        fightTimeMachine.roll();
+        fightContext.getFightEventBus().postEvent(new SmallRoundBeginEvent(curActionHero.getId(), round));
+        fightContext.getFightTimeMachine().roll();
 
         //
 
@@ -289,19 +287,14 @@ public class FightMatch {
         this.actionMoveBar.roll();
         MoveBarUnit fastestUnit = this.actionMoveBar.getFastestUnit();
         if (fastestUnit == null) {
-            log.error("FightImpl, getFastestUnit()为空");
+            Log.battle.error("FightImpl, getFastestUnit()为空");
             return null;
         }
         long heroId = fastestUnit.getHeroId();
-        FightHero fightHero;
-        if (fastestUnit.isAttacker()) {
-            fightHero = attacker.get(heroId);
-        } else {
-            fightHero = defender.get(heroId);
-        }
+        FightHero fightHero = this.heroMap.get(heroId);
 
         if (fightHero == null) {
-            log.error("FightImpl, fightHero为空, fastestUnit={}", fastestUnit);
+            Log.battle.error("FightImpl, fightHero为空, fastestUnit={}", fastestUnit);
             return null;
         }
 
@@ -312,26 +305,21 @@ public class FightMatch {
         this.smallRoundEnum = nextSmallRoundState;
     }
 
-    public FightHero getFightHero(long heroId, boolean attacker) {
-        return getHeroMap(attacker).get(heroId);
+    public FightHero getFightHero(long heroId) {
+        return this.heroMap.get(heroId);
     }
 
     public void unitDead(FightHero fightHero) {
         long heroId = fightHero.getId();
-        Map<Long, FightHero> heroMap = this.getHeroMap(fightHero.isAttacker());
         heroMap.remove(heroId);
         actionMoveBar.removeUnit(heroId);
     }
 
-    private Map<Long, FightHero> getHeroMap(boolean attacker) {
-        if (attacker) {
-            return this.attacker;
-        } else {
-            return this.defender;
-        }
+    public List<FightHero> getTargetHeroList(boolean attacker) {
+        return this.heroMap.values().stream().filter(e -> e.isAttacker() != attacker).collect(Collectors.toList());
     }
 
     public void finish() {
-        fightLogManager.printLog();
+        fightContext.getFightLogManager().printLog();
     }
 }

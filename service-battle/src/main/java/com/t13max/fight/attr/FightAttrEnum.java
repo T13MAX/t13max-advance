@@ -9,6 +9,7 @@ import java.util.Map;
  * @author: t13max
  * @since: 15:02 2024/4/10
  */
+@Getter
 public enum FightAttrEnum {
 
     ATTACK(10) {
@@ -22,19 +23,22 @@ public enum FightAttrEnum {
             }
         }
     },
-
+    //防御力
     DEF(20),
-
+    //当前生命值
     CUR_HP(30),
-
+    //最大生命值
     MAX_HP(40),
-
+    //速度
     SPEED(50),
+    //元素
     ELEMENT(60),
+    //属性精通
     MASTERY(70),
     //受到伤害增加
     VULNERABILITY(80),
-
+    //造成伤害增加
+    DAMAGE_INCREASE(90),
     ;
 
     private static Map<Integer, FightAttrEnum> fightAttrEnumMap = new HashMap<>();
@@ -45,8 +49,7 @@ public enum FightAttrEnum {
         }
     }
 
-    @Getter
-    private int id;
+    private final int id;
 
     FightAttrEnum(int id) {
         this.id = id;
