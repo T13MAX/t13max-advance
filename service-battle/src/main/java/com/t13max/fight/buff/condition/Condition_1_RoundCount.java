@@ -13,7 +13,9 @@ public class Condition_1_RoundCount extends AbstractEventCondition {
 
     private int count;
 
-    private int targetCount;
+    private final int targetCount;
+
+    private int lastRound = 0;
 
     public Condition_1_RoundCount(String param) {
         this.targetCount = Integer.parseInt(param);
@@ -31,7 +33,11 @@ public class Condition_1_RoundCount extends AbstractEventCondition {
         switch (event.getFightEventEnum()) {
             case SMALL_ROUND_BEGIN -> {
                 SmallRoundBeginEvent smallRoundBeginEvent = (SmallRoundBeginEvent) event;
-                count++;
+                int round = smallRoundBeginEvent.getRound();
+                if (lastRound != round) {
+                    lastRound = round;
+                    count++;
+                }
                 if (count >= targetCount) return true;
             }
         }

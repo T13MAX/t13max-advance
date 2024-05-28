@@ -3,6 +3,9 @@ package com.t13max.fight.buff.effect;
 import com.t13max.fight.FightContext;
 import com.t13max.fight.FightHero;
 import com.t13max.fight.buff.RemoveReason;
+import com.t13max.fight.event.BuffSwitchToActiveEvent;
+import com.t13max.fight.event.FightEventEnum;
+import com.t13max.fight.event.IFightEvent;
 
 /**
  * 属性改变效果
@@ -14,7 +17,7 @@ public class Buff_Effect_1_Attr extends AbstractEffect {
 
     @Override
     protected void onInit() {
-        modify(true);
+
     }
 
     @Override
@@ -23,9 +26,20 @@ public class Buff_Effect_1_Attr extends AbstractEffect {
         modify(false);
     }
 
+    @Override
+    protected void handleActive() {
+        modify(true);
+    }
+
+    @Override
+    protected void doOnEvent(IFightEvent event) {
+
+    }
+
     private void modify(boolean add) {
         FightContext fightContext = this.buffBox.getFightContext();
         FightHero fightHero = fightContext.getFightMatch().getFightHero(buffBox.getOwnerId());
         fightHero.getFightAttrManager().modifyAttr(this.param, add);
+        fightHero.getFightAttrManager().calcFinalAttr();
     }
 }

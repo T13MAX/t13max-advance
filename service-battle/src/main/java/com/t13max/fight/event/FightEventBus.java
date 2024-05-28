@@ -18,6 +18,12 @@ public class FightEventBus {
 
     private Map<FightEventEnum, LinkedList<IFightEventListener>> listenersMap = new HashMap<>();
 
+    public void register(List<IFightEventListener> eventListenerList) {
+        for (IFightEventListener eventListener : eventListenerList) {
+            register(eventListener);
+        }
+    }
+
     public void register(IFightEventListener eventListener) {
         Set<FightEventEnum> interestedEvent = eventListener.getInterestedEvent();
         for (FightEventEnum fightEventEnum : interestedEvent) {

@@ -18,4 +18,7 @@ public interface IImpact extends ITrigger {
     void onCreate();
 
     void onDestroy();
+
+    //参数校验
+    boolean paramCheck();
 }

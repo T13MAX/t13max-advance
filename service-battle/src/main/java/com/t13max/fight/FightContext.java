@@ -23,4 +23,6 @@ public class FightContext {
 
     private FightLogManager fightLogManager;
 
+
+
 }

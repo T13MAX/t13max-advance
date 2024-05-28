@@ -20,13 +20,18 @@ public abstract class AbstractAction extends AbstractImpact implements IAction {
     @Override
     public void onCreate() {
         //订阅一些事件之类的
-
+        fightContext.getFightEventBus().register(this);
         handleCreate();
     }
 
     @Override
     public void onDestroy() {
+        fightContext.getFightEventBus().unregister(this);
+    }
 
+    @Override
+    public boolean paramCheck() {
+        return true;
     }
 
     public void handleCreate() {

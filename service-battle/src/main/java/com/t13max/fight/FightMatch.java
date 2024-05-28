@@ -5,16 +5,13 @@ import com.t13max.fight.enums.SmallRoundEnum;
 import com.t13max.fight.event.*;
 import com.t13max.fight.moveBar.ActionMoveBar;
 import com.t13max.fight.moveBar.MoveBarUnit;
-import com.t13max.fight.skill.FightSkill;
-import com.t13max.template.helper.SkillHelper;
-import com.t13max.template.manager.TemplateManager;
-import com.t13max.template.temp.TemplateSkill;
+import com.t13max.fight.skill.IFightSkill;
 import com.t13max.util.Log;
 import com.t13max.util.TimeUtil;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +24,6 @@ import java.util.stream.Collectors;
  * @since: 14:53 2024/4/10
  */
 @Data
-@Log4j2
 @NoArgsConstructor
 public class FightMatch {
 
@@ -37,7 +33,7 @@ public class FightMatch {
 
     private SmallRoundEnum smallRoundEnum;
 
-    private Map<Long, FightHero> heroMap;
+    private Map<Long, FightHero> heroMap = new HashMap<>();
 
     private ActionMoveBar actionMoveBar;
 
@@ -52,6 +48,7 @@ public class FightMatch {
     private int round;
 
     private long lastFightStatusChangeMills;
+
 
     /**
      * 构造方法 只初始化一些基本的数据
@@ -69,14 +66,14 @@ public class FightMatch {
 
     public void tick() {
 
-        log.debug("开始tick!");
+        Log.battle.debug("开始tick!");
         switch (this.fightEnum) {
             case INIT -> {
                 //超时销毁
-                if (checkTimeout(30 * 1000)) {
+                if (checkTimeout(FightConst.WAIT_JOIN_TIMEOUT_MILLS)) {
                     changeFightState(FightEnum.FINISHED);
+                    return;
                 }
-
                 //暂时没有其他操作 直接进入回合
                 changeFightState(FightEnum.SMALL_ROUND);
             }
@@ -113,6 +110,7 @@ public class FightMatch {
     }
 
     private void smallRoundTick() {
+
         switch (smallRoundEnum) {
             case DETERMINE_NEXT_ACTION_UNIT -> {
                 determineNextActionUnit();
@@ -126,7 +124,7 @@ public class FightMatch {
                     changeSmallRoundState(SmallRoundEnum.DO_ACTION);
                 } else if (actionArgs != null) {
                     changeSmallRoundState(SmallRoundEnum.DO_ACTION);
-                } else if (checkTimeout(10 * 1000)) {
+                } else if (checkTimeout(FightConst.ACTION_TIMEOUT_MILLS)) {
                     //超时了 AI代替出手
                     this.actionArgs = curActionHero.runWithAI();
                     changeSmallRoundState(SmallRoundEnum.DO_ACTION);
@@ -183,7 +181,7 @@ public class FightMatch {
     private boolean tryFootUp() {
 
         //只剩下一方的人了
-        boolean finished = heroMap.values().stream().allMatch(e -> e.isAttacker() || !e.isAttacker());
+        boolean finished = heroMap.values().stream().allMatch(FightHero::isAttacker) || heroMap.values().stream().noneMatch(FightHero::isAttacker);
 
         if (finished) {
             return true;
@@ -214,20 +212,13 @@ public class FightMatch {
         List<Long> targetIds = actionArgs.getTargetIds();
 
         if (curActionHero.getFightMember().getUid() != playerId || curActionHero.getId() != heroId) {
-            log.error("行动失败, 参数错误");
+            Log.battle.error("行动失败, 参数错误");
             return false;
         }
 
-        FightSkill skill = curActionHero.getSkillManager().getSkill(skillId);
-        if (skill == null) {
-            log.error("行动失败, 参数错误");
-            return false;
-        }
-
-        SkillHelper skillHelper = TemplateManager.inst().helper(SkillHelper.class);
-        TemplateSkill template = skillHelper.getTemplate(skillId);
-        if (template == null) {
-            log.error("行动失败, 参数错误");
+        IFightSkill fightSkill = curActionHero.getSkillManager().getFightSkill(skillId);
+        if (fightSkill == null) {
+            Log.battle.error("行动失败, 参数错误");
             return false;
         }
 
@@ -243,8 +234,9 @@ public class FightMatch {
         }
 
         //技能消耗和冷却
-        skill.consumeCost();
-        skill.increaseCoolDown();
+        if (!fightSkill.consumeCost()) {
+            return false;
+        }
 
         //行动事件
         DoActionEvent actionEvent = new DoActionEvent(heroId, curActionHero.isAttacker(), skillId, targetIds);
@@ -272,7 +264,6 @@ public class FightMatch {
         fightContext.getFightTimeMachine().roll();
 
         //
-
         changeSmallRoundState(SmallRoundEnum.WAIT_MANUAL);
     }
 
@@ -321,5 +312,6 @@ public class FightMatch {
 
     public void finish() {
         fightContext.getFightLogManager().printLog();
+        Log.battle.info("FightMatch.finish, matchId={}", this.id);
     }
 }

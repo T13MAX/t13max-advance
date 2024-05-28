@@ -14,7 +14,7 @@ public enum FightAttrEnum {
 
     ATTACK(10) {
         @Override
-        public double modifyValue(Double oldValue, double modifyValue, boolean add) {
+        public double modifyValue(FightAttrManager fightAttrManager, Double oldValue, double modifyValue, boolean add) {
             if (add) {
                 return oldValue + modifyValue;
             } else {
@@ -26,7 +26,21 @@ public enum FightAttrEnum {
     //防御力
     DEF(20),
     //当前生命值
-    CUR_HP(30),
+    CUR_HP(30) {
+        @Override
+        public double modifyRate(FightAttrManager fightAttrManager, Double oldValue, double modifyValue, boolean add) {
+            //当前生命值没有比例
+            return oldValue;
+        }
+
+        @Override
+        public double modifyValue(FightAttrManager fightAttrManager, Double oldValue, double modifyValue, boolean add) {
+            double newValue = super.modifyValue(fightAttrManager, oldValue, modifyValue, add);
+            Double maxValue = fightAttrManager.getFinalAttr(FightAttrEnum.MAX_HP);
+            //不能超过最大生命值
+            return Math.min(newValue, maxValue);
+        }
+    },
     //最大生命值
     MAX_HP(40),
     //速度
@@ -39,6 +53,12 @@ public enum FightAttrEnum {
     VULNERABILITY(80),
     //造成伤害增加
     DAMAGE_INCREASE(90),
+    //充能 满了释放发招
+    CHARGE(100) {
+
+    },
+    //生命恢复
+    HP_RECOVER(110),
     ;
 
     private static Map<Integer, FightAttrEnum> fightAttrEnumMap = new HashMap<>();
@@ -55,7 +75,7 @@ public enum FightAttrEnum {
         this.id = id;
     }
 
-    public double modifyRate(Double oldValue, double modifyValue, boolean add) {
+    public double modifyRate(FightAttrManager fightAttrManager, Double oldValue, double modifyValue, boolean add) {
 
         if (oldValue == null) {
             oldValue = 0D;
@@ -64,19 +84,21 @@ public enum FightAttrEnum {
         if (add) {
             return oldValue + modifyValue;
         } else {
+            //默认百分比允许负数 就是减益效果
             return oldValue - modifyValue;
         }
     }
 
-    public double modifyValue(Double oldValue, double modifyValue, boolean add) {
+    public double modifyValue(FightAttrManager fightAttrManager, Double oldValue, double modifyValue, boolean add) {
 
-        if (oldValue == 0) {
+        if (oldValue == null) {
             oldValue = 0D;
         }
 
         if (add) {
             return oldValue + modifyValue;
         } else {
+            //默认基础数值最低就是0
             return Math.max(0, oldValue - modifyValue);
         }
     }

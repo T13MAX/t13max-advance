@@ -5,6 +5,7 @@ import com.t13max.game.exception.BattleException;
 import com.t13max.template.helper.HeroHelper;
 import com.t13max.template.manager.TemplateManager;
 import com.t13max.template.temp.TemplateHero;
+import com.t13max.util.Log;
 import lombok.Getter;
 
 import java.util.HashMap;
@@ -42,15 +43,15 @@ public class FightAttrManager {
         }
         valueAttrMap.put(FightAttrEnum.ATTACK, (double) template.getAtk());
         valueAttrMap.put(FightAttrEnum.MAX_HP, (double) template.getHp());
+        valueAttrMap.put(FightAttrEnum.DEF, (double) template.getDef());
         valueAttrMap.put(FightAttrEnum.SPEED, (double) template.getSpeed());
         valueAttrMap.put(FightAttrEnum.ELEMENT, (double) template.getElement());
         valueAttrMap.put(FightAttrEnum.MASTERY, (double) template.getMastery());
 
         //临时
-        for (FightAttrEnum attrEnum : FightAttrEnum.values()) {
-            rateAttrMap.put(attrEnum, random.nextDouble(10));
-        }
         rateAttrMap.put(FightAttrEnum.ATTACK, random.nextDouble(100));
+        rateAttrMap.put(FightAttrEnum.DEF, random.nextDouble(100));
+        rateAttrMap.put(FightAttrEnum.MAX_HP, random.nextDouble(100));
 
         calcFinalAttr();
 
@@ -116,13 +117,19 @@ public class FightAttrManager {
 
     public void modifyRateAttr(FightAttrEnum attrEnum, double value, boolean add) {
         Double oldValue = this.rateAttrMap.get(attrEnum);
-        double newValue = attrEnum.modifyRate(oldValue, value, add);
+        double newValue = attrEnum.modifyRate(this, oldValue, value, add);
+        //if (attrEnum == FightAttrEnum.MAX_HP) reCalcHp();
         this.rateAttrMap.put(attrEnum, newValue);
     }
 
     public void modifyValueAttr(FightAttrEnum attrEnum, double value, boolean add) {
+        if (attrEnum == FightAttrEnum.CUR_HP) {
+            Log.battle.error("禁止使用modifyValueAttr修改当前血量");
+            return;
+        }
         Double oldValue = this.valueAttrMap.get(attrEnum);
-        double newValue = attrEnum.modifyValue(oldValue, value, add);
+        double newValue = attrEnum.modifyValue(this, oldValue, value, add);
+        //if (attrEnum == FightAttrEnum.MAX_HP) reCalcHp();
         this.valueAttrMap.put(attrEnum, newValue);
     }
 
@@ -142,5 +149,19 @@ public class FightAttrManager {
         }
     }
 
+    /**
+     * //如果调整了最大生命值 则当前生命值同步修改
+     *
+     * @Author t13max
+     * @Date 19:42 2024/5/27
+     */
+    private void reCalcHp() {
+        Double oldValue = 0D;
+        double newValue = 0D;
+
+        Double oldCurHp = getFinalAttr(FightAttrEnum.CUR_HP);
+        double rate = oldCurHp / oldValue;
+        setCurHp(newValue * rate);
+    }
 }
 

@@ -15,10 +15,14 @@ import java.util.*;
 public class TemplateSkill implements ITemplate {
 
     private int id;
+    private int type;
     private int[] toSelfImpacts;
     private int[] toOtherImpacts;
     private String[] selfParams;
     private String[] otherParams;
+    private int collDown;
+    private int selfSelector;
+    private int otherSelector;
     private String des;
 }
 

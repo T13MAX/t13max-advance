@@ -1,5 +1,6 @@
 package com.t13max.fight;
 
+import com.t13max.fight.attr.AttrUpdateReason;
 import com.t13max.fight.attr.FightAttrEnum;
 import com.t13max.fight.event.*;
 
@@ -21,6 +22,7 @@ public class LifecycleObserver implements IFightEventListener {
         Set<FightEventEnum> interests = new HashSet<>();
 
         interests.add(FightEventEnum.UNIT_DEAD);
+        interests.add(FightEventEnum.SMALL_ROUND_BEGIN);
         interests.add(FightEventEnum.SMALL_ROUND_END);
         interests.add(FightEventEnum.ATTRIBUTE_UPDATE);
         interests.add(FightEventEnum.READY_TO_ADD_HP);
@@ -41,21 +43,42 @@ public class LifecycleObserver implements IFightEventListener {
     @Override
     public void onEvent(IFightEvent event) {
         switch (event.getFightEventEnum()) {
-            case UNIT_DEAD:
+            case UNIT_DEAD -> {
                 UnitDeadEvent unitDeadEvent = (UnitDeadEvent) event;
                 unitDead(unitDeadEvent);
-                break;
-            case SMALL_ROUND_END:
-                break;
-            case ATTRIBUTE_UPDATE:
-                break;
-            case READY_TO_ADD_HP:
-                break;
-            case READY_TO_SUB_HP:
+            }
+            case SMALL_ROUND_END -> {
+                //回合结束
+            }
+            case SMALL_ROUND_BEGIN -> {
+                SmallRoundBeginEvent smallRoundBeginEvent = (SmallRoundBeginEvent) event;
+                Double finalAttr = this.fightHero.getFightAttrManager().getFinalAttr(FightAttrEnum.HP_RECOVER);
+                this.fightHero.getFightContext().getFightEventBus().postEvent(new ReadyToAddHpEvent(this.fightHero.getId(), this.fightHero.getId(), finalAttr, AttrUpdateReason.SELF_CURE));
+            }
+            case ATTRIBUTE_UPDATE -> {
+                //要是有多个变更 是不是应该最后再算一下最终属性?
+                AttributeUpdateEvent attributeUpdateEvent = (AttributeUpdateEvent) event;
+                this.fightHero.getFightAttrManager().calcFinalAttr();
+            }
+            case READY_TO_ADD_HP -> {
+                ReadyToAddHpEvent readyToAddHpEvent = (ReadyToAddHpEvent) event;
+                if (readyToAddHpEvent.getTargetHeroId() != fightHero.getId()) {
+                    break;
+                }
+                Double curHp = this.fightHero.getFightAttrManager().getFinalAttr(FightAttrEnum.CUR_HP);
+                double value = readyToAddHpEvent.getValue();
+                if (value == 0)  break;
+                fightHero.getFightAttrManager().addHp(value);
+                AttributeUpdateEvent attributeUpdateEvent = new AttributeUpdateEvent(readyToAddHpEvent.getGenerateHeroId(), fightHero.getId(), FightAttrEnum.CUR_HP, curHp, value, true);
+                this.fightHero.getFightContext().getFightEventBus().postEvent(attributeUpdateEvent);
+            }
+            case READY_TO_SUB_HP -> {
                 ReadyToSubHpEvent readyToSubHpEvent = (ReadyToSubHpEvent) event;
                 handleSubHp(readyToSubHpEvent);
-                break;
-            default:
+            }
+            default -> {
+
+            }
 
         }
     }
@@ -78,7 +101,10 @@ public class LifecycleObserver implements IFightEventListener {
         }
         fightHero.getFightAttrManager().subHp(subValue);
 
-        this.fightHero.getFightContext().getFightEventBus().postEvent(new AttributeUpdateEvent(readyToSubHpEvent.getGenerateHeroId(), fightHero.getId(), FightAttrEnum.CUR_HP, oldValue, subValue, false));
+        AttributeUpdateEvent attributeUpdateEvent = new AttributeUpdateEvent(readyToSubHpEvent.getGenerateHeroId(), fightHero.getId(), FightAttrEnum.CUR_HP, oldValue, subValue, false);
+        //原因传过去
+        attributeUpdateEvent.setAttrUpdateReason(readyToSubHpEvent.getAttrUpdateReason());
+        this.fightHero.getFightContext().getFightEventBus().postEvent(attributeUpdateEvent);
 
         if (fightHero.isDie()) {
             this.fightHero.getFightContext().getFightEventBus().postEvent(new UnitDeadEvent(Collections.singletonList(this.fightHero.getId())));

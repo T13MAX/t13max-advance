@@ -41,6 +41,7 @@ public class FightFactory {
 
             //创建战斗上下文
             FightContext fightContext = new FightContext();
+            fightMatch.setFightContext(fightContext);
 
             initFightContext(fightContext);
 
@@ -97,7 +98,7 @@ public class FightFactory {
     public FightHero createHero(FightContext fightContext, FightMember fightMember, long heroId, int template) {
         HeroHelper heroHelper = TemplateManager.inst().helper(HeroHelper.class);
         TemplateHero templateHero = heroHelper.getTemplate(template);
-        FightHero fightHero = FightHero.createFightHero(fightContext, UuidUtil.getNextId(), templateHero.getId(), fightMember);
+        FightHero fightHero = FightHero.createFightHero(fightContext, heroId, templateHero.getId(), fightMember);
         return fightHero;
     }
 

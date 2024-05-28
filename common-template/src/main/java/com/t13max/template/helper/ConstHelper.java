@@ -44,6 +44,8 @@ public class ConstHelper extends TemplateHelper<TemplateConst> {
     public enum ConstEnum {
 
         行动值(130001),
+        等待出手超时时间(130002),
+        最大回合数(130003),
 
 
         ;

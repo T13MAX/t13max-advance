@@ -1,7 +1,9 @@
 package com.t13max.fight.event;
 
+import com.t13max.fight.attr.AttrUpdateReason;
 import com.t13max.fight.attr.FightAttrEnum;
 import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @author: t13max
@@ -22,7 +24,10 @@ public class AttributeUpdateEvent extends AbstractEvent {
 
     private boolean add;
 
-    public AttributeUpdateEvent(long generateHeroId,long targetHeroId,FightAttrEnum attrEnum, double oldValue, double delta, boolean add) {
+    @Setter
+    private AttrUpdateReason attrUpdateReason = AttrUpdateReason.DEF;
+
+    public AttributeUpdateEvent(long generateHeroId, long targetHeroId, FightAttrEnum attrEnum, double oldValue, double delta, boolean add) {
         super(FightEventEnum.ATTRIBUTE_UPDATE);
         this.attrEnum = attrEnum;
         this.oldValue = oldValue;
@@ -31,6 +36,5 @@ public class AttributeUpdateEvent extends AbstractEvent {
         this.generateHeroId = generateHeroId;
         this.targetHeroId = targetHeroId;
     }
-
 
 }

@@ -1,11 +1,7 @@
 package com.t13max.fight.buff.condition;
 
-import com.t13max.fight.buff.effect.AbstractEffect;
 import com.t13max.fight.event.FightEventEnum;
 import com.t13max.fight.event.IFightEvent;
-
-import java.util.Collections;
-import java.util.List;
 
 /**
  * 直接生效
@@ -14,6 +10,11 @@ import java.util.List;
  * @since: 14:56 2024/4/23
  */
 public class Condition_0_Active extends AbstractEventCondition {
+
+
+    public Condition_0_Active() {
+        subEvent(FightEventEnum.BUFF_ADD_TO_HOST);
+    }
 
     @Override
     public ConditionEnum getConditionEnum() {

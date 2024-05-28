@@ -1,5 +1,6 @@
 package com.t13max.fight.buff;
 
+import com.t13max.fight.FightContext;
 import com.t13max.fight.buff.effect.IBuffEffect;
 
 import java.util.Set;
@@ -11,6 +12,10 @@ import java.util.Set;
 public interface IBuffBox {
 
     long getId();
+
+    long getOwnerId();
+
+    FightContext getFightContext();
 
     //获取持续时间
     int getLife();

@@ -5,7 +5,7 @@ import com.t13max.fight.buff.BuffManager;
 import com.t13max.fight.impact.IImpact;
 import com.t13max.fight.impact.ImpactFactory;
 import com.t13max.fight.member.FightMember;
-import com.t13max.fight.skill.FightSkill;
+import com.t13max.fight.skill.IFightSkill;
 import com.t13max.fight.skill.SkillManager;
 import com.t13max.template.helper.HeroHelper;
 import com.t13max.template.helper.SkillHelper;
@@ -19,7 +19,6 @@ import lombok.extern.log4j.Log4j2;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author: t13max
@@ -74,8 +73,8 @@ public class FightHero {
         ActionArgs actionArgs = new ActionArgs(this.fightMember.getUid(), this.id);
         HeroHelper heroHelper = TemplateManager.inst().helper(HeroHelper.class);
         TemplateHero template = heroHelper.getTemplate(this.getTemplateId());
-        actionArgs.setSkillId(template.getSkill1());
-        List<FightHero> heroList  = this.fightContext.getFightMatch().getTargetHeroList(this.isAttacker());
+        actionArgs.setSkillId(template.getSkill()[0]);
+        List<FightHero> heroList = this.fightContext.getFightMatch().getTargetHeroList(this.isAttacker());
         FightHero random = RandomUtil.random(heroList);
         actionArgs.setTargetIds(Collections.singletonList(random.getId()));
         return actionArgs;
@@ -87,8 +86,8 @@ public class FightHero {
     }
 
     public void emitSkill(int skillId, List<Long> targetIds, FightMatch fight) {
-        FightSkill skill = this.getSkillManager().getSkill(skillId);
-        if (skill == null) {
+        IFightSkill fightSkill = this.getSkillManager().getFightSkill(skillId);
+        if (fightSkill == null) {
             log.error("英雄没这个技能! heroId={}, skillId={}", this.id, skillId);
             return;
         }
@@ -99,7 +98,7 @@ public class FightHero {
             return;
         }
 
-        if (checkTargetValid(template, targetIds)) {
+        if (!checkTargetValid(template, targetIds)) {
             Log.battle.error("目标不合法, skillId={}, targetIds={}", skillId, targetIds);
             return;
         }
@@ -110,7 +109,7 @@ public class FightHero {
         String[] selfParams = template.getSelfParams();
         for (int i = 0; i < toSelfImpacts.length; i++) {
             int impactId = toSelfImpacts[i];
-            IImpact impact = ImpactFactory.createImpact(fightContext,this.getId(), skillId, selfParams[i], impactId, this.isAttacker(), 0, fight.getRound(), Collections.singletonList(this.id));
+            IImpact impact = ImpactFactory.createImpact(fightContext, this.getId(), skillId, selfParams[i], impactId, this.isAttacker(), 0, fight.getRound(), Collections.singletonList(this.id));
             if (impact != null) {
                 fightTimeMachine.addImpactToTimeLine(impact);
             }
@@ -120,7 +119,7 @@ public class FightHero {
         String[] otherParams = template.getOtherParams();
         for (int i = 0; i < toOtherImpacts.length; i++) {
             int impactId = toOtherImpacts[i];
-            IImpact impact = ImpactFactory.createImpact(fightContext,this.getId(), skillId, otherParams[i], impactId, this.isAttacker(), 0, fight.getRound(), targetIds);
+            IImpact impact = ImpactFactory.createImpact(fightContext, this.getId(), skillId, otherParams[i], impactId, this.isAttacker(), 0, fight.getRound(), targetIds);
             if (impact != null) {
                 fightTimeMachine.addImpactToTimeLine(impact);
             }
@@ -145,4 +144,5 @@ public class FightHero {
     public boolean isAttacker() {
         return this.fightMember.isAttacker();
     }
+
 }

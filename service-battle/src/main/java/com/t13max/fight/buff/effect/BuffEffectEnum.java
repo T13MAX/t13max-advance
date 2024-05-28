@@ -14,9 +14,11 @@ public enum BuffEffectEnum {
 
     ATTR(1, Buff_Effect_1_Attr.class),
 
-    ELEMENT(2, Buff_Effect_2_Element.class),
+    //ELEMENT(2, Buff_Effect_2_Element.class),
 
     COUNTER_WOUND(3, Buff_Effect_3_CounterWound.class),
+
+    VANISH(4, Buff_Effect_4_Vanish.class),
 
 
     ;

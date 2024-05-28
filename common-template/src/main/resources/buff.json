@@ -1,5 +1,26 @@
 [
   {
+    "id": 120000,
+    "disposedRule": 0,
+    "activeCondition": [
+      "0",
+      "0"
+    ],
+    "disposedCondition": [
+      "10",
+      "10"
+    ],
+    "effect": [
+      1,
+      1
+    ],
+    "params": [
+      "40,1,1000",
+      "110,0,1000"
+    ],
+    "des": "测试阶段buff, 生命提高1000%, 回血量加1000"
+  },
+  {
     "id": 120001,
     "disposedRule": 0,
     "activeCondition": [
@@ -20,10 +41,12 @@
     "id": 120002,
     "disposedRule": 0,
     "activeCondition": [
+      "0",
       "0"
     ],
     "disposedCondition": [
-      "2"
+      "10",
+      "10"
     ],
     "effect": [
       1,

@@ -1,6 +1,7 @@
 [
   {
     "id": 110000,
+    "type": 0,
     "toSelfImpacts": [],
     "toOtherImpacts": [
       1
@@ -16,6 +17,7 @@
   },
   {
     "id": 110011,
+    "type": 0,
     "toSelfImpacts": [
       2
     ],
@@ -35,6 +37,43 @@
   },
   {
     "id": 110012,
+    "type": 0,
+    "toSelfImpacts": [],
+    "toOtherImpacts": [
+      1,
+      2
+    ],
+    "coldDown": 3,
+    "selfParams": [],
+    "otherParams": [
+      "10,150",
+      "120002"
+    ],
+    "selfSelector": 1,
+    "otherSelector": 2,
+    "des": "傻呆呆小技能, 对所有敌人造成攻击力150%的伤害, 同时施加泯灭效果"
+  },
+  {
+    "id": 110013,
+    "type": 1,
+    "toSelfImpacts": [],
+    "toOtherImpacts": [
+      1,
+      2
+    ],
+    "coldDown": 3,
+    "selfParams": [],
+    "otherParams": [
+      "10,150",
+      "120002"
+    ],
+    "selfSelector": 1,
+    "otherSelector": 2,
+    "des": "傻呆呆小技能, 对所有敌人造成攻击力150%的伤害, 同时施加泯灭效果"
+  },
+  {
+    "id": 110014,
+    "type": 2,
     "toSelfImpacts": [],
     "toOtherImpacts": [
       1,

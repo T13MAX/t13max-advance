@@ -13,7 +13,7 @@ import java.util.concurrent.atomic.AtomicLong;
 @UtilityClass
 public class UuidUtil {
 
-    private AtomicLong ID = new AtomicLong(100000000);
+    private final AtomicLong ID = new AtomicLong(1000);
 
     /**
      * 先只保证一次启动唯一后续修改
@@ -25,10 +25,10 @@ public class UuidUtil {
         return ID.incrementAndGet();
     }
 
+    @Getter
     public static enum FUNCTIONENUM {
 
         ;
-        @Getter
         private int id;
 
 

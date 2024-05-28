@@ -1,5 +1,6 @@
 package com.t13max.fight;
 
+import com.t13max.fight.action.AbstractAction;
 import com.t13max.fight.impact.IImpact;
 import com.t13max.fight.trigger.ITrigger;
 import com.t13max.fight.trigger.TriggerTimeline;
@@ -40,7 +41,14 @@ public class FightTimeMachine {
     public void tick() {
         Collection<ITrigger> triggers = triggerTimeline.getNextTriggerList();
         for (ITrigger trigger : triggers) {
+
+            //时间到, 执行
             trigger.onTimeIsUp();
+
+            //如果是行动 执行完销毁
+            if (trigger instanceof AbstractAction action) {
+                action.onDestroy();
+            }
         }
     }
 

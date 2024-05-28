@@ -8,5 +8,5 @@ package com.t13max.fight.buff;
  */
 public enum RemoveReason {
     DISPOSED,
-
+    XXX,
 }

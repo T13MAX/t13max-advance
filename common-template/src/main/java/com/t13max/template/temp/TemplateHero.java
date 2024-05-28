@@ -22,10 +22,7 @@ public class TemplateHero implements ITemplate {
     private int speed;
     private int element;
     private int mastery;
-    private int skill1;
-    private int skill2;
-    private int skill3;
-    private int skill4;
+    private int[] skill;
 
 
 }

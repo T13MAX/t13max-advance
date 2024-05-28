@@ -38,6 +38,10 @@ public class ConditionFactory {
         if (split.length > 0) {
             id = Integer.parseInt(split[0]);
         }
+        //大于10的不处理 只处理基础类型
+        if (id >= 10) {
+            return null;
+        }
         if (split.length > 1) {
             param = split[1];
         }

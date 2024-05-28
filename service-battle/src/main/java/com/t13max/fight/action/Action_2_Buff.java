@@ -37,7 +37,8 @@ public class Action_2_Buff extends AbstractAction {
                 continue;
             }
 
-            BuffBoxImpl buffBoxImpl = BuffFactory.createBuffBoxImpl(fightContext,fightHero.getId(), this.param);
+            BuffBoxImpl buffBoxImpl = BuffFactory.createBuffBoxImpl(fightContext, fightHero.getId(), this.param);
+            if (buffBoxImpl == null) return;
             fightHero.getBuffManager().addBuff(buffBoxImpl);
             fightEventBus.register(buffBoxImpl);
         }

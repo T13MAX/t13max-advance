@@ -75,7 +75,7 @@ public class TemplateManager extends ManagerBase {
      */
     public boolean load() {
         try {
-            helperMap.values().forEach(TemplateHelper::reload);
+            helperMap.values().forEach(TemplateHelper::load);
         } catch (Exception e) {
             throw e;
         }

@@ -1,6 +1,7 @@
 package com.t13max.fight.impact;
 
 import com.t13max.fight.action.Action_1_Attack;
+import com.t13max.fight.action.Action_2_Buff;
 import com.t13max.fight.action.IAction;
 import lombok.Getter;
 
@@ -14,7 +15,7 @@ import java.util.Map;
 public enum ImpactEnum {
 
     ATTACK(1, Action_1_Attack.class),
-    BUFF(2, Action_1_Attack.class),
+    BUFF(2, Action_2_Buff.class),
 
     ;
 

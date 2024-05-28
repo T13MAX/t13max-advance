@@ -11,18 +11,18 @@ import com.t13max.fight.event.UnitDeadEvent;
  * @author: t13max
  * @since: 11:25 2024/4/11
  */
-public class Condition_2_UnitDead extends AbstractEventCondition {
+public class Condition_10_UnitDead extends AbstractEventCondition {
 
     private long targetId;
 
-    public Condition_2_UnitDead(String param) {
+    public Condition_10_UnitDead(String param) {
         this.targetId = Long.parseLong(param);
         subEvent(FightEventEnum.UNIT_DEAD);
     }
 
     @Override
     public ConditionEnum getConditionEnum() {
-        return ConditionEnum.AT_ONCE;
+        return ConditionEnum.UNIT_DEAD;
     }
 
     @Override

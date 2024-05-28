@@ -5,11 +5,14 @@ import com.t13max.fight.FightHero;
 import com.t13max.fight.buff.condition.IEventCondition;
 import com.t13max.fight.buff.effect.IBuffEffect;
 import com.t13max.fight.event.*;
+import com.t13max.game.exception.BattleException;
 import com.t13max.template.helper.BuffHelper;
 import com.t13max.template.manager.TemplateManager;
 import com.t13max.template.temp.TemplateBuff;
 import com.t13max.util.Log;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -18,7 +21,8 @@ import java.util.Set;
  * @author: t13max
  * @since: 15:57 2024/4/10
  */
-@Data
+@Getter
+@Setter
 public class BuffBoxImpl extends AbstractEventListener implements IBuffBox {
 
     private long id;
@@ -27,11 +31,12 @@ public class BuffBoxImpl extends AbstractEventListener implements IBuffBox {
 
     private BuffStatus buffStatus;
 
-    private DisposedRule disposedRule;
+    //先默认全是任意一个
+    private DisposedRule disposedRule = DisposedRule.ANY;
 
     private int buffId;
 
-    private Set<IBuffEffect> buffEffects;
+    private Set<IBuffEffect> buffEffects = new HashSet<>();
 
     private int layer;
 
@@ -44,6 +49,10 @@ public class BuffBoxImpl extends AbstractEventListener implements IBuffBox {
                 //this.reduceLife(1);
             }
             case BUFF_EFFECT_CAN_ACTIVE -> {
+                BuffEffectCanActiveEvent buffEffectCanActiveEvent = (BuffEffectCanActiveEvent) event;
+                if (buffEffectCanActiveEvent.getBuffEffect().getBuffBox() != this) {
+                    break;
+                }
                 if (buffStatus == BuffStatus.IDLE) {
                     // 任意一个效果满足生效条件, 盒子就生效
                     if (buffEffects.stream().anyMatch(buffEffect -> buffEffect.getBuffStatus() == BuffStatus.ACTIVE)) {
@@ -52,28 +61,27 @@ public class BuffBoxImpl extends AbstractEventListener implements IBuffBox {
                 }
             }
             case BUFF_EFFECT_CAN_DISPOSED -> {
+                BuffEffectCanDisposedEvent buffEffectCanDisposedEvent = (BuffEffectCanDisposedEvent) event;
+                if (buffEffectCanDisposedEvent.getBuffEffect().getBuffBox() != this) {
+                    break;
+                }
                 if (buffStatus == BuffStatus.ACTIVE) {
-                    BuffEffectCanDisposedEvent buffEffectCanDisposedEvent = (BuffEffectCanDisposedEvent) event;
 
                     // 按配置规则判断是否可消散
                     boolean canDisposed = false;
 
                     if (disposedRule == DisposedRule.ANY) {
-                        if (buffEffects.stream()
-                                .anyMatch(buffEffect -> buffEffect.getBuffStatus() == BuffStatus.DISPOSED)) {
+                        if (buffEffects.stream().anyMatch(buffEffect -> buffEffect.getBuffStatus() == BuffStatus.DISPOSED)) {
                             canDisposed = true;
                         }
                     } else if (disposedRule == DisposedRule.ALL) {
-                        if (buffEffects.stream()
-                                .allMatch(buffEffect -> buffEffect.getBuffStatus() == BuffStatus.DISPOSED)) {
+                        if (buffEffects.stream().allMatch(buffEffect -> buffEffect.getBuffStatus() == BuffStatus.DISPOSED)) {
                             canDisposed = true;
                         }
                     }
 
                     if (canDisposed) {
                         switchBuffStatus(BuffStatus.DISPOSED, buffEffectCanDisposedEvent.getRemoveReason());
-                    } else {
-
                     }
                 }
             }
@@ -131,8 +139,7 @@ public class BuffBoxImpl extends AbstractEventListener implements IBuffBox {
 
         TemplateBuff templateBuff = TemplateManager.inst().helper(BuffHelper.class).getTemplate(buffId);
         if (templateBuff == null) {
-            Log.battle.error("createBuffBoxImpl, buff不存在, buffId={}", buffId);
-            return;
+            throw new BattleException("buff不存在, id="+buffId);
         }
         int[] effect = templateBuff.getEffect();
         String[] params = templateBuff.getParams();
@@ -144,16 +151,20 @@ public class BuffBoxImpl extends AbstractEventListener implements IBuffBox {
             String param = params[i];
             String activeCondition = activeConditions[i];
             String disposedCondition = disposedConditions[i];
-            IBuffEffect buffEffect = BuffFactory.createBuffEffect(effectId, param, activeCondition, disposedCondition);
+            IBuffEffect buffEffect = BuffFactory.createBuffEffect(this, effectId, param, activeCondition, disposedCondition);
             this.buffEffects.add(buffEffect);
         }
 
         this.buffEffects.forEach(IBuffEffect::onCreate);
+
+        //最后注册监听
+        this.getFightContext().getFightEventBus().register(this);
     }
 
     @Override
     public void onDestroy(RemoveReason reason) {
         this.buffEffects.forEach(e -> e.onDestroy(reason));
+        this.getFightContext().getFightEventBus().unregister(this);
     }
 
     private void switchBuffStatus(BuffStatus nextStatus, RemoveReason removeReason) {
@@ -169,7 +180,8 @@ public class BuffBoxImpl extends AbstractEventListener implements IBuffBox {
                 fightContext.getFightEventBus().postEvent(new BuffSwitchToActiveEvent(this));
                 break;
             case DISPOSED:
-                fightContext.getFightMatch().getFightHero(this.ownerId).getBuffManager().removeBuff(this.id);
+                fightContext.getFightMatch().getFightHero(this.ownerId).getBuffManager().removeBuff(this.id,removeReason);
+                this.onDestroy(removeReason);
                 break;
         }
     }

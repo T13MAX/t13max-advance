@@ -17,6 +17,8 @@ import java.lang.reflect.Constructor;
 import java.util.*;
 
 /**
+ * buff盒子和效果工厂
+ *
  * @author: t13max
  * @since: 11:42 2024/4/23
  */
@@ -35,11 +37,18 @@ public class BuffFactory {
         buffBox.setFightContext(fightContext);
         buffBox.setOwnerId(ownerId);
         buffBox.setBuffId(buffId);
-        buffBox.onCreate();
+
+        try {
+
+            buffBox.onCreate();
+        } catch (Exception e) {
+            Log.battle.error("createBuffBoxImpl, error={}", e.getMessage());
+            return null;
+        }
         return buffBox;
     }
 
-    public IBuffEffect createBuffEffect(int effectId, String param, String activeCondition, String disposedCondition) {
+    public IBuffEffect createBuffEffect(IBuffBox buffBox, int effectId, String param, String activeCondition, String disposedCondition) {
         BuffEffectEnum buffEffectEnum = BuffEffectEnum.getEffect(effectId);
         if (buffEffectEnum == null) {
             return null;
@@ -55,13 +64,14 @@ public class BuffFactory {
             return null;
         }
         result.setParam(param);
+        result.setBuffBox(buffBox);
 
         //填充 常规生效消散条件 (还有一些特殊条件是自己实现的 不在通用部分) 目前没有复杂的条件处理 只是多个或关系的用;分隔 一个条件用,分隔id和参数 后续优化
         List<IEventCondition> activeConditionList = ConditionFactory.createEventConditionList(activeCondition);
         result.getActiveConditions().addAll(activeConditionList);
-
         List<IEventCondition> dispossedConditionList = ConditionFactory.createEventConditionList(disposedCondition);
         result.getDisposedConditions().addAll(dispossedConditionList);
+
 
         return result;
     }

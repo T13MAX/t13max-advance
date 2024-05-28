@@ -4,6 +4,7 @@ import com.t13max.fight.FightContext;
 import com.t13max.fight.FightHero;
 import com.t13max.fight.FightMatch;
 import com.t13max.fight.event.*;
+import com.t13max.util.Log;
 import lombok.extern.log4j.Log4j2;
 
 import java.text.DecimalFormat;
@@ -28,11 +29,8 @@ public class FightLogManager extends AbstractEventListener {
 
     private FootUpLog footUpLog;
 
-    public FightLogManager() {
-        subscribeEvent(FightEventEnum.values());
-    }
-
     public FightLogManager(FightContext fightContext) {
+        subscribeEvent(FightEventEnum.values());
         this.fightContext = fightContext;
     }
 
@@ -67,14 +65,14 @@ public class FightLogManager extends AbstractEventListener {
             }
             case ATTRIBUTE_UPDATE -> {
                 AttributeUpdateEvent attributeUpdateEvent = (AttributeUpdateEvent) event;
-                this.curRoundLogEntity.getAttrUpdateLogs().add(new AttrUpdateLog(attributeUpdateEvent));
+                this.curRoundLogEntity.getAttrUpdateLogs().put(attributeUpdateEvent.getGenerateHeroId(), new AttrUpdateLog(attributeUpdateEvent));
             }
             case UNIT_DEAD -> {
                 UnitDeadEvent unitDeadEvent = (UnitDeadEvent) event;
                 this.curRoundLogEntity.setDueToDeathList(unitDeadEvent.getDeadList());
             }
             case SMALL_ROUND_END -> {
-                log.debug(curRoundLogEntity);
+                Log.battle.info(curRoundLogEntity);
                 this.logList.add(curRoundLogEntity);
                 this.curRoundLogEntity = null;
             }

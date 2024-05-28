@@ -9,6 +9,8 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class TimeUtil {
 
+    public int SECOND = 1000;
+
     public long nowMills() {
         return System.currentTimeMillis();
     }

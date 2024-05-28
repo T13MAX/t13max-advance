@@ -40,20 +40,16 @@
             <version>1.18.30</version>
         </dependency>
 
-        <!--log4j依赖：api和core-->
-        <!--log4j日志门面-->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
-            <version>2.19.0</version>
+            <version>2.17.2</version>
         </dependency>
-        <!--log4j日志实现-->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
-            <version>2.19.0</version>
+            <version>2.17.2</version>
         </dependency>
-
 
     </dependencies>
 </project>

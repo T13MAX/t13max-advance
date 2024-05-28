@@ -1,12 +1,15 @@
 package com.t13max.fight.moveBar;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @author: t13max
  * @since: 11:57 2024/4/11
  */
-@Data
+@Getter
+@Setter
 public class MoveBarUnit {
 
     private long heroId;

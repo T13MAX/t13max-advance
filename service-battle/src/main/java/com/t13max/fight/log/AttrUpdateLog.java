@@ -1,5 +1,6 @@
 package com.t13max.fight.log;
 
+import com.t13max.fight.attr.AttrUpdateReason;
 import com.t13max.fight.attr.FightAttrEnum;
 import com.t13max.fight.event.AttributeUpdateEvent;
 import lombok.Data;
@@ -21,6 +22,8 @@ public class AttrUpdateLog {
 
     private FightAttrEnum attrEnum;
 
+    private AttrUpdateReason attrUpdateReason;
+
     private double oldValue;
 
     private double delta;
@@ -34,11 +37,12 @@ public class AttrUpdateLog {
         this.oldValue = attributeUpdateEvent.getOldValue();
         this.delta = attributeUpdateEvent.getDelta();
         this.add = attributeUpdateEvent.isAdd();
+        this.attrUpdateReason = attributeUpdateEvent.getAttrUpdateReason();
     }
 
     @Override
     public String toString() {
         String addStr = add ? LogConst.ADD_STR : LogConst.SUB_STR;
-        return targetHeroId + "的" + attrEnum.toString() + addStr + FightLogManager.DF.format(delta);
+        return targetHeroId + "的" + attrEnum.toString() + addStr + FightLogManager.DF.format(delta) + ", reason:" + this.attrUpdateReason;
     }
 }

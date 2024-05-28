@@ -16,6 +16,10 @@ public class SkillHelper extends TemplateHelper<TemplateSkill>{
 
     @Override
     public boolean configCheck() {
+
+        for (TemplateSkill templateSkill : getTempAll()) {
+            //templateSkill.get
+        }
         return true;
     }
 

@@ -43,7 +43,7 @@ public class DefaultDamageCalculator implements ICalculator {
 
 
         int rate = Integer.parseInt(split[1]);
-        double finalDamage = Math.max(1, atkValue * (rate / CalcConst.MAX_RATE) * (1 + damageIncrease / CalcConst.MAX_RATE) * (1 + vulnerability / CalcConst.MAX_RATE) * defValue / CalcConst.MAX_RATE);
+        double finalDamage = Math.max(1, atkValue * (rate / CalcConst.MAX_RATE) * (1 + damageIncrease / CalcConst.MAX_RATE) * (1 + vulnerability / CalcConst.MAX_RATE) * (1 - defValue / CalcConst.MAX_RATE));
         //一系列复杂的计算
 
         return finalDamage;

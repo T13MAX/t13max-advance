@@ -5,6 +5,7 @@ import com.t13max.fight.FightMatch;
 import com.t13max.fight.FightTimeMachine;
 import com.t13max.fight.damage.DefaultDamageCalculator;
 import com.t13max.fight.event.ReadyToSubHpEvent;
+import com.t13max.util.Log;
 
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +25,16 @@ public class Action_1_Attack extends AbstractAction {
     }
 
     @Override
+    public boolean paramCheck() {
+        String[] split = this.param.split(",");
+        if (split.length < 2) {
+            Log.battle.error("Action_1_Attack.paramCheck, split.length < 2, id={}", this.skillId);
+            return false;
+        }
+        return true;
+    }
+
+    @Override
     public void onTimeIsUp() {
         FightMatch fightMatch = fightContext.getFightMatch();
         FightHero fightHero = fightMatch.getFightHero(this.getGenerator());
@@ -32,7 +43,7 @@ public class Action_1_Attack extends AbstractAction {
 
         for (Long targetHeroId : targetHeroIds) {
             FightHero targetHero = fightMatch.getFightHero(targetHeroId);
-            double damage = new DefaultDamageCalculator(fightHero, targetHero,this.param).calcDamage();
+            double damage = new DefaultDamageCalculator(fightHero, targetHero, this.param).calcDamage();
             damageMap.put(targetHeroId, damage);
         }
 

@@ -6,6 +6,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 条件枚举
+ * 小于10的是基础条件 走通用逻辑添加
+ * 大于的特殊处理
+ *
  * @author: t13max
  * @since: 13:54 2024/5/27
  */
@@ -28,13 +32,20 @@ public enum ConditionEnum {
         }
     },
 
-    UNIT_DEAD(2) {
+
+    NEW_ROUND(3) {
         @Override
         public IEventCondition createCondition(String param) {
-            return new Condition_2_UnitDead(param);
+            return null;
         }
     },
 
+    UNIT_DEAD(10) {
+        @Override
+        public IEventCondition createCondition(String param) {
+            return new Condition_10_UnitDead(param);
+        }
+    },
 
     ;
 

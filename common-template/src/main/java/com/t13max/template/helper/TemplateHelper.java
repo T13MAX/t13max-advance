@@ -128,4 +128,15 @@ public abstract class TemplateHelper<T extends ITemplate> {
     public Collection<T> getAll() {
         return DATA_MAP.values();
     }
+
+    /**
+     * 专门用于校验用的获取所有数据
+     *
+     * @Author t13max
+     * @Date 20:31 2024/5/27
+     */
+    public Collection<T> getTempAll() {
+        return TEMP_DATA_MAP.values();
+    }
+
 }
