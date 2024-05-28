@@ -26,7 +26,7 @@ import java.util.Set;
  */
 public class TemplateManager extends ManagerBase {
 
-    private Map<String, TemplateHelper> helperMap = new HashMap<>();
+    private Map<String, TemplateHelper<?>> helperMap = new HashMap<>();
 
     /**
      * 获取当前实例对象
@@ -76,6 +76,16 @@ public class TemplateManager extends ManagerBase {
     public boolean load() {
         try {
             helperMap.values().forEach(TemplateHelper::load);
+
+            for (TemplateHelper templateHelper : helperMap.values()) {
+                if (!templateHelper.configCheck()) {
+                    //直接抛出异常 不让起服
+                    throw new CommonException("加载表失败");
+                }
+            }
+
+            helperMap.values().forEach(TemplateHelper::transfer);
+
         } catch (Exception e) {
             throw e;
         }
@@ -94,11 +104,22 @@ public class TemplateManager extends ManagerBase {
                 return false;
             }
         }
+        for (String name : nameList) {
+            TemplateHelper<?> templateHelper = helperMap.get(name);
+            if (!templateHelper.configCheck()) {
+                //直接抛出异常 不让起服
+                return false;
+            }
+        }
+        for (String name : nameList) {
+            TemplateHelper<?> templateHelper = helperMap.get(name);
+            templateHelper.transfer();
+        }
         return true;
     }
 
     public boolean reload(String name) {
-        TemplateHelper templateHelper = helperMap.get(name);
+        TemplateHelper<?> templateHelper = helperMap.get(name);
         if (templateHelper == null) {
             Log.template.error("reload失败, name不存在, name={}", name);
             return false;
@@ -121,6 +142,12 @@ public class TemplateManager extends ManagerBase {
     public boolean reload() {
         try {
             helperMap.values().forEach(TemplateHelper::reload);
+            for (TemplateHelper<?> templateHelper : helperMap.values()) {
+                if (!templateHelper.configCheck()) {
+                    return false;
+                }
+            }
+            helperMap.values().forEach(TemplateHelper::transfer);
         } catch (Exception e) {
             Log.template.error("reload失败, error={}", e.getMessage());
             return false;
@@ -128,8 +155,8 @@ public class TemplateManager extends ManagerBase {
         return true;
     }
 
-    public <T extends TemplateHelper> T helper(Class<T> clazz){
-        return (T)this.helperMap.get(clazz.getName());
+    public <T extends TemplateHelper<?>> T helper(Class<T> clazz) {
+        return (T) this.helperMap.get(clazz.getName());
     }
 
 }

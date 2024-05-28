@@ -21,7 +21,6 @@ public class TemplateSkill implements ITemplate {
     private String[] selfParams;
     private String[] otherParams;
     private int collDown;
-    private int selfSelector;
     private int otherSelector;
     private String des;
 }

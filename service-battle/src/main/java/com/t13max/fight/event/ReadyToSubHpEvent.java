@@ -28,4 +28,11 @@ public class ReadyToSubHpEvent extends AbstractEvent {
         this.generateHeroId = generateHeroId;
     }
 
+    public ReadyToSubHpEvent(long generateHeroId, Map<Long, Double> damageMap, AttrUpdateReason attrUpdateReason) {
+        super(FightEventEnum.READY_TO_SUB_HP);
+        this.damageMap = damageMap;
+        this.generateHeroId = generateHeroId;
+        this.attrUpdateReason = attrUpdateReason;
+    }
+
 }

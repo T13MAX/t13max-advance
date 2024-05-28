@@ -3,8 +3,10 @@ package com.t13max.fight;
 import com.t13max.fight.enums.FightEnum;
 import com.t13max.fight.enums.SmallRoundEnum;
 import com.t13max.fight.event.*;
+import com.t13max.fight.hero.FightHero;
 import com.t13max.fight.moveBar.ActionMoveBar;
 import com.t13max.fight.moveBar.MoveBarUnit;
+import com.t13max.fight.msg.DoActionArgs;
 import com.t13max.fight.skill.IFightSkill;
 import com.t13max.util.Log;
 import com.t13max.util.TimeUtil;
@@ -39,9 +41,9 @@ public class FightMatch {
 
     private FightHero curActionHero;
 
-    private ActionArgs actionArgs;
+    private DoActionArgs doActionArgs;
 
-    private LinkedList<ActionArgs> extraActionList = new LinkedList<>();
+    private LinkedList<DoActionArgs> extraActionList = new LinkedList<>();
 
     private FightContext fightContext;
 
@@ -119,14 +121,14 @@ public class FightMatch {
                 smallRoundBegin();
             }
             case WAIT_MANUAL -> {
-                if (true) {
-                    this.actionArgs = curActionHero.runWithAI();
+                if (curActionHero.isAutoAction()) {
+                    this.doActionArgs = curActionHero.runWithAI();
                     changeSmallRoundState(SmallRoundEnum.DO_ACTION);
-                } else if (actionArgs != null) {
+                } else if (doActionArgs != null) {
                     changeSmallRoundState(SmallRoundEnum.DO_ACTION);
                 } else if (checkTimeout(FightConst.ACTION_TIMEOUT_MILLS)) {
                     //超时了 AI代替出手
-                    this.actionArgs = curActionHero.runWithAI();
+                    this.doActionArgs = curActionHero.runWithAI();
                     changeSmallRoundState(SmallRoundEnum.DO_ACTION);
                 }
             }
@@ -148,7 +150,7 @@ public class FightMatch {
             }
             case CHECK_EXTRA_ACTION -> {
                 if (!this.extraActionList.isEmpty()) {
-                    this.actionArgs = extraActionList.removeFirst();
+                    this.doActionArgs = extraActionList.removeFirst();
                     changeSmallRoundState(SmallRoundEnum.EXTRA_ACTION);
                 } else {
                     changeSmallRoundState(SmallRoundEnum.SMALL_ROUND_END);
@@ -206,19 +208,19 @@ public class FightMatch {
 
     private boolean doAction() {
 
-        long playerId = actionArgs.getPlayerId();
-        long heroId = actionArgs.getHeroId();
-        int skillId = actionArgs.getSkillId();
-        List<Long> targetIds = actionArgs.getTargetIds();
+        long playerId = doActionArgs.getPlayerId();
+        long heroId = doActionArgs.getHeroId();
+        int skillId = doActionArgs.getSkillId();
+        List<Long> targetIds = doActionArgs.getTargetIds();
 
         if (curActionHero.getFightMember().getUid() != playerId || curActionHero.getId() != heroId) {
-            Log.battle.error("行动失败, 参数错误");
+            Log.battle.error("行动失败, 参数错误, uid 或 heroId错误");
             return false;
         }
 
         IFightSkill fightSkill = curActionHero.getSkillManager().getFightSkill(skillId);
         if (fightSkill == null) {
-            Log.battle.error("行动失败, 参数错误");
+            Log.battle.error("行动失败, 参数错误, skillId={}", skillId);
             return false;
         }
 
@@ -270,7 +272,7 @@ public class FightMatch {
     private void determineNextActionUnit() {
         curActionHero = null;
         curActionHero = getFastestUnit();
-        actionArgs = null;
+        doActionArgs = null;
         changeSmallRoundState(SmallRoundEnum.SMALL_ROUND_BEGIN);
     }
 

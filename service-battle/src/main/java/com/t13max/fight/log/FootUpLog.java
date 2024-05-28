@@ -1,6 +1,6 @@
 package com.t13max.fight.log;
 
-import com.t13max.fight.FightHero;
+import com.t13max.fight.hero.FightHero;
 import lombok.Data;
 
 import java.util.HashMap;

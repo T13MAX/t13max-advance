@@ -178,6 +178,18 @@ public class RandomUtil {
         return list.get(index);
     }
 
+    public static <T> List<T> random(List<T> list, int num) {
+        if (list == null || list.isEmpty() || list.size() < num) {
+            return null;
+        }
+        Set<T> result = new HashSet<>();
+        while (result.size() < num) {
+            int index = getRanNumByInterval(list.size() - 1);
+            result.add(list.get(index));
+        }
+        return new LinkedList<>(result);
+    }
+
 
     //权重进行随机 返回随机的id
     public static int getRandomByWeight(Map<Integer, Integer> map) {
@@ -220,40 +232,6 @@ public class RandomUtil {
         }
         return -1;
     }
-
-    //权重进行随机 返回随机的多个id
-//    public static List<Integer> getRandomManyByWeight(String randomString, int num) {
-//        List<Integer> randomIds = Lists.newLinkedList();
-//        int max = 0;
-//        List<Integer> idlist = new ArrayList<>();
-//        List<Integer> probabilitylist = new ArrayList<>();
-//        String[] split = randomString.split(SEMICOLON);
-//        for (String s : split) {
-//            String[] split1 = s.split(COMMA);
-//            idlist.add(Integer.parseInt(split1[0]));//id
-//            max = Integer.parseInt(split1[1]) + max;//权重值
-//            probabilitylist.add(max);
-//        }
-//
-//        Set<Integer> randomNums = RandomUtil.getRanListByInterval(1, max, num);
-//
-//        for (int everyRandomNum : randomNums) {
-//            for (int x = 0; x < probabilitylist.size(); x++) {
-//                if (everyRandomNum <= probabilitylist.get(x) && !randomIds.contains(idlist.get(x))) {
-//                    randomIds.add(idlist.get(x));
-//                    System.err.println("===everyRandomNum:" + everyRandomNum + "=====addElement: " + idlist.get(x)
-//                        + "===============");
-//                    break;
-//                }
-//            }
-//        }
-//        if (randomIds.size() != num) {
-//            System.err.println("===randomIds-size:" + randomIds.size() + "=====num: " + num
-//                + "===============");
-//        }
-//        return randomIds;
-//    }
-
 
     // 权重进行随机 返回随机的多个id
     public static Set<Integer> getRandomManyByWeight(String randomString, int num) {

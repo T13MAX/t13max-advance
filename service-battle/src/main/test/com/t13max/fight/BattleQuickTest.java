@@ -5,6 +5,7 @@ import battle.entity.FightHeroInfoPb;
 import battle.entity.FightPlayerInfoPb;
 import com.t13max.fight.buff.BuffBoxImpl;
 import com.t13max.fight.buff.BuffFactory;
+import com.t13max.fight.hero.FightHero;
 import com.t13max.game.config.BattleConfig;
 import com.t13max.game.run.Application;
 import com.t13max.game.run.ServerConfig;
@@ -42,9 +43,15 @@ public class BattleQuickTest {
         CreateFightMatchReq.Builder messageBuilder = CreateFightMatchReq.newBuilder();
         messageBuilder.setMatchId(UuidUtil.getNextId());
         messageBuilder.setAttacker(quickCreateSpecialPlayer());
-        messageBuilder.setDefender(quickCreatePlayer());
+        messageBuilder.setDefender(FightPlayerInfoPb.newBuilder().setMonsterGroupId(150001));
 
         FightMatch fightMatch = FightFactory.createFightMatch(messageBuilder.build());
+
+        if (fightMatch == null) {
+            Log.battle.error("战斗创建失败");
+            return;
+        }
+
         for (FightHero fightHero : fightMatch.getHeroMap().values()) {
             if (!fightHero.isAttacker()) {
                 continue;
@@ -53,6 +60,7 @@ public class BattleQuickTest {
             BuffBoxImpl buffBoxImpl = BuffFactory.createBuffBoxImpl(fightHero.getFightContext(), fightHero.getId(), 120000);
             fightHero.getBuffManager().addBuff(buffBoxImpl);
         }
+
         MatchManager.inst().addFightMatch(fightMatch);
     }
 

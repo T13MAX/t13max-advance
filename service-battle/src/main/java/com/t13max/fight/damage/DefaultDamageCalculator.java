@@ -1,6 +1,6 @@
 package com.t13max.fight.damage;
 
-import com.t13max.fight.FightHero;
+import com.t13max.fight.hero.FightHero;
 import com.t13max.fight.attr.FightAttrEnum;
 import com.t13max.fight.attr.FightAttrManager;
 
@@ -41,11 +41,45 @@ public class DefaultDamageCalculator implements ICalculator {
         FightAttrEnum fightAttrEnum = FightAttrEnum.getFightAttrEnum(attr);
         Double atkValue = fightAttrManager.getFinalAttr(fightAttrEnum);
 
+        double rate = Double.parseDouble(split[1]);
 
-        int rate = Integer.parseInt(split[1]);
-        double finalDamage = Math.max(1, atkValue * (rate / CalcConst.MAX_RATE) * (1 + damageIncrease / CalcConst.MAX_RATE) * (1 + vulnerability / CalcConst.MAX_RATE) * (1 - defValue / CalcConst.MAX_RATE));
         //一系列复杂的计算
+        double finalDamage = atkValue * rate / CalcConst.MAX_RATE * (1 + calcDamage(damageIncrease)) * (1 + calcVul(vulnerability)) * (calcDef(defValue));
 
-        return finalDamage;
+        return Math.max(1, finalDamage);
+    }
+
+    private double calcDamage(double damageIncrease) {
+        double finalValue = 0;
+        finalValue = damageIncrease / CalcConst.MAX_RATE;
+        return finalValue;
+    }
+
+    /**
+     * 计算受伤增幅
+     *
+     * @Author t13max
+     * @Date 14:53 2024/5/28
+     */
+    private double calcVul(Double vulnerability) {
+        double finalValue = 0;
+        finalValue = vulnerability / CalcConst.MAX_RATE;
+        return finalValue;
+    }
+
+    /**
+     * 防御力减伤
+     * y=(1/100)x
+     * y=36/x
+     *
+     * @Author t13max
+     * @Date 14:52 2024/5/28
+     */
+    private double calcDef(double defValue) {
+        double finalValue = 1 - defValue / CalcConst.MAX_RATE;
+        if (defValue >= CalcConst.DEF_CHANGE_POINT) {
+            finalValue = CalcConst.DEF_INVERSE / defValue;
+        }
+        return finalValue;
     }
 }

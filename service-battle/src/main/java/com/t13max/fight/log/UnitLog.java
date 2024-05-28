@@ -1,6 +1,6 @@
 package com.t13max.fight.log;
 
-import com.t13max.fight.FightHero;
+import com.t13max.fight.hero.FightHero;
 import com.t13max.fight.attr.FightAttrEnum;
 
 /**

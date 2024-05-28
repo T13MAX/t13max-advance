@@ -22,6 +22,11 @@ public class CreateMatchMessage extends AbstractMessage<CreateFightMatchReq> {
     public void doMessage(ISession session, int msgId, CreateFightMatchReq message) {
         FightMatch fightMatch = FightFactory.createFightMatch(message);
 
+        if (fightMatch == null) {
+            Log.battle.error("战斗创建失败");
+            return;
+        }
+
         MatchManager.inst().addFightMatch(fightMatch);
 
         CreateFightMatchResp.Builder builder = CreateFightMatchResp.newBuilder();

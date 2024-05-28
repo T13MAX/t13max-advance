@@ -1,5 +1,11 @@
-package com.t13max.fight;
+package com.t13max.fight.hero;
 
+import com.t13max.fight.hero.ai.IHeroAI;
+import com.t13max.fight.hero.ai.SimpleHeroAI;
+import com.t13max.fight.msg.DoActionArgs;
+import com.t13max.fight.FightContext;
+import com.t13max.fight.FightMatch;
+import com.t13max.fight.FightTimeMachine;
 import com.t13max.fight.attr.FightAttrManager;
 import com.t13max.fight.buff.BuffManager;
 import com.t13max.fight.impact.IImpact;
@@ -7,6 +13,7 @@ import com.t13max.fight.impact.ImpactFactory;
 import com.t13max.fight.member.FightMember;
 import com.t13max.fight.skill.IFightSkill;
 import com.t13max.fight.skill.SkillManager;
+import com.t13max.game.exception.BattleException;
 import com.t13max.template.helper.HeroHelper;
 import com.t13max.template.helper.SkillHelper;
 import com.t13max.template.manager.TemplateManager;
@@ -15,6 +22,7 @@ import com.t13max.template.temp.TemplateSkill;
 import com.t13max.util.Log;
 import com.t13max.util.RandomUtil;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
 
 import java.util.Collections;
@@ -42,12 +50,17 @@ public class FightHero {
 
     private LifecycleObserver lifecycleObserver;
 
+    private IHeroAI heroAI;
+
+    @Setter
+    private volatile boolean autoAction;
+
     private transient FightContext fightContext;
 
     public FightHero() {
     }
 
-    public static final FightHero createFightHero(FightContext fightContext, long id, int templateId, FightMember fightMember) {
+    public static FightHero createFightHero(FightContext fightContext, long id, int templateId, FightMember fightMember) {
         FightHero fightHero = new FightHero();
 
         try {
@@ -64,20 +77,19 @@ public class FightHero {
         } catch (Exception e) {
             Log.battle.error("英雄创建失败, error={}", e.getMessage());
             //异常处理
+            throw new BattleException("英雄创建失败, heroId=" + templateId);
         }
 
         return fightHero;
     }
 
-    public ActionArgs runWithAI() {
-        ActionArgs actionArgs = new ActionArgs(this.fightMember.getUid(), this.id);
-        HeroHelper heroHelper = TemplateManager.inst().helper(HeroHelper.class);
-        TemplateHero template = heroHelper.getTemplate(this.getTemplateId());
-        actionArgs.setSkillId(template.getSkill()[0]);
-        List<FightHero> heroList = this.fightContext.getFightMatch().getTargetHeroList(this.isAttacker());
-        FightHero random = RandomUtil.random(heroList);
-        actionArgs.setTargetIds(Collections.singletonList(random.getId()));
-        return actionArgs;
+    public DoActionArgs runWithAI() {
+        if (this.heroAI == null) {
+            //暂时先就使用简单AI
+            heroAI = new SimpleHeroAI(this);
+        }
+
+        return heroAI.doAction();
     }
 
     public boolean isCanDoAction() {

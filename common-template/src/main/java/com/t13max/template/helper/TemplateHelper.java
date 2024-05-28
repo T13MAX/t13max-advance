@@ -67,14 +67,6 @@ public abstract class TemplateHelper<T extends ITemplate> {
             //打印日志 告知没有reload成功
             Log.template.error("加载表失败! fileName={}", fileName);
         }
-
-        if (!configCheck()) {
-            //打印日志 告知没有reload成功
-            Log.template.error("表校验失败! fileName={}", fileName);
-            return;
-        }
-
-        transfer();
     }
 
     /**
@@ -89,13 +81,6 @@ public abstract class TemplateHelper<T extends ITemplate> {
             //直接抛出异常 不让起服
             throw new CommonException("加载表失败");
         }
-
-        if (!configCheck()) {
-            //直接抛出异常 不让起服
-            throw new CommonException("加载表失败");
-        }
-
-        transfer();
     }
 
     public boolean doLoad() {

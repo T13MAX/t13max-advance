@@ -1,6 +1,6 @@
 package com.t13max.fight.attr;
 
-import com.t13max.fight.FightHero;
+import com.t13max.fight.hero.FightHero;
 import com.t13max.game.exception.BattleException;
 import com.t13max.template.helper.HeroHelper;
 import com.t13max.template.manager.TemplateManager;

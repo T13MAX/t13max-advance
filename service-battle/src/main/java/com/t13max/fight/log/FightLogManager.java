@@ -1,7 +1,7 @@
 package com.t13max.fight.log;
 
 import com.t13max.fight.FightContext;
-import com.t13max.fight.FightHero;
+import com.t13max.fight.hero.FightHero;
 import com.t13max.fight.FightMatch;
 import com.t13max.fight.event.*;
 import com.t13max.util.Log;

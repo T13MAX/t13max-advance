@@ -1,6 +1,6 @@
 package com.t13max.fight.damage;
 
-import com.t13max.fight.FightHero;
+import com.t13max.fight.hero.FightHero;
 import com.t13max.fight.attr.FightAttrEnum;
 import com.t13max.fight.attr.FightAttrManager;
 import com.t13max.fight.buff.effect.element.ElementEnum;

@@ -18,6 +18,7 @@
         <module>service-scene</module>
         <module>common-proto</module>
         <module>common-data</module>
+        <module>service-client</module>
     </modules>
 
     <properties>

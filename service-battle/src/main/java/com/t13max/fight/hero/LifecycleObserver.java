@@ -1,4 +1,4 @@
-package com.t13max.fight;
+package com.t13max.fight.hero;
 
 import com.t13max.fight.attr.AttrUpdateReason;
 import com.t13max.fight.attr.FightAttrEnum;
@@ -52,8 +52,12 @@ public class LifecycleObserver implements IFightEventListener {
             }
             case SMALL_ROUND_BEGIN -> {
                 SmallRoundBeginEvent smallRoundBeginEvent = (SmallRoundBeginEvent) event;
-                Double finalAttr = this.fightHero.getFightAttrManager().getFinalAttr(FightAttrEnum.HP_RECOVER);
-                this.fightHero.getFightContext().getFightEventBus().postEvent(new ReadyToAddHpEvent(this.fightHero.getId(), this.fightHero.getId(), finalAttr, AttrUpdateReason.SELF_CURE));
+                Double hpRecover = this.fightHero.getFightAttrManager().getFinalAttr(FightAttrEnum.HP_RECOVER);
+                Double curHp = this.fightHero.getFightAttrManager().getFinalAttr(FightAttrEnum.CUR_HP);
+                Double maxHp = this.fightHero.getFightAttrManager().getFinalAttr(FightAttrEnum.MAX_HP);
+                double finalValue = Math.min(maxHp - curHp, hpRecover);
+                if (finalValue == 0)  break;
+                this.fightHero.getFightContext().getFightEventBus().postEvent(new ReadyToAddHpEvent(this.fightHero.getId(), this.fightHero.getId(), finalValue, AttrUpdateReason.SELF_CURE));
             }
             case ATTRIBUTE_UPDATE -> {
                 //要是有多个变更 是不是应该最后再算一下最终属性?
@@ -67,7 +71,7 @@ public class LifecycleObserver implements IFightEventListener {
                 }
                 Double curHp = this.fightHero.getFightAttrManager().getFinalAttr(FightAttrEnum.CUR_HP);
                 double value = readyToAddHpEvent.getValue();
-                if (value == 0)  break;
+                if (value == 0) break;
                 fightHero.getFightAttrManager().addHp(value);
                 AttributeUpdateEvent attributeUpdateEvent = new AttributeUpdateEvent(readyToAddHpEvent.getGenerateHeroId(), fightHero.getId(), FightAttrEnum.CUR_HP, curHp, value, true);
                 this.fightHero.getFightContext().getFightEventBus().postEvent(attributeUpdateEvent);

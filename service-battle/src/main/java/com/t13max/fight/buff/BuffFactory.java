@@ -1,14 +1,11 @@
 package com.t13max.fight.buff;
 
 import com.t13max.fight.FightContext;
-import com.t13max.fight.FightHero;
 import com.t13max.fight.buff.condition.IEventCondition;
 import com.t13max.fight.buff.effect.AbstractEffect;
 import com.t13max.fight.buff.effect.BuffEffectEnum;
 import com.t13max.fight.buff.effect.IBuffEffect;
-import com.t13max.game.exception.BattleException;
 import com.t13max.util.Log;
-import com.t13max.util.PackageUtil;
 import com.t13max.util.UuidUtil;
 import lombok.experimental.UtilityClass;
 import lombok.extern.log4j.Log4j2;

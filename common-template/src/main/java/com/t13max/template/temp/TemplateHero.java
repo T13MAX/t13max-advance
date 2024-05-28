@@ -7,6 +7,9 @@ import lombok.Data;
 import java.util.*;
 
 /**
+ * 英雄模板
+ * 从101000开始是怪物
+ *
  * @author: t13max
  * @since: 14:02 2024/4/11
  */

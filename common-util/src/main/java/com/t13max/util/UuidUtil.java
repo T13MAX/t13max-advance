@@ -25,6 +25,16 @@ public class UuidUtil {
         return ID.incrementAndGet();
     }
 
+    /**
+     * 获取下一个临时id
+     *
+     * @Author t13max
+     * @Date 16:31 2024/5/28
+     */
+    public long getNextTempId() {
+        return ID.incrementAndGet();
+    }
+
     @Getter
     public static enum FUNCTIONENUM {
 

@@ -1,6 +1,6 @@
 package com.t13max.fight.moveBar;
 
-import com.t13max.fight.FightHero;
+import com.t13max.fight.hero.FightHero;
 import com.t13max.template.helper.ConstHelper;
 import com.t13max.template.helper.HeroHelper;
 import com.t13max.template.manager.TemplateManager;

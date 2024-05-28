@@ -1,6 +1,6 @@
 package com.t13max.fight.buff;
 
-import com.t13max.fight.FightHero;
+import com.t13max.fight.hero.FightHero;
 import com.t13max.fight.event.BuffAddToHostEvent;
 import com.t13max.fight.event.BuffRemoveFromHostEvent;
 import lombok.Getter;

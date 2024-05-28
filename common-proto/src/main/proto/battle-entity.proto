@@ -11,8 +11,10 @@ message FightMatchPb{
 message FightPlayerInfoPb{
   //玩家id
   uint64 playerId = 1;
+  //是否怪物
+  uint32 monsterGroupId = 2;
   //英雄信息
-  repeated FightHeroInfoPb heroList = 2;
+  repeated FightHeroInfoPb heroList = 3;
 }
 
 message FightHeroInfoPb{

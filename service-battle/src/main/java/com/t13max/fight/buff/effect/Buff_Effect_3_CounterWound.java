@@ -46,10 +46,10 @@ public class Buff_Effect_3_CounterWound extends AbstractEffect {
                     break;
                 }
 
-                double damage = this.rate / CalcConst.MAX_RATE * attributeUpdateEvent.getDelta();
+                double damage = attributeUpdateEvent.getDelta() * this.rate / CalcConst.MAX_RATE;
 
                 FightEventBus fightEventBus = this.buffBox.getFightContext().getFightEventBus();
-                fightEventBus.postEvent(new ReadyToSubHpEvent(ownerId, Collections.singletonMap(attributeUpdateEvent.getGenerateHeroId(), damage)));
+                fightEventBus.postEvent(new ReadyToSubHpEvent(ownerId, Collections.singletonMap(attributeUpdateEvent.getGenerateHeroId(), damage), AttrUpdateReason.COUNTER_WOUND));
             }
         }
 
