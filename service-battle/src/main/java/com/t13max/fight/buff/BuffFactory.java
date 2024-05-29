@@ -6,7 +6,7 @@ import com.t13max.fight.buff.effect.AbstractEffect;
 import com.t13max.fight.buff.effect.BuffEffectEnum;
 import com.t13max.fight.buff.effect.IBuffEffect;
 import com.t13max.util.Log;
-import com.t13max.util.UuidUtil;
+import com.t13max.util.TempIdUtil;
 import lombok.experimental.UtilityClass;
 import lombok.extern.log4j.Log4j2;
 
@@ -30,7 +30,7 @@ public class BuffFactory {
     public BuffBoxImpl createBuffBoxImpl(FightContext fightContext, long ownerId, int buffId) {
 
         BuffBoxImpl buffBox = new BuffBoxImpl();
-        buffBox.setId(UuidUtil.getNextId());
+        buffBox.setId(TempIdUtil.getNextTempId());
         buffBox.setFightContext(fightContext);
         buffBox.setOwnerId(ownerId);
         buffBox.setBuffId(buffId);

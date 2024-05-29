@@ -66,3 +66,13 @@ message FightMatchFinishPush{
   uint64 matchId = 1;
   bool win = 2;
 }
+
+//登录battle请求 目前没有login和gateway 先这样写 简单
+message LoginBattleReq{
+  string username = 1;
+  string password = 2;
+}
+
+message LoginBattleResp{
+  uint64 uuid = 1;
+}

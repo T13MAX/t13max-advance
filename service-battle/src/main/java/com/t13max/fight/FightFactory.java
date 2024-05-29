@@ -19,7 +19,7 @@ import com.t13max.template.temp.TemplateHero;
 import com.t13max.template.temp.TemplateMonster;
 import com.t13max.template.temp.TemplateMonsterGroup;
 import com.t13max.util.Log;
-import com.t13max.util.UuidUtil;
+import com.t13max.util.TempIdUtil;
 import lombok.experimental.UtilityClass;
 
 import java.util.HashMap;
@@ -62,7 +62,7 @@ public class FightFactory {
                 defenderMember = createPlayerMember(fightContext, attackerPb.getPlayerId(), false);
                 defender = createHeroMap(fightContext, defenderMember, defenderPb);
             } else {
-                defenderMember = createMonsterMember(fightContext, UuidUtil.getNextTempId(), false);
+                defenderMember = createMonsterMember(fightContext, TempIdUtil.getNextTempId(), false);
                 defender = createHeroMap(fightContext, defenderMember, defenderPb.getMonsterGroupId());
             }
             fightMatch.getMemberMap().put(defenderMember.getId(), defenderMember);
@@ -124,7 +124,7 @@ public class FightFactory {
             if (template == null) {
                 throw new BattleException("TemplateMonster为空, monsterId=" + monsterId);
             }
-            FightHero fightHero = createHero(fightContext, fightMember, UuidUtil.getNextTempId(), template.getHeroTempId());
+            FightHero fightHero = createHero(fightContext, fightMember, TempIdUtil.getNextTempId(), template.getHeroTempId());
             fightHero.setAutoAction(true);
             result.put(fightHero.getId(), fightHero);
         }

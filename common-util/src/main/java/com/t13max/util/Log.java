@@ -13,6 +13,7 @@ public class Log {
     public static Logger template = LogManager.getLogger("TEMPLATE");
     public static Logger game = LogManager.getLogger("GAME");
     public static Logger battle = LogManager.getLogger("BATTLE");
+    public static Logger data = LogManager.getLogger("DATA");
     public static Logger scene = LogManager.getLogger("SCENE");
 
 

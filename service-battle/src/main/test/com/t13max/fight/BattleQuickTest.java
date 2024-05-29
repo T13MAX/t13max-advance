@@ -10,7 +10,7 @@ import com.t13max.game.config.BattleConfig;
 import com.t13max.game.run.Application;
 import com.t13max.game.run.ServerConfig;
 import com.t13max.util.Log;
-import com.t13max.util.UuidUtil;
+import com.t13max.util.TempIdUtil;
 import org.junit.Test;
 
 import java.util.concurrent.locks.LockSupport;
@@ -41,7 +41,7 @@ public class BattleQuickTest {
 
     private void quickTest() {
         CreateFightMatchReq.Builder messageBuilder = CreateFightMatchReq.newBuilder();
-        messageBuilder.setMatchId(UuidUtil.getNextId());
+        messageBuilder.setMatchId(TempIdUtil.getNextId());
         messageBuilder.setAttacker(quickCreateSpecialPlayer());
         messageBuilder.setDefender(FightPlayerInfoPb.newBuilder().setMonsterGroupId(150001));
 
@@ -67,9 +67,9 @@ public class BattleQuickTest {
 
     private FightPlayerInfoPb quickCreateSpecialPlayer() {
         FightPlayerInfoPb.Builder playerInfoPb = FightPlayerInfoPb.newBuilder();
-        playerInfoPb.setPlayerId(UuidUtil.getNextId());
+        playerInfoPb.setPlayerId(TempIdUtil.getNextId());
         FightHeroInfoPb.Builder builder = FightHeroInfoPb.newBuilder();
-        builder.setHeroId(UuidUtil.getNextId());
+        builder.setHeroId(TempIdUtil.getNextId());
         builder.setTemplateId(100001);
         playerInfoPb.addHeroList(builder);
         return playerInfoPb.build();
@@ -77,10 +77,10 @@ public class BattleQuickTest {
 
     private FightPlayerInfoPb quickCreatePlayer() {
         FightPlayerInfoPb.Builder playerInfoPb = FightPlayerInfoPb.newBuilder();
-        playerInfoPb.setPlayerId(UuidUtil.getNextId());
+        playerInfoPb.setPlayerId(TempIdUtil.getNextId());
         for (int i = 0; i < 5; i++) {
             FightHeroInfoPb.Builder builder = FightHeroInfoPb.newBuilder();
-            builder.setHeroId(UuidUtil.getNextId());
+            builder.setHeroId(TempIdUtil.getNextId());
             builder.setTemplateId(100000);
             playerInfoPb.addHeroList(builder);
         }

@@ -1,14 +1,10 @@
 package com.t13max.fight;
 
-import battle.api.CreateFightMatchReq;
-import battle.entity.FightHeroInfoPb;
-import battle.entity.FightPlayerInfoPb;
 import com.t13max.fight.enums.FightEnum;
 import com.t13max.game.manager.ManagerBase;
 import com.t13max.util.Log;
 import com.t13max.util.ThreadNameFactory;
 import com.t13max.util.TimeUtil;
-import com.t13max.util.UuidUtil;
 import lombok.extern.log4j.Log4j2;
 
 import java.util.HashSet;

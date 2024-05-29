@@ -1,13 +1,9 @@
 package com.t13max.fight;
 
-import battle.api.CreateFightMatchReq;
-import battle.entity.FightHeroInfoPb;
-import battle.entity.FightPlayerInfoPb;
 import com.t13max.game.config.BattleConfig;
 import com.t13max.game.run.Application;
 import com.t13max.game.run.ServerConfig;
 import com.t13max.util.Log;
-import com.t13max.util.UuidUtil;
 
 import java.util.concurrent.locks.LockSupport;
 
@@ -18,7 +14,7 @@ import java.util.concurrent.locks.LockSupport;
 @ServerConfig(configClazz = BattleConfig.class)
 public class BattleApplication {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
         Application.run(BattleApplication.class, args);
 

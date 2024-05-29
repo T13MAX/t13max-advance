@@ -19,5 +19,9 @@ public interface ISession {
 
     Channel getChannel();
 
-    void sendMessage(MessageLite messageLite);
+    void sendMessage(int msgId, int resCode, MessageLite messageLite);
+
+    void sendMessage(int msgId, MessageLite messageLite);
+
+    void sendError(int msgId, int errorCode);
 }

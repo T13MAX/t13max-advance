@@ -2,7 +2,6 @@ package com.t13max.fight.skill;
 
 import com.t13max.fight.FightContext;
 import com.t13max.template.temp.TemplateSkill;
-import com.t13max.util.UuidUtil;
 import lombok.Getter;
 
 /**

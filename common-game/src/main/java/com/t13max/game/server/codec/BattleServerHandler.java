@@ -1,6 +1,7 @@
 package com.t13max.game.server.codec;
 
-import com.t13max.game.msg.IMessage;
+import com.t13max.game.event.GameEventBus;
+import com.t13max.game.event.SessionCLoseEvent;
 import com.t13max.game.msg.MessageManager;
 import com.t13max.game.session.SessionManager;
 import com.t13max.game.session.BattleSession;
@@ -21,7 +22,6 @@ public class BattleServerHandler extends ChannelDuplexHandler {
 
     private static final byte[] EMPTY_BYTES = new byte[0];
 
-
     public BattleServerHandler() {
 
     }
@@ -37,6 +37,7 @@ public class BattleServerHandler extends ChannelDuplexHandler {
     public void channelInactive(ChannelHandlerContext ctx) {
         final ISession session = SessionManager.inst().removeSession(ctx.channel());
         if (session == null) return;
+        GameEventBus.inst().postEvent(new SessionCLoseEvent(session.getUuid()));
         Log.common.info("{} inactive!!!", session);
     }
 
@@ -52,7 +53,6 @@ public class BattleServerHandler extends ChannelDuplexHandler {
             return;
         }
 
-
         try {
             int msgId = buf.readInt();
             byte[] data = EMPTY_BYTES;
@@ -61,7 +61,7 @@ public class BattleServerHandler extends ChannelDuplexHandler {
                 buf.readBytes(data);
             }
 
-         MessageManager.inst().doMessage(session,msgId,data);
+            MessageManager.inst().doMessage(session, msgId, data);
 
         } finally {
             buf.release();

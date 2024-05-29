@@ -4,6 +4,7 @@ import com.google.protobuf.MessageLite;
 import com.google.protobuf.Parser;
 import com.t13max.game.exception.CommonException;
 import com.t13max.game.manager.ManagerBase;
+import com.t13max.game.session.BaseSession;
 import com.t13max.game.session.BattleSession;
 import com.t13max.game.session.ISession;
 import com.t13max.util.Log;
@@ -138,5 +139,9 @@ public class MessageManager extends ManagerBase {
             buf.writeBytes(data);
         }
         return buf;
+    }
+
+    public void sendError(ISession session, int msgId, int errorCode) {
+        sendMessage(session, msgId, errorCode, null);
     }
 }

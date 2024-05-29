@@ -16,6 +16,9 @@ public class BaseConfig {
     //实例id
     protected String instanceId;
 
+    //实例唯一序号
+    protected int instanceNo;
+
     //是否阻塞主线程
     protected boolean park;
 
@@ -25,6 +28,8 @@ public class BaseConfig {
     //业务线程池配置
     protected ActionConfig action;
 
+    //数据库文件
+    protected String dbFile;
 
     /**
      * 校验数据

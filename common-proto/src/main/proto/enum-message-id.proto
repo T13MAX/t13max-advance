@@ -40,6 +40,9 @@ enum MessageId{
   S_MATCH_UPDATE_PUSH = 30012;
   //战斗结束推送
   S_MATCH_FINISH_PUSH = 30014;
+  //战斗服登录
+  C_BATTLE_LOGIN = 30015;
+  S_BATTLE_LOGIN = 30016;
 
 }
 

@@ -10,7 +10,6 @@ import org.apache.logging.log4j.Logger;
 import org.yaml.snakeyaml.Yaml;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.locks.LockSupport;
 
 /**
@@ -23,7 +22,7 @@ public class Application {
 
     private static String instanceName;
 
-    public static void run(Class<?> clazz, String[] args) {
+    public static void run(Class<?> clazz, String[] args) throws Exception{
 
         //初始化所有manager
         ManagerBase.initAllManagers();
@@ -36,11 +35,22 @@ public class Application {
         //启动监听服
         initServer(clazz);
 
+        initData();
+
         //添加停服钩子 manager shutdown
         addShutdownHook(ManagerBase::shutdown);
 
         //阻塞主线程
         if (config.isPark()) LockSupport.park();
+    }
+
+    private static void initData() throws ClassNotFoundException {
+        String dbFile = config.getDbFile();
+        if (dbFile == null) {
+            return;
+        }
+        //尝试加载数据库模块
+        Class.forName("com.t13max.data.dao.SqlLiteDao");
     }
 
     private static void initServer(Class<?> clazz) throws RuntimeException {
