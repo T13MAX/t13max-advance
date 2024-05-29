@@ -1,10 +1,10 @@
 package com.t13max.fight.msg;
 
 import com.google.protobuf.MessageLite;
-import com.t13max.fight.FightMatch;
-import com.t13max.fight.MatchManager;
+import com.t13max.fight.member.IFightMember;
 import com.t13max.game.msg.IMessage;
-import com.t13max.game.msg.ISession;
+import com.t13max.game.session.ISession;
+import com.t13max.util.Log;
 
 /**
  * @author: t13max
@@ -12,4 +12,12 @@ import com.t13max.game.msg.ISession;
  */
 public abstract class AbstractMessage<T extends MessageLite> implements IMessage<T> {
 
+    @Override
+    public final void doMessage(ISession session, int msgId, T message) {
+        Log.common.info("receiveMessage, uuid={}, msgId={}, message={}", session.getUuid(), msgId, message, getClass().getSimpleName());
+
+        doMessage();
+    }
+
+    protected abstract void doMessage(IFightMember member, int msgId, T Message);
 }

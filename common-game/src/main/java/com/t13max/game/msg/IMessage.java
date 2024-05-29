@@ -1,6 +1,7 @@
 package com.t13max.game.msg;
 
 import com.google.protobuf.MessageLite;
+import com.t13max.game.session.ISession;
 
 /**
  * @author: t13max

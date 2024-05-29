@@ -1,5 +1,6 @@
 package com.t13max.fight.moveBar;
 
+import battle.event.entity.BattleMoveBar;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -36,6 +37,15 @@ public class MoveBarUnit {
 
     public void doAction() {
         this.curDistance -= this.actionDistance;
+    }
+
+    public BattleMoveBar buildBattleMoveBar() {
+        BattleMoveBar.Builder builder = BattleMoveBar.newBuilder();
+        builder.setHeroId(this.heroId);
+        builder.setCurrDistance(this.curDistance);
+        builder.setSpeed(this.speed);
+        builder.setTotalDistance(this.actionDistance);
+        return builder.build();
     }
 
 }

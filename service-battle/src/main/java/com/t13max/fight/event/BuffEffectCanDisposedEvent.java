@@ -1,6 +1,6 @@
 package com.t13max.fight.event;
 
-import com.t13max.fight.buff.RemoveReason;
+import battle.event.entity.RemoveReason;
 import com.t13max.fight.buff.effect.IBuffEffect;
 import lombok.Getter;
 

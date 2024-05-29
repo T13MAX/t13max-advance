@@ -31,4 +31,19 @@ enum MessageId{
   //玩家战斗行动操作
   C_MATCH_ACTION = 30005;
   S_MATCH_ACTION = 30006;
+  //玩家退出
+  C_LEAVE_MATCH = 30007;
+  S_LEAVE_MATCH = 30008;
+  //推送当前可行动单位
+  S_ACTION_UNIT_PUSH = 30010;
+  //战斗状态变化推送
+  S_MATCH_UPDATE_PUSH = 30012;
+  //战斗结束推送
+  S_MATCH_FINISH_PUSH = 30014;
+
+}
+
+enum ResultCode{
+  SUCCESS = 0;
+
 }

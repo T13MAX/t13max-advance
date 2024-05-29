@@ -1,5 +1,7 @@
 package com.t13max.fight.buff;
 
+import battle.event.entity.BuffStatus;
+import battle.event.entity.RemoveReason;
 import com.t13max.fight.FightContext;
 import com.t13max.fight.buff.effect.IBuffEffect;
 
@@ -12,6 +14,8 @@ import java.util.Set;
 public interface IBuffBox {
 
     long getId();
+
+    int getBuffId();
 
     long getOwnerId();
 
@@ -31,6 +35,9 @@ public interface IBuffBox {
 
     //消亡
     void onDestroy(RemoveReason reason);
+
+    //获取buff状态
+    BuffStatus getBuffStatus();
 
     //获取buff效果
     Set<IBuffEffect> getBuffEffects();

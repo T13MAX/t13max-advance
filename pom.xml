@@ -19,6 +19,8 @@
         <module>common-proto</module>
         <module>common-data</module>
         <module>service-client</module>
+        <module>service-gateway</module>
+        <module>service-login</module>
     </modules>
 
     <properties>

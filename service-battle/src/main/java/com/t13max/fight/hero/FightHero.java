@@ -1,7 +1,10 @@
 package com.t13max.fight.hero;
 
+import battle.entity.FightHeroInfoPb;
 import com.t13max.fight.hero.ai.IHeroAI;
 import com.t13max.fight.hero.ai.SimpleHeroAI;
+import com.t13max.fight.member.IFightMember;
+import com.t13max.fight.moveBar.MoveBarUnit;
 import com.t13max.fight.msg.DoActionArgs;
 import com.t13max.fight.FightContext;
 import com.t13max.fight.FightMatch;
@@ -10,17 +13,13 @@ import com.t13max.fight.attr.FightAttrManager;
 import com.t13max.fight.buff.BuffManager;
 import com.t13max.fight.impact.IImpact;
 import com.t13max.fight.impact.ImpactFactory;
-import com.t13max.fight.member.FightMember;
 import com.t13max.fight.skill.IFightSkill;
 import com.t13max.fight.skill.SkillManager;
 import com.t13max.game.exception.BattleException;
-import com.t13max.template.helper.HeroHelper;
 import com.t13max.template.helper.SkillHelper;
 import com.t13max.template.manager.TemplateManager;
-import com.t13max.template.temp.TemplateHero;
 import com.t13max.template.temp.TemplateSkill;
 import com.t13max.util.Log;
-import com.t13max.util.RandomUtil;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
@@ -38,7 +37,7 @@ public class FightHero {
 
     private long id;
 
-    private FightMember fightMember;
+    private IFightMember fightMember;
 
     private int templateId;
 
@@ -60,7 +59,7 @@ public class FightHero {
     public FightHero() {
     }
 
-    public static FightHero createFightHero(FightContext fightContext, long id, int templateId, FightMember fightMember) {
+    public static FightHero createFightHero(FightContext fightContext, long id, int templateId, IFightMember fightMember) {
         FightHero fightHero = new FightHero();
 
         try {
@@ -157,4 +156,14 @@ public class FightHero {
         return this.fightMember.isAttacker();
     }
 
+    public FightHeroInfoPb buildFightHeroInfoPb() {
+        FightHeroInfoPb.Builder builder = FightHeroInfoPb.newBuilder();
+        builder.setHeroId(this.id);
+        builder.setTemplateId(this.templateId);
+        MoveBarUnit moveBarUnit = this.fightContext.getFightMatch().getActionMoveBar().getUnit(this.id);
+        if (moveBarUnit != null) {
+            builder.setMoveBar(moveBarUnit.buildBattleMoveBar());
+        }
+        return builder.build();
+    }
 }

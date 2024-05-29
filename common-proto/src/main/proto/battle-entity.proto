@@ -4,10 +4,15 @@ syntax = "proto3";
 option java_package = "battle.entity";
 option java_multiple_files = true;
 
+import "battle-event-entity.proto";
+
+//战斗的各种信息
 message FightMatchPb{
   uint64 matchId = 1;
+  repeated FightPlayerInfoPb playerData = 2;
 }
 
+//玩家信息
 message FightPlayerInfoPb{
   //玩家id
   uint64 playerId = 1;
@@ -17,10 +22,32 @@ message FightPlayerInfoPb{
   repeated FightHeroInfoPb heroList = 3;
 }
 
+//英雄信息
 message FightHeroInfoPb{
   //英雄唯一id
   uint64 heroId = 1;
   //英雄模板id
   uint32 templateId = 2;
   //其他参数
+  map<uint32, double> attrMap = 3;
+  //行动条信息
+  BattleMoveBar moveBar = 4;
+}
+
+//各种事件
+message FightEventPb{
+  int32 impactId = 1; // 相关的Impact表ID
+
+  oneof event{
+    DoActionEventPb doActionEvent = 10;
+    DamageEventPb damageEventPb = 11;
+    CureEventPb cureEventPb = 12;
+    DeadEventPb deadEventPb = 13;
+    BuffAddEventPb buffAddEventPb = 14;
+    BuffUpdateEventPb buffUpdateEventPb = 15;
+    BuffActionEventPb buffActionEventPb = 16;
+    BuffRemoveEventPb buffRemoveEventPb = 17;
+    AttributeUpdateEventPb attributeUpdateEventPb = 18;
+    MoveBarUpdateEventPb moveBarUpdateEventPb = 19;
+  }
 }

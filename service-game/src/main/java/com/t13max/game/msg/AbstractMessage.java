@@ -5,6 +5,7 @@ import com.t13max.game.player.JobName;
 import com.t13max.game.player.Player;
 import com.t13max.game.player.PlayerManager;
 import com.t13max.game.run.Application;
+import com.t13max.game.session.ISession;
 
 /**
  * @author: t13max

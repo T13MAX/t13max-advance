@@ -1,7 +1,6 @@
 package com.t13max.fight.buff.effect;
 
 import com.t13max.fight.FightContext;
-import com.t13max.fight.buff.RemoveReason;
 import com.t13max.fight.buff.condition.ConditionEnum;
 
 /**

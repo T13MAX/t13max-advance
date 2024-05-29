@@ -1,5 +1,7 @@
 package com.t13max.fight.event;
 
+import battle.entity.FightEventPb;
+import battle.event.entity.DoActionEventPb;
 import lombok.Getter;
 
 import java.util.List;
@@ -9,7 +11,7 @@ import java.util.List;
  * @since: 16:10 2024/4/15
  */
 @Getter
-public class DoActionEvent extends AbstractEvent {
+public class DoActionEvent extends AbstractEvent implements IFightEventPackager {
 
     private long heroId;
 
@@ -25,5 +27,16 @@ public class DoActionEvent extends AbstractEvent {
         this.skillId = skillId;
         this.targetIds = targetIds;
         this.attacker = attacker;
+    }
+
+    @Override
+    public FightEventPb pack() {
+        FightEventPb.Builder builder = FightEventPb.newBuilder();
+        DoActionEventPb.Builder eventBuilder = DoActionEventPb.newBuilder();
+        eventBuilder.setHeroId(this.heroId);
+        eventBuilder.setSkillId(this.skillId);
+        eventBuilder.addAllTargetId(this.targetIds);
+        builder.setDoActionEvent(eventBuilder);
+        return builder.build();
     }
 }

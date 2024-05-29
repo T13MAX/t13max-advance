@@ -1,0 +1,84 @@
+syntax = "proto3";
+
+
+option java_package = "battle.event.entity";
+option java_multiple_files = true;
+
+message DoActionEventPb {
+  uint64 heroId = 1; // 行动单位heroId
+  uint32 skillId = 2; // 技能id，到时看是否需要
+  repeated uint64 targetId = 3; // 目标
+}
+
+message DamageEventPb {
+  FightDamage damages = 1; //
+}
+
+message FightDamage {
+  uint64 targetHeroId = 1; // 目标
+  double damage = 2; // 伤害值
+}
+
+message CureEventPb {
+  uint64 targetHeroId = 1; // 被治疗者
+  double value = 2; // 数值
+}
+
+message DeadEventPb {
+  uint64 deadHeroId = 1; // 死亡单位id
+}
+
+// Buff添加事件
+message BuffAddEventPb {
+  uint32 buffId = 1;
+  BuffStatus buffStatus = 2; // buff信息
+}
+
+// Buff更新事件
+message BuffUpdateEventPb {
+  BuffStatus buffStatus = 1; // buff信息
+}
+
+// Buff生效事件
+message BuffActionEventPb {
+  BuffStatus buffStatus = 1; // buff信息
+}
+
+// Buff移除事件
+message BuffRemoveEventPb {
+  BuffStatus buffStatus = 1; // buff信息
+  RemoveReason reason = 2; // 原因 1正常消散 2驱散
+}
+
+message AttributeUpdateEventPb {
+  uint64 heroId = 1; // 效果目标oId
+  uint32 attributeType = 2; // 属性类型
+  double delta = 3; // 变化值,正数表示增加,负数表示减少
+  double finalValue = 4; // 变化后当前值
+  uint64 generatorId = 5; // 产生此属性变更事件的英雄id
+}
+
+message MoveBarUpdateEventPb {
+  BattleMoveBar moveBars = 1; // 行动条上更新的单位
+}
+
+message BattleMoveBar {
+  uint64 heroId = 1; // 英雄id
+  uint32 speed = 2; // 速度值
+  uint32 totalDistance = 3; // 总距离
+  float currDistance = 4; // 当前距离
+}
+
+enum BuffStatus{
+  // 未激活
+  IDLE = 0;
+  // 激活生效
+  ACTIVE = 1;
+  // 消散
+  DISPOSED = 2;
+}
+
+enum RemoveReason{
+  DISPOSED_REMOVE = 0;
+  XXX = 1;
+}

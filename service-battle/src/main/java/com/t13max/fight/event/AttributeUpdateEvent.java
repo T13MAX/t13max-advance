@@ -1,5 +1,7 @@
 package com.t13max.fight.event;
 
+import battle.entity.FightEventPb;
+import battle.event.entity.AttributeUpdateEventPb;
 import com.t13max.fight.attr.AttrUpdateReason;
 import com.t13max.fight.attr.FightAttrEnum;
 import lombok.Getter;
@@ -10,7 +12,7 @@ import lombok.Setter;
  * @since: 10:46 2024/4/16
  */
 @Getter
-public class AttributeUpdateEvent extends AbstractEvent {
+public class AttributeUpdateEvent extends AbstractEvent implements IFightEventPackager {
 
     private long generateHeroId;
 
@@ -37,4 +39,16 @@ public class AttributeUpdateEvent extends AbstractEvent {
         this.targetHeroId = targetHeroId;
     }
 
+    @Override
+    public FightEventPb pack() {
+        FightEventPb.Builder builder = FightEventPb.newBuilder();
+        AttributeUpdateEventPb.Builder eventBuilder = AttributeUpdateEventPb.newBuilder();
+        eventBuilder.setAttributeType(attrEnum.getId());
+        eventBuilder.setDelta(delta);
+        eventBuilder.setFinalValue(add ? oldValue + delta : oldValue - delta);
+        eventBuilder.setGeneratorId(generateHeroId);
+        eventBuilder.setHeroId(targetHeroId);
+        builder.setAttributeUpdateEventPb(eventBuilder);
+        return builder.build();
+    }
 }

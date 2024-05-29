@@ -1,12 +1,10 @@
 package com.t13max.fight.buff.effect;
 
-import com.t13max.fight.buff.BuffBoxImpl;
-import com.t13max.fight.buff.BuffStatus;
+import battle.event.entity.BuffStatus;
+import battle.event.entity.RemoveReason;
 import com.t13max.fight.buff.IBuffBox;
-import com.t13max.fight.buff.RemoveReason;
 import com.t13max.fight.buff.condition.IEventCondition;
 import com.t13max.fight.event.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -98,7 +96,7 @@ public abstract class AbstractEffect extends AbstractEventListener implements IB
             boolean canDisposed = checkAnyConditionMatched(disposedConditions, event);
 
             if (canDisposed) {
-                disposed(RemoveReason.DISPOSED);
+                disposed(RemoveReason.DISPOSED_REMOVE);
             }
         }
 

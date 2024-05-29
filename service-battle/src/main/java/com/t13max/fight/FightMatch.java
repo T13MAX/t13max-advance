@@ -1,9 +1,12 @@
 package com.t13max.fight;
 
+import battle.api.FightMatchUpdatePush;
+import battle.entity.FightMatchPb;
 import com.t13max.fight.enums.FightEnum;
 import com.t13max.fight.enums.SmallRoundEnum;
 import com.t13max.fight.event.*;
 import com.t13max.fight.hero.FightHero;
+import com.t13max.fight.member.IFightMember;
 import com.t13max.fight.moveBar.ActionMoveBar;
 import com.t13max.fight.moveBar.MoveBarUnit;
 import com.t13max.fight.msg.DoActionArgs;
@@ -34,6 +37,8 @@ public class FightMatch {
     private FightEnum fightEnum;
 
     private SmallRoundEnum smallRoundEnum;
+
+    private Map<Long, IFightMember> memberMap = new HashMap<>();
 
     private Map<Long, FightHero> heroMap = new HashMap<>();
 
@@ -213,7 +218,7 @@ public class FightMatch {
         int skillId = doActionArgs.getSkillId();
         List<Long> targetIds = doActionArgs.getTargetIds();
 
-        if (curActionHero.getFightMember().getUid() != playerId || curActionHero.getId() != heroId) {
+        if (curActionHero.getFightMember().getId() != playerId || curActionHero.getId() != heroId) {
             Log.battle.error("行动失败, 参数错误, uid 或 heroId错误");
             return false;
         }
@@ -260,6 +265,9 @@ public class FightMatch {
 
         MoveBarUnit actionMoveBarUnit = actionMoveBar.getUnit(curActionHero.getId());
         actionMoveBarUnit.doAction();
+
+        //推送当前状态
+        pushFightMatchPb();
 
         //抛出小回合开始事件
         fightContext.getFightEventBus().postEvent(new SmallRoundBeginEvent(curActionHero.getId(), round));
@@ -315,5 +323,22 @@ public class FightMatch {
     public void finish() {
         fightContext.getFightLogManager().printLog();
         Log.battle.info("FightMatch.finish, matchId={}", this.id);
+    }
+
+    private void pushFightMatchPb() {
+
+        FightMatchUpdatePush.Builder builder = FightMatchUpdatePush.newBuilder();
+        builder.setFightMatchPb(buildFightMatchPb());
+
+        //push
+    }
+
+    private FightMatchPb buildFightMatchPb() {
+        FightMatchPb.Builder builder = FightMatchPb.newBuilder();
+        builder.setMatchId(this.id);
+        for (IFightMember member : this.memberMap.values()) {
+            builder.addPlayerData(member.buildFightPlayerInfoPb());
+        }
+        return builder.build();
     }
 }

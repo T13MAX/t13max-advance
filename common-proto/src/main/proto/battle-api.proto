@@ -5,6 +5,7 @@ option java_multiple_files = true;
 
 import "battle-entity.proto";
 
+//创建一场战斗
 message CreateFightMatchReq{
   //战斗唯一id
   uint64 matchId = 1;
@@ -18,10 +19,50 @@ message CreateFightMatchResp{
 
 }
 
+//加入战斗
 message JoinFightMatchReq{
   uint64 matchId = 1;
 }
 
 message JoinFightMatchResp{
   FightMatchPb fightMatchPb = 1;
+}
+
+//英雄行动请求
+message DoActionReq{
+  uint64 heroId = 1;
+  uint32 skillId = 2;
+  repeated uint64 targetIds = 3;
+}
+
+message DoActionResp{
+  uint64 playerId = 1;
+  uint64 heroId = 2;
+  repeated FightEventPb event = 3;
+}
+
+//客户端退出
+message LeaveFightMatchReq{
+  uint64 matchId = 1;
+}
+
+message LeaveFightMatchResp{
+
+}
+
+//推送当前可行动单位
+message FightMatchActionUnitPush{
+  uint64 playerId = 1;
+  uint64 heroId = 2;
+}
+
+//战斗各种变更 推送客户端
+message FightMatchUpdatePush{
+  FightMatchPb fightMatchPb = 1;
+}
+
+//战斗结束
+message FightMatchFinishPush{
+  uint64 matchId = 1;
+  bool win = 2;
 }

@@ -6,7 +6,9 @@ import battle.entity.FightPlayerInfoPb;
 import com.t13max.fight.event.FightEventBus;
 import com.t13max.fight.hero.FightHero;
 import com.t13max.fight.log.FightLogManager;
-import com.t13max.fight.member.FightMember;
+import com.t13max.fight.member.IFightMember;
+import com.t13max.fight.member.MonsterMember;
+import com.t13max.fight.member.PlayerMember;
 import com.t13max.fight.moveBar.ActionMoveBar;
 import com.t13max.game.exception.BattleException;
 import com.t13max.template.helper.HeroHelper;
@@ -50,13 +52,20 @@ public class FightFactory {
             fightContext.setFightMatch(fightMatch);
             fightContext.getFightEventBus().register(fightContext.getFightLogManager());
 
-            Map<Long, FightHero> attacker = createHeroMap(fightContext, createFightMember(attackerPb.getPlayerId(), true), attackerPb);
+            IFightMember attackerMember = createPlayerMember(fightContext, attackerPb.getPlayerId(), true);
+            fightMatch.getMemberMap().put(attackerMember.getId(), attackerMember);
+
+            Map<Long, FightHero> attacker = createHeroMap(fightContext, attackerMember, attackerPb);
             Map<Long, FightHero> defender;
+            IFightMember defenderMember;
             if (defenderPb.getMonsterGroupId() == 0) {
-                defender = createHeroMap(fightContext, createFightMember(defenderPb.getPlayerId(), false), defenderPb);
+                defenderMember = createPlayerMember(fightContext, attackerPb.getPlayerId(), false);
+                defender = createHeroMap(fightContext, defenderMember, defenderPb);
             } else {
-                defender = createHeroMap(fightContext, createFightMember(UuidUtil.getNextTempId(), false), defenderPb.getMonsterGroupId());
+                defenderMember = createMonsterMember(fightContext, UuidUtil.getNextTempId(), false);
+                defender = createHeroMap(fightContext, defenderMember, defenderPb.getMonsterGroupId());
             }
+            fightMatch.getMemberMap().put(defenderMember.getId(), defenderMember);
 
             fightMatch.getHeroMap().putAll(attacker);
             fightMatch.getHeroMap().putAll(defender);
@@ -89,11 +98,15 @@ public class FightFactory {
      * @Author t13max
      * @Date 16:11 2024/5/27
      */
-    public static FightMember createFightMember(long uid, boolean attacker) {
-        return new FightMember(uid, attacker);
+    public static IFightMember createPlayerMember(FightContext fightContext, long uid, boolean attacker) {
+        return new PlayerMember(fightContext,uid, attacker);
     }
 
-    private static Map<Long, FightHero> createHeroMap(FightContext fightContext, FightMember fightMember, int monsterGroupId) {
+    public static IFightMember createMonsterMember(FightContext fightContext, long uid, boolean attacker) {
+        return new MonsterMember(fightContext,uid, attacker);
+    }
+
+    private static Map<Long, FightHero> createHeroMap(FightContext fightContext, IFightMember fightMember, int monsterGroupId) {
         MonsterGroupHelper monsterGroupHelper = TemplateManager.inst().helper(MonsterGroupHelper.class);
         TemplateMonsterGroup monsterGroup = monsterGroupHelper.getTemplate(monsterGroupId);
         if (monsterGroup == null) {
@@ -102,7 +115,7 @@ public class FightFactory {
         return createHeroMap(fightContext, fightMember, monsterGroup);
     }
 
-    private static Map<Long, FightHero> createHeroMap(FightContext fightContext, FightMember fightMember, TemplateMonsterGroup monsterGroup) {
+    private static Map<Long, FightHero> createHeroMap(FightContext fightContext, IFightMember fightMember, TemplateMonsterGroup monsterGroup) {
 
         Map<Long, FightHero> result = new HashMap<>();
         MonsterHelper monsterHelper = TemplateManager.inst().helper(MonsterHelper.class);
@@ -118,7 +131,7 @@ public class FightFactory {
         return result;
     }
 
-    private static Map<Long, FightHero> createHeroMap(FightContext fightContext, FightMember fightMember, FightPlayerInfoPb playerInfoPb) {
+    private static Map<Long, FightHero> createHeroMap(FightContext fightContext, IFightMember fightMember, FightPlayerInfoPb playerInfoPb) {
         Map<Long, FightHero> result = new HashMap<>();
         for (FightHeroInfoPb fightHeroInfoPb : playerInfoPb.getHeroListList()) {
             FightHero fightHero = createHero(fightContext, fightMember, fightHeroInfoPb.getHeroId(), fightHeroInfoPb.getTemplateId());
@@ -127,7 +140,7 @@ public class FightFactory {
         return result;
     }
 
-    public static FightHero createHero(FightContext fightContext, FightMember fightMember, long heroId, int template) {
+    public static FightHero createHero(FightContext fightContext, IFightMember fightMember, long heroId, int template) {
         HeroHelper heroHelper = TemplateManager.inst().helper(HeroHelper.class);
         TemplateHero templateHero = heroHelper.getTemplate(template);
         return FightHero.createFightHero(fightContext, heroId, templateHero.getId(), fightMember);
