@@ -19,11 +19,6 @@ public class LoginFrame extends JFrame {
 
     public static LoginFrame LOGIN_FRAME = new LoginFrame();
 
-    private static JLabel fpd = new JLabel("忘记密码");
-    private static JButton btn1 = new JButton("登入");
-    private static JPasswordField jpf = new JPasswordField(25);
-    private static JTextField jtName = new JTextField("", 25);
-
     private volatile boolean logging;
 
     private LoginFrame() throws HeadlessException {
@@ -35,7 +30,7 @@ public class LoginFrame extends JFrame {
         this.setLocationRelativeTo(null);
     }
 
-    public void init() {
+    private void init() {
 
         Container container = this.getContentPane();
 
@@ -47,20 +42,25 @@ public class LoginFrame extends JFrame {
         JLabel ljName = new JLabel("账号:");
         JLabel ljName1 = new JLabel("密码:");
 
+        JTextField jtName = new JTextField("", 25);
         jtName.setBounds(125, 155, 300, 40);
         ljName.setBounds(75, 155, 50, 40);
         label1.setBounds(160, 30, 200, 100);
 
-
         //密码窗口设置
+        JPasswordField jpf = new JPasswordField(25);
         jpf.setBounds(125, 200, 300, 40);
 
+        JLabel fpd = new JLabel("忘记密码");
         fpd.setBounds(350, 240, 100, 30);
         fpd.setFont(new Font("宋体", Font.PLAIN, 12));
         fpd.setCursor(new Cursor(Cursor.HAND_CURSOR));
         ljName1.setBounds(75, 200, 50, 40);
+
         //登入按钮设置
+        JButton btn1 = new JButton("登入");
         btn1.setBounds(125, 290, 300, 40);
+
         container.add(fpd);
         container.add(label1);
         container.add(btn1);

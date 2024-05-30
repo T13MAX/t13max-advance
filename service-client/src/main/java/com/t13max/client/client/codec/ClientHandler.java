@@ -37,13 +37,6 @@ public class ClientHandler extends ChannelDuplexHandler {
     public void channelRead(final ChannelHandlerContext ctx, Object obj) throws Exception {
 
         ByteBuf buf = (ByteBuf) obj;
-        Channel channel = ctx.channel();
-        final ISession session = SessionManager.inst().getSession(channel);
-
-        if (session == null) {
-            Log.common.error("session为空, 无法接收消息 ");
-            return;
-        }
 
         try {
             int msgId = buf.readInt();

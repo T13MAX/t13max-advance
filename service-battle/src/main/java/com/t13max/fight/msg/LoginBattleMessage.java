@@ -23,7 +23,6 @@ public class LoginBattleMessage implements IMessage<LoginBattleReq> {
 
     @Override
     public void doMessage(ISession session, int msgId, LoginBattleReq message) {
-
         AccountData accountData = SqlLiteUtil.selectAccount(message.getUsername());
         if (accountData == null) {
             //session.sendError(MessageId.S_BATTLE_LOGIN_VALUE, ErrorCode.FAIL);

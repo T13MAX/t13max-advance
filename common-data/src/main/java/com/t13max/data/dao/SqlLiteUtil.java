@@ -55,14 +55,15 @@ public class SqlLiteUtil {
 
     private static void checkCreate() {
         try {
-            String sql = TextUtil.readText("create.sql");
+            String sql = TextUtil.readSql("create.sql");
             Statement statement = conn.createStatement();
             boolean execute = statement.execute(sql);
             if (!execute) {
-                throw new DataException("创建表失败, 执行失败");
+                //表已存在会返回false
+                Log.common.info("checkCreate, sql执行失败");
             }
         } catch (Exception e) {
-            throw new DataException("创建表失败, error={}" + e.getMessage());
+            throw new DataException("创建表失败, error=" + e.getMessage());
         }
     }
 
@@ -98,9 +99,10 @@ public class SqlLiteUtil {
     }
 
     private static AccountData createAccountData(ResultSet rs) {
-        AccountData accountData = new AccountData();
+        AccountData accountData = null;
         try {
             if (rs.next()) {
+                accountData = new AccountData();
                 accountData.setId(rs.getLong("id"));
                 accountData.setUsername(rs.getString("username"));
                 accountData.setPassword(rs.getString("password"));

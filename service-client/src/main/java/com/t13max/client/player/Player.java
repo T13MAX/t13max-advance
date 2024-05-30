@@ -3,10 +3,11 @@ package com.t13max.client.player;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.MessageLite;
 import com.google.protobuf.Parser;
+import com.t13max.client.client.NettyClient;
 import com.t13max.client.player.task.SendMsgTask;
 import com.t13max.client.player.task.msg.MessagePack;
-import com.t13max.client.view.login.LoginFrame;
 import com.t13max.util.Log;
+import io.netty.channel.Channel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,6 +23,8 @@ public class Player {
 
     public static final Player PLAYER = new Player();
 
+    public static Map<Integer, Parser<? extends MessageLite>> PARSER_MAP = new HashMap<>();
+
     @Setter
     private long uuid;
 
@@ -29,26 +32,69 @@ public class Player {
 
     private Map<Integer, BlockingQueue<MessagePack<? extends MessageLite>>> messageMap = new ConcurrentHashMap<>();
 
-    private Map<Integer, Parser<? extends MessageLite>> parserMap = new HashMap<>();
-
     //玩家主线程
     private ExecutorService playerExecutor = Executors.newSingleThreadExecutor();
 
+    private NettyClient nettyClient = new NettyClient();
+
+    private Channel channel;
+
     private volatile boolean stop;
+
+    private volatile long lastTickMills;
 
     public Player() {
 
         Runtime.getRuntime().addShutdownHook(new Thread(this::shutdown));
+
+        nettyClient.start();
+        try {
+            channel = nettyClient.connect("127.0.0.1", 24000).channel();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
         playerExecutor.execute(this::run);
     }
 
     public void run() {
 
+        while (!stop) {
+
+            long beginMills = System.currentTimeMillis();
+
+            try {
+                tick();
+            } catch (Exception e) {
+                Log.client.error("tick出错 error={}", e.getMessage());
+            }
+
+            long endMills = System.currentTimeMillis();
+
+            this.lastTickMills = endMills;
+
+            //运行时间
+            long runMills = endMills - beginMills;
+
+            try {
+                long sleepMills = Math.max(0, 200 - runMills);
+                Thread.sleep(sleepMills);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void tick() {
+        if (taskQueue.isEmpty()) {
+            return;
+        }
+        List<Runnable> list = new LinkedList<>();
+        taskQueue.drainTo(list);
 
+        for (Runnable runnable : list) {
+            runnable.run();
+        }
     }
 
     public void shutdown() {
@@ -64,6 +110,8 @@ public class Player {
         } catch (InterruptedException e) {
             Log.client.error("terminate被中断!");
         }
+
+        channel.close();
     }
 
     public <T extends MessageLite> void receiveMessage(int msgId, int resCode, byte[] data) {
@@ -73,7 +121,7 @@ public class Player {
         } else {
             T object = null;
             try {
-                Parser<T> parser = (Parser<T>) parserMap.get(msgId);
+                Parser<T> parser = (Parser<T>) PARSER_MAP.get(msgId);
                 object = parser.parseFrom(data);
             } catch (InvalidProtocolBufferException e) {
                 Log.client.error("解析错误, msgId={}", msgId);

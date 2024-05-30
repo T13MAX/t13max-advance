@@ -26,8 +26,9 @@ import java.util.Set;
  */
 public class MessageManager extends ManagerBase {
 
-    private final Map<Integer, IMessage> messageMap = new HashMap<>();
+    private final Map<Integer, IMessage<?>> messageMap = new HashMap<>();
     private final Map<Integer, Method> parserMap = new HashMap<>();
+    private final Map<Integer, Class<?>> classMap = new HashMap<>();
 
     @Override
     public void init() {
@@ -37,7 +38,7 @@ public class MessageManager extends ManagerBase {
             //创建实例
             for (Class<?> clazz : classSet) {
                 // 只需要加载TemplateHelper注解数据
-                if (!Message.class.isAssignableFrom(clazz) || Modifier.isAbstract(clazz.getModifiers())) {
+                if (!IMessage.class.isAssignableFrom(clazz) || Modifier.isAbstract(clazz.getModifiers())) {
                     continue;
                 }
 
@@ -48,17 +49,19 @@ public class MessageManager extends ManagerBase {
                     continue;
                 }
 
-                IMessage message = (IMessage) inst;
+                IMessage<?> message = (IMessage<?>) inst;
                 messageMap.put(annotation.value(), message);
 
-                Method[] declaredMethods = IMessage.class.getDeclaredMethods();
+                Method[] declaredMethods = message.getClass().getDeclaredMethods();
                 for (Method declaredMethod : declaredMethods) {
                     if (declaredMethod.getName().equals("doMessage")) {
                         Class<?>[] parameterTypes = declaredMethod.getParameterTypes();
                         if (parameterTypes.length > 2) {
                             Class<?> parameterType = parameterTypes[2];
-                            Method method = parameterType.getMethod("getDefaultInstance");
-                            parserMap.put(annotation.value(), method);
+                            if (parameterType.isInterface()) continue;
+                            Method parseForm = parameterType.getMethod("getDefaultInstance");
+                            parserMap.put(annotation.value(), parseForm);
+                            classMap.put(annotation.value(), parameterType);
                         }
                     }
                 }
@@ -81,16 +84,16 @@ public class MessageManager extends ManagerBase {
         return ManagerBase.inst(MessageManager.class);
     }
 
-    public IMessage getMessage(int msgId) {
-        return messageMap.get(msgId);
+    public <T extends MessageLite> IMessage<T> getMessage(int msgId) {
+        return (IMessage<T>) messageMap.get(msgId);
     }
 
     public Method getParseMethod(int msgId) {
         return parserMap.get(msgId);
     }
 
-    public void doMessage(ISession session, int msgId, byte[] data) {
-        IMessage message = this.getMessage(msgId);
+    public <T extends MessageLite> void doMessage(ISession session, int msgId, byte[] data) {
+        IMessage<T> message = this.getMessage(msgId);
         if (message == null) {
             Log.common.error("msg不存在, msgId={}", msgId);
             return;
@@ -101,9 +104,15 @@ public class MessageManager extends ManagerBase {
             return;
         }
 
-        try {
+        Class<?> clazz = this.classMap.get(msgId);
+        if (clazz == null) {
+            Log.common.error("clazz不存在, msgId={}", msgId);
+            return;
+        }
 
-            MessageLite messageLite = (MessageLite) parseMethod.invoke(data);
+        try {
+            MessageLite instance = (MessageLite) parseMethod.invoke(clazz);
+            T messageLite = (T) instance.getParserForType().parseFrom(data);
             message.doMessage(session, msgId, messageLite);
         } catch (Exception e) {
             //后续添加异常处理

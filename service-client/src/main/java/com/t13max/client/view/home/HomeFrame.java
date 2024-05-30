@@ -1,11 +1,13 @@
 package com.t13max.client.view.home;
 
+import com.t13max.client.player.Player;
 import com.t13max.client.view.battle.BattlePanel;
 import com.t13max.client.view.Const;
 import com.t13max.client.view.operate.OperatePanel;
 
 import javax.swing.*;
 import java.awt.*;
+
 /**
  * 主界面
  *
@@ -19,7 +21,7 @@ public class HomeFrame extends JFrame {
 
     public HomeFrame() {
         init();
-        this.setTitle(Const.MAIN_FRAME_TITLE);
+        this.setTitle(Const.MAIN_FRAME_TITLE + " - " + Player.PLAYER.getUuid());
         this.setSize(Const.MAIN_WIDTH, Const.MAIN_HEIGHT);
         this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
         this.setResizable(false);

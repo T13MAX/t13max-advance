@@ -22,26 +22,33 @@ public class Application {
 
     private static String instanceName;
 
-    public static void run(Class<?> clazz, String[] args) throws Exception{
+    public static void run(Class<?> clazz, String[] args) throws Exception {
 
-        //初始化所有manager
-        ManagerBase.initAllManagers();
+        try {
+            //初始化所有manager
+            ManagerBase.initAllManagers();
 
-        //加载配置
-        loadConfig(clazz);
+            //加载配置
+            loadConfig(clazz);
 
-        initInstance();
+            initInstance();
 
-        //启动监听服
-        initServer(clazz);
+            //启动监听服
+            initServer(clazz);
 
-        initData();
+            initData();
 
-        //添加停服钩子 manager shutdown
-        addShutdownHook(ManagerBase::shutdown);
+            //添加停服钩子 manager shutdown
+            addShutdownHook(ManagerBase::shutdown);
 
-        //阻塞主线程
-        if (config.isPark()) LockSupport.park();
+            //阻塞主线程
+            if (config.isPark()) LockSupport.park();
+        } catch (Exception e) {
+            //遇到任何异常 直接退出
+            e.printStackTrace();
+            System.exit(0);
+        }
+
     }
 
     private static void initData() throws ClassNotFoundException {
@@ -50,7 +57,7 @@ public class Application {
             return;
         }
         //尝试加载数据库模块
-        Class.forName("com.t13max.data.dao.SqlLiteDao");
+        Class.forName("com.t13max.data.dao.SqlLiteUtil");
     }
 
     private static void initServer(Class<?> clazz) throws RuntimeException {
@@ -80,7 +87,7 @@ public class Application {
         try {
             baseServer = constructor.newInstance();
         } catch (Exception e) {
-            throw new CommonException("无法启动监听, 创建server对象失败");
+            throw new CommonException("无法启动监听, 创建server对象失败, error=" + e.getMessage());
         }
 
         try {

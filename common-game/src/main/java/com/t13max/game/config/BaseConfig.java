@@ -22,7 +22,7 @@ public class BaseConfig {
     //是否阻塞主线程
     protected boolean park;
 
-    //netty配置
+    //netty配置 允许使用默认
     protected NettyConfig netty;
 
     //业务线程池配置

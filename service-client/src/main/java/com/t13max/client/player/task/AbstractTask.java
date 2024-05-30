@@ -19,9 +19,15 @@ public abstract class AbstractTask implements IPlayerTask {
     protected void retry() {
         retry++;
         if (retry > 100) {
-            Log.client.error("重试次数过多!");
+            Log.client.error("重试次数过多! task={}", this.getClass().getSimpleName());
+            retryFail();
+            return;
         }
         Player.PLAYER.addTask(this);
+    }
+
+    protected void retryFail(){
+
     }
 
 }

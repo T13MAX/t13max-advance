@@ -15,6 +15,10 @@ import java.util.List;
  */
 public class LoginRespMsgTask extends AbstractTask {
 
+    static {
+        Player.PARSER_MAP.put(MessageId.S_BATTLE_LOGIN_VALUE, LoginBattleResp.parser());
+    }
+
     @Override
     public void run() {
         List<MessagePack<LoginBattleResp>> messagePacks = Player.PLAYER.getMessage(MessageId.S_BATTLE_LOGIN_VALUE);
@@ -41,6 +45,11 @@ public class LoginRespMsgTask extends AbstractTask {
             loginSuccess(uuid);
         }
 
+    }
+
+    @Override
+    protected void retryFail() {
+        loginFail(-1);
     }
 
     private void loginFail(int resCode) {

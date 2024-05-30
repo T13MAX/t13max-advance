@@ -2,7 +2,10 @@ package com.t13max.fight;
 
 import com.t13max.game.config.BattleConfig;
 import com.t13max.game.run.Application;
+import com.t13max.game.run.NettyServer;
 import com.t13max.game.run.ServerConfig;
+import com.t13max.game.server.BaseServer;
+import com.t13max.game.server.BattleServer;
 import com.t13max.util.Log;
 
 import java.util.concurrent.locks.LockSupport;
@@ -12,6 +15,7 @@ import java.util.concurrent.locks.LockSupport;
  * @since: 14:01 2024/5/23
  */
 @ServerConfig(configClazz = BattleConfig.class)
+@NettyServer(serverClazz = BattleServer.class)
 public class BattleApplication {
 
     public static void main(String[] args) throws Exception {

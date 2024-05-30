@@ -1,7 +1,7 @@
 
-//account表
-create table if not exists accountData (
-    id INTEGER PRIMARY,
+--account表
+CREATE TABLE IF NOT EXISTS accountData (
+    id INTEGER PRIMARY KEY,
     username TEXT,
-    password TEXT,
+    password TEXT
 );

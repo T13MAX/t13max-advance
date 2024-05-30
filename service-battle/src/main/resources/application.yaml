@@ -16,3 +16,6 @@ test: true
 
 #数据库
 dbFile: /Users/antingbi/mc/SqlLiteDb/battle.db
+
+netty:
+  port: 24000

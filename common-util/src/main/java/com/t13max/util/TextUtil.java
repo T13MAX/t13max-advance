@@ -14,6 +14,14 @@ import java.io.InputStreamReader;
 public class TextUtil {
 
     public String readText(String fileName) {
+        return readIgnore(fileName, null);
+    }
+
+    public String readSql(String fileName) {
+        return readIgnore(fileName, "--");
+    }
+
+    public String readIgnore(String fileName, String ignore) {
         InputStream resourceAsStream = TextUtil.class.getClassLoader().getResourceAsStream(fileName);
         if (resourceAsStream == null) {
             throw new RuntimeException("资源找不到");
@@ -27,6 +35,9 @@ public class TextUtil {
 
             //将文件内容全部拼接到 字符串s
             while ((lineTxt = br.readLine()) != null) {
+                if (ignore != null && lineTxt.contains(ignore)) {
+                    continue;
+                }
                 stringBuilder.append(lineTxt);
             }
         } catch (Exception e) {

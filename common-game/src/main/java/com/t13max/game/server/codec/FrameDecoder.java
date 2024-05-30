@@ -28,7 +28,7 @@ public class FrameDecoder extends ByteToMessageDecoder {
 
             // 标记读位置
             in.markReaderIndex();
-            int frameLength = in.readInt();
+            int frameLength = in.readInt() - MessageConst.LEN_LENGTH;
             if (in.isReadable(frameLength))
                 return in.readRetainedSlice(frameLength);
             else
