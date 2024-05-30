@@ -1,9 +1,15 @@
-#battle
+#game
 
 #实例id
-instanceId: battle-101
+instanceId: game-101
 #是否阻塞主线程
 park: false
+
+#业务线程池配置
+action:
+  core: 1
+  max: 1
+  name: gameActionExecutor
 
 #测试
 test: true
@@ -12,4 +18,4 @@ test: true
 dbFile: /Users/antingbi/mc/SqlLiteDb/battle.db
 
 netty:
-  port: 24000
+  port: 23000

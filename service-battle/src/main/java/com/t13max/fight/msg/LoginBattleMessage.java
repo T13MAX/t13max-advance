@@ -5,12 +5,13 @@ import battle.api.LoginBattleResp;
 import com.t13max.data.dao.SqlLiteUtil;
 import com.t13max.data.entity.AccountData;
 import com.t13max.data.util.UuidUtil;
+import com.t13max.fight.FightFactory;
+import com.t13max.fight.member.FightMemberManager;
 import com.t13max.fight.member.IFightMember;
-import com.t13max.game.msg.ErrorCode;
-import com.t13max.game.msg.IMessage;
-import com.t13max.game.msg.Message;
+import com.t13max.game.msg.*;
 import com.t13max.game.session.ISession;
 import message.id.MessageId;
+
 
 /**
  * 登录消息 比较特殊 直接实现Message接口
@@ -22,7 +23,9 @@ import message.id.MessageId;
 public class LoginBattleMessage implements IMessage<LoginBattleReq> {
 
     @Override
-    public void doMessage(ISession session, int msgId, LoginBattleReq message) {
+    public void doMessage(ISession session, MessagePack<LoginBattleReq> messagePack) {
+        int msgId = messagePack.getMsgId();
+        LoginBattleReq message = messagePack.getMessageLite();
         AccountData accountData = SqlLiteUtil.selectAccount(message.getUsername());
         if (accountData == null) {
             //session.sendError(MessageId.S_BATTLE_LOGIN_VALUE, ErrorCode.FAIL);
@@ -33,9 +36,10 @@ public class LoginBattleMessage implements IMessage<LoginBattleReq> {
             session.sendError(MessageId.S_BATTLE_LOGIN_VALUE, ErrorCode.FAIL);
             return;
         }
+        long uuid = accountData.getId();
         LoginBattleResp.Builder builder = LoginBattleResp.newBuilder();
-        builder.setUuid(accountData.getId());
-        session.setUuid(accountData.getId());
+        builder.setUuid(uuid);
+        session.setUuid(uuid);
         session.sendMessage(MessageId.S_BATTLE_LOGIN_VALUE, builder.build());
     }
 

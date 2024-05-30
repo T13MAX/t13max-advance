@@ -1,8 +1,11 @@
 package com.t13max.game.server.codec;
 
+import com.google.protobuf.MessageLite;
 import com.t13max.game.event.GameEventBus;
 import com.t13max.game.event.SessionCLoseEvent;
+import com.t13max.game.msg.ClientMessagePack;
 import com.t13max.game.msg.MessageManager;
+import com.t13max.game.msg.ServerMessagePack;
 import com.t13max.game.session.SessionManager;
 import com.t13max.game.session.BattleSession;
 import com.t13max.game.session.ISession;
@@ -61,7 +64,12 @@ public class BattleServerHandler extends ChannelDuplexHandler {
                 buf.readBytes(data);
             }
 
-            MessageManager.inst().doMessage(session, msgId, data);
+
+            //改为其他线程执行
+            MessageLite messageLite = MessageManager.inst().parseMessage(msgId, data);
+            if (messageLite == null) return;
+
+            MessageManager.inst().doMessage(session, new ClientMessagePack<>(msgId, messageLite));
 
         } finally {
             buf.release();

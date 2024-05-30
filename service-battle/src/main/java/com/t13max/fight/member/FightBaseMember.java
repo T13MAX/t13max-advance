@@ -18,12 +18,6 @@ public abstract class FightBaseMember implements IFightMember {
 
     protected transient FightContext fightContext;
 
-    public FightBaseMember(FightContext fightContext, long uid, boolean attacker) {
-        this.uid = uid;
-        this.attacker = attacker;
-        this.fightContext = fightContext;
-    }
-
     @Override
     public long getId() {
         return uid;

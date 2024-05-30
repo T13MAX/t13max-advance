@@ -15,18 +15,19 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author: t13max
  * @since: 20:00 2024/5/23
  */
+/*@Deprecated
 public class FightMemberManager extends ManagerBase implements IGameEventListener {
 
     private Map<Long, IFightMember> memberMap = new ConcurrentHashMap<>();
 
     private Set<GameEventEnum> interestedEventEnum = Collections.singleton(GameEventEnum.SESSION_CLOSE);
 
-    /**
+    *//**
      * 获取当前实例对象
      *
      * @Author t13max
      * @Date 16:44 2024/5/23
-     */
+     *//*
     public static FightMemberManager inst() {
         return ManagerBase.inst(FightMemberManager.class);
     }
@@ -72,4 +73,5 @@ public class FightMemberManager extends ManagerBase implements IGameEventListene
     public int getPriority() {
         return 0;
     }
-}
+
+}*/

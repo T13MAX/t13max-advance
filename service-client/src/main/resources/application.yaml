@@ -1,0 +1,6 @@
+#client
+
+#实例id
+instanceId: client-101
+#是否阻塞主线程
+park: false

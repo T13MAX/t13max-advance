@@ -1,16 +1,12 @@
 package com.t13max.game.msg;
 
 import com.google.protobuf.MessageLite;
-import com.google.protobuf.Parser;
 import com.t13max.game.exception.CommonException;
 import com.t13max.game.manager.ManagerBase;
-import com.t13max.game.session.BaseSession;
-import com.t13max.game.session.BattleSession;
 import com.t13max.game.session.ISession;
 import com.t13max.util.Log;
 import com.t13max.util.PackageUtil;
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.PooledByteBufAllocator;
 import io.netty.channel.Channel;
 
 import java.lang.reflect.InvocationTargetException;
@@ -52,16 +48,17 @@ public class MessageManager extends ManagerBase {
                 IMessage<?> message = (IMessage<?>) inst;
                 messageMap.put(annotation.value(), message);
 
-                Method[] declaredMethods = message.getClass().getDeclaredMethods();
+                Method[] declaredMethods = inst.getClass().getDeclaredMethods();
                 for (Method declaredMethod : declaredMethods) {
                     if (declaredMethod.getName().equals("doMessage")) {
                         Class<?>[] parameterTypes = declaredMethod.getParameterTypes();
-                        if (parameterTypes.length > 2) {
-                            Class<?> parameterType = parameterTypes[2];
-                            if (parameterType.isInterface()) continue;
-                            Method parseForm = parameterType.getMethod("getDefaultInstance");
+                        for (Class<?> parameterType : parameterTypes) {
+                            if (parameterType.isInterface() || !MessageLite.class.isAssignableFrom(parameterType))
+                                continue;
+                            Method parseForm = getParseMethod(parameterType);
                             parserMap.put(annotation.value(), parseForm);
                             classMap.put(annotation.value(), parameterType);
+                            break;
                         }
                     }
                 }
@@ -72,6 +69,14 @@ public class MessageManager extends ManagerBase {
             throw new CommonException(e);
         }
 
+    }
+
+    private Method getParseMethod(Class<?> parameterType) {
+        try {
+            return parameterType.getMethod("getDefaultInstance");
+        } catch (NoSuchMethodException e) {
+            throw new CommonException(e);
+        }
     }
 
     /**
@@ -92,65 +97,65 @@ public class MessageManager extends ManagerBase {
         return parserMap.get(msgId);
     }
 
-    public <T extends MessageLite> void doMessage(ISession session, int msgId, byte[] data) {
-        IMessage<T> message = this.getMessage(msgId);
-        if (message == null) {
-            Log.common.error("msg不存在, msgId={}", msgId);
-            return;
-        }
+    public <T extends MessageLite> T parseMessage(int msgId, byte[] data) {
         Method parseMethod = this.getParseMethod(msgId);
         if (parseMethod == null) {
             Log.common.error("parseMethod不存在, msgId={}", msgId);
-            return;
+            return null;
         }
 
         Class<?> clazz = this.classMap.get(msgId);
         if (clazz == null) {
             Log.common.error("clazz不存在, msgId={}", msgId);
-            return;
+            return null;
         }
 
+        T messageLite = null;
         try {
+
             MessageLite instance = (MessageLite) parseMethod.invoke(clazz);
-            T messageLite = (T) instance.getParserForType().parseFrom(data);
-            message.doMessage(session, msgId, messageLite);
+            messageLite = (T) instance.getParserForType().parseFrom(data);
         } catch (Exception e) {
             //后续添加异常处理
             Log.common.error("doMessage error, msgId={}, error={}", msgId, e.getMessage());
         }
-
+        return messageLite;
     }
 
-    public void sendMessage(ISession session, int msgId, int resCode, MessageLite messageLite) {
-        Channel channel = session.getChannel();
-        if (!channel.isActive()) {
-            Log.common.error("sendMessage failed, channel inactive, uuid={}, msgId={}, message={}", session.getUuid(), msgId, messageLite, getClass().getSimpleName());
+    public <T extends MessageLite> void doMessage(ISession session, MessagePack<T> messagePack) {
+        int msgId = messagePack.getMsgId();
+        IMessage<T> message = this.getMessage(msgId);
+        if (message == null) {
+            Log.common.error("msg不存在, msgId={}", msgId);
             return;
         }
-        ByteBuf byteBuf = wrapBuffers(msgId, resCode, messageLite == null ? null : messageLite.toByteArray());
-        channel.writeAndFlush(byteBuf);
-        Log.common.info("sendMessage, uuid={}, msgId={}, message={}", session.getUuid(), msgId, messageLite, getClass().getSimpleName());
 
+        message.doMessage(session, messagePack);
     }
 
-    public void sendMessage(ISession session, int msgId, MessageLite messageLite) {
-        sendMessage(session, msgId, 0, messageLite);
+    /**
+     * 手动添加消息 比如登录那种特殊消息
+     *
+     * @Author t13max
+     * @Date 19:44 2024/5/30
+     */
+    public <T extends MessageLite> void addMessage(int msgId, IMessage<T> message, Class<T> clazz) {
+        this.messageMap.put(msgId, message);
+        this.classMap.put(msgId, clazz);
+        this.parserMap.put(msgId, getParseMethod(clazz));
     }
 
-    public ByteBuf wrapBuffers(int msgId, int resCode, byte[] data) {
-        int len = MessageConst.CLIENT_HEADER_LENGTH;
-        if (null != data) len += data.length;
-        ByteBuf buf = PooledByteBufAllocator.DEFAULT.buffer(len);
-        buf.writeInt(len);
-        buf.writeInt(msgId);
-        buf.writeInt(resCode);
-        if (null != data) {
-            buf.writeBytes(data);
+    public <T extends MessageLite> void sendMessage(ISession session, MessagePack<T> messagePack) {
+        Channel channel = session.getChannel();
+        if (!channel.isActive()) {
+            Log.common.error("sendMessage failed, channel inactive, uuid={}, MessagePack={}", session.getUuid(), messagePack);
+            return;
         }
-        return buf;
+        ByteBuf byteBuf = messagePack.wrapBuffers();
+        channel.writeAndFlush(byteBuf);
+        Log.common.info("sendMessage, uuid={}, msgId={}, MessagePack={}", session.getUuid(), session.getUuid(), messagePack);
+
     }
 
-    public void sendError(ISession session, int msgId, int errorCode) {
-        sendMessage(session, msgId, errorCode, null);
-    }
+
 }

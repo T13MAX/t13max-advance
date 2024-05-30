@@ -10,7 +10,13 @@ import com.t13max.fight.FightContext;
 public class PlayerMember extends FightBaseMember {
 
     public PlayerMember(FightContext fightContext, long uid, boolean attacker) {
-        super(fightContext, uid, attacker);
+        this.uid = uid;
+        this.attacker = attacker;
+        this.fightContext = fightContext;
+    }
+
+    public PlayerMember(long uid) {
+        this.uid = uid;
     }
 
     @Override

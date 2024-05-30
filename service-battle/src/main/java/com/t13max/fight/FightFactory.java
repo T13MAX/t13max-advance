@@ -6,6 +6,7 @@ import battle.entity.FightPlayerInfoPb;
 import com.t13max.fight.event.FightEventBus;
 import com.t13max.fight.hero.FightHero;
 import com.t13max.fight.log.FightLogManager;
+import com.t13max.fight.member.FightMemberManager;
 import com.t13max.fight.member.IFightMember;
 import com.t13max.fight.member.MonsterMember;
 import com.t13max.fight.member.PlayerMember;
@@ -53,6 +54,8 @@ public class FightFactory {
             fightContext.getFightEventBus().register(fightContext.getFightLogManager());
 
             IFightMember attackerMember = createPlayerMember(fightContext, attackerPb.getPlayerId(), true);
+            FightMemberManager.inst().putPlayerMember(attackerMember);
+
             fightMatch.getMemberMap().put(attackerMember.getId(), attackerMember);
 
             Map<Long, FightHero> attacker = createHeroMap(fightContext, attackerMember, attackerPb);
@@ -66,6 +69,7 @@ public class FightFactory {
                 defender = createHeroMap(fightContext, defenderMember, defenderPb.getMonsterGroupId());
             }
             fightMatch.getMemberMap().put(defenderMember.getId(), defenderMember);
+            FightMemberManager.inst().putPlayerMember(defenderMember);
 
             fightMatch.getHeroMap().putAll(attacker);
             fightMatch.getHeroMap().putAll(defender);
@@ -98,12 +102,16 @@ public class FightFactory {
      * @Author t13max
      * @Date 16:11 2024/5/27
      */
+    public static IFightMember createPlayerMember(long uid) {
+        return new PlayerMember(uid);
+    }
+
     public static IFightMember createPlayerMember(FightContext fightContext, long uid, boolean attacker) {
-        return new PlayerMember(fightContext,uid, attacker);
+        return new PlayerMember(fightContext, uid, attacker);
     }
 
     public static IFightMember createMonsterMember(FightContext fightContext, long uid, boolean attacker) {
-        return new MonsterMember(fightContext,uid, attacker);
+        return new MonsterMember(fightContext, uid, attacker);
     }
 
     private static Map<Long, FightHero> createHeroMap(FightContext fightContext, IFightMember fightMember, int monsterGroupId) {

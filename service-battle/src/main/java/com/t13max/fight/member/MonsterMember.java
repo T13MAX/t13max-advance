@@ -10,7 +10,9 @@ import com.t13max.fight.FightContext;
 public class MonsterMember extends FightBaseMember {
 
     public MonsterMember(FightContext fightContext, long uid, boolean attacker) {
-        super(fightContext,uid, attacker);
+        this.uid = uid;
+        this.attacker = attacker;
+        this.fightContext = fightContext;
     }
 
     @Override

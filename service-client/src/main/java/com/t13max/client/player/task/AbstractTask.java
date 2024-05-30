@@ -26,7 +26,11 @@ public abstract class AbstractTask implements IPlayerTask {
         Player.PLAYER.addTask(this);
     }
 
-    protected void retryFail(){
+    public void submit() {
+        Player.PLAYER.addTask(this);
+    }
+
+    protected void retryFail() {
 
     }
 

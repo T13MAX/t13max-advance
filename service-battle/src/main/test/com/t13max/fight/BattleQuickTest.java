@@ -8,7 +8,7 @@ import com.t13max.fight.buff.BuffFactory;
 import com.t13max.fight.hero.FightHero;
 import com.t13max.game.config.BattleConfig;
 import com.t13max.game.run.Application;
-import com.t13max.game.run.ServerConfig;
+import com.t13max.game.run.ApplicationConfig;
 import com.t13max.util.Log;
 import com.t13max.util.TempIdUtil;
 import org.junit.Test;
@@ -21,7 +21,7 @@ import java.util.concurrent.locks.LockSupport;
  * @author: t13max
  * @since: 14:01 2024/5/23
  */
-@ServerConfig(configClazz = BattleConfig.class)
+@ApplicationConfig(configClazz = BattleConfig.class)
 public class BattleQuickTest {
 
     @Test
@@ -41,7 +41,7 @@ public class BattleQuickTest {
 
     private void quickTest() {
         CreateFightMatchReq.Builder messageBuilder = CreateFightMatchReq.newBuilder();
-        messageBuilder.setMatchId(TempIdUtil.getNextId());
+        messageBuilder.setMatchId(TempIdUtil.getNextTempId());
         messageBuilder.setAttacker(quickCreateSpecialPlayer());
         messageBuilder.setDefender(FightPlayerInfoPb.newBuilder().setMonsterGroupId(150001));
 
@@ -67,9 +67,9 @@ public class BattleQuickTest {
 
     private FightPlayerInfoPb quickCreateSpecialPlayer() {
         FightPlayerInfoPb.Builder playerInfoPb = FightPlayerInfoPb.newBuilder();
-        playerInfoPb.setPlayerId(TempIdUtil.getNextId());
+        playerInfoPb.setPlayerId(TempIdUtil.getNextTempId());
         FightHeroInfoPb.Builder builder = FightHeroInfoPb.newBuilder();
-        builder.setHeroId(TempIdUtil.getNextId());
+        builder.setHeroId(TempIdUtil.getNextTempId());
         builder.setTemplateId(100001);
         playerInfoPb.addHeroList(builder);
         return playerInfoPb.build();
@@ -77,10 +77,10 @@ public class BattleQuickTest {
 
     private FightPlayerInfoPb quickCreatePlayer() {
         FightPlayerInfoPb.Builder playerInfoPb = FightPlayerInfoPb.newBuilder();
-        playerInfoPb.setPlayerId(TempIdUtil.getNextId());
+        playerInfoPb.setPlayerId(TempIdUtil.getNextTempId());
         for (int i = 0; i < 5; i++) {
             FightHeroInfoPb.Builder builder = FightHeroInfoPb.newBuilder();
-            builder.setHeroId(TempIdUtil.getNextId());
+            builder.setHeroId(TempIdUtil.getNextTempId());
             builder.setTemplateId(100000);
             playerInfoPb.addHeroList(builder);
         }

@@ -46,7 +46,7 @@ public class FightMatch {
 
     private FightHero curActionHero;
 
-    private DoActionArgs doActionArgs;
+    private volatile DoActionArgs doActionArgs;
 
     private LinkedList<DoActionArgs> extraActionList = new LinkedList<>();
 

@@ -141,7 +141,7 @@ public class Application {
      */
     private static void loadConfig(Class<?> clazz) {
 
-        ServerConfig annotation = clazz.getAnnotation(ServerConfig.class);
+        ApplicationConfig annotation = clazz.getAnnotation(ApplicationConfig.class);
 
         Class<? extends BaseConfig> configClazz = BaseConfig.class;
         if (annotation != null) {

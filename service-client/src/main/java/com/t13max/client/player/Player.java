@@ -1,13 +1,11 @@
 package com.t13max.client.player;
 
-import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.MessageLite;
-import com.google.protobuf.Parser;
 import com.t13max.client.client.NettyClient;
 import com.t13max.client.player.task.SendMsgTask;
-import com.t13max.client.player.task.msg.MessagePack;
+import com.t13max.client.msg.ClientSession;
+import com.t13max.game.msg.MessagePack;
 import com.t13max.util.Log;
-import io.netty.channel.Channel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,8 +21,6 @@ public class Player {
 
     public static final Player PLAYER = new Player();
 
-    public static Map<Integer, Parser<? extends MessageLite>> PARSER_MAP = new HashMap<>();
-
     @Setter
     private long uuid;
 
@@ -37,7 +33,8 @@ public class Player {
 
     private NettyClient nettyClient = new NettyClient();
 
-    private Channel channel;
+    @Setter
+    private ClientSession clientSession;
 
     private volatile boolean stop;
 
@@ -49,7 +46,7 @@ public class Player {
 
         nettyClient.start();
         try {
-            channel = nettyClient.connect("127.0.0.1", 24000).channel();
+            nettyClient.connect("127.0.0.1", 24000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -111,28 +108,7 @@ public class Player {
             Log.client.error("terminate被中断!");
         }
 
-        channel.close();
-    }
-
-    public <T extends MessageLite> void receiveMessage(int msgId, int resCode, byte[] data) {
-        MessagePack<T> messagePack;
-        if (resCode != 0) {
-            messagePack = new MessagePack<>(resCode);
-        } else {
-            T object = null;
-            try {
-                Parser<T> parser = (Parser<T>) PARSER_MAP.get(msgId);
-                object = parser.parseFrom(data);
-            } catch (InvalidProtocolBufferException e) {
-                Log.client.error("解析错误, msgId={}", msgId);
-                return;
-            }
-            messagePack = new MessagePack<>(object);
-        }
-        BlockingQueue<MessagePack<?>> messagePacks = this.messageMap.computeIfAbsent(msgId, k -> new LinkedBlockingQueue<>());
-        if (!messagePacks.offer(messagePack)) {
-            Log.client.error("MessagePack 天加失败");
-        }
+        clientSession.close();
     }
 
     public void sendMessage(int msgId, MessageLite messageLite) {
@@ -152,14 +128,5 @@ public class Player {
         }
     }
 
-    public <T extends MessageLite> List<MessagePack<T>> getMessage(int msgId) {
-        BlockingQueue<MessagePack<? extends MessageLite>> messagePacks = messageMap.get(msgId);
-        if (messagePacks == null || messagePacks.isEmpty()) {
-            return Collections.emptyList();
-        }
-        List<MessagePack<T>> result = new LinkedList<>();
-        messagePacks.drainTo((List) result);
-        return result;
-    }
 
 }

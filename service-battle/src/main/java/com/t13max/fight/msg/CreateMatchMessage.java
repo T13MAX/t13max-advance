@@ -5,21 +5,33 @@ import battle.api.CreateFightMatchResp;
 import com.t13max.fight.FightFactory;
 import com.t13max.fight.FightMatch;
 import com.t13max.fight.MatchManager;
+import com.t13max.fight.buff.BuffBoxImpl;
+import com.t13max.fight.buff.BuffFactory;
+import com.t13max.fight.hero.FightHero;
 import com.t13max.fight.member.IFightMember;
+import com.t13max.game.msg.IMessage;
+import com.t13max.game.msg.MessagePack;
+import com.t13max.game.session.BattleSession;
 import com.t13max.game.session.ISession;
 import com.t13max.game.msg.Message;
 import com.t13max.util.Log;
 import message.id.MessageId;
 
 /**
+ * 理论上 创建战斗不是客户端调用的 应该是game服rpc过来的
+ *
  * @author: t13max
  * @since: 19:39 2024/5/23
  */
 @Message(MessageId.C_CREATE_MATCH_VALUE)
-public class CreateMatchMessage extends AbstractMessage<CreateFightMatchReq> {
+public class CreateMatchMessage implements IMessage<CreateFightMatchReq> {
 
     @Override
-    protected void doMessage(IFightMember member, int msgId, CreateFightMatchReq message) {
+    public void doMessage(ISession session, MessagePack<CreateFightMatchReq> messagePack) {
+
+        long uuid = session.getUuid();
+        CreateFightMatchReq message = messagePack.getMessageLite();
+
         FightMatch fightMatch = FightFactory.createFightMatch(message);
 
         if (fightMatch == null) {
@@ -27,9 +39,22 @@ public class CreateMatchMessage extends AbstractMessage<CreateFightMatchReq> {
             return;
         }
 
+        //临时测试代码
+        for (FightHero fightHero : fightMatch.getHeroMap().values()) {
+            if (!fightHero.isAttacker()) {
+                continue;
+            }
+            //给自己挂一个牛逼逼的buff
+            BuffBoxImpl buffBoxImpl = BuffFactory.createBuffBoxImpl(fightHero.getFightContext(), fightHero.getId(), 120000);
+            fightHero.getBuffManager().addBuff(buffBoxImpl);
+        }
+
         MatchManager.inst().addFightMatch(fightMatch);
 
+        MatchManager.inst().addFightMatch(fightMatch);
         CreateFightMatchResp.Builder builder = CreateFightMatchResp.newBuilder();
-        member.sendMsg(builder.build());
+
+        IFightMember fightMember = fightMatch.getMemberMap().get(uuid);
+        fightMember.sendMsg(builder.build());
     }
 }

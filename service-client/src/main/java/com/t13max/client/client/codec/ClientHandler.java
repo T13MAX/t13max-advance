@@ -1,6 +1,12 @@
 package com.t13max.client.client.codec;
 
+import com.google.protobuf.MessageLite;
+import com.t13max.client.msg.ClientSession;
 import com.t13max.client.player.Player;
+import com.t13max.client.player.task.AbstractTask;
+import com.t13max.game.msg.ClientMessagePack;
+import com.t13max.game.msg.MessageManager;
+import com.t13max.game.msg.ServerMessagePack;
 import com.t13max.game.session.ISession;
 import com.t13max.game.session.SessionManager;
 import com.t13max.util.Log;
@@ -26,6 +32,8 @@ public class ClientHandler extends ChannelDuplexHandler {
     public void channelActive(ChannelHandlerContext ctx) {
         SocketAddress socketAddress = ctx.channel().remoteAddress();
         Log.common.info("{} active!!!", socketAddress);
+        ClientSession clientSession = new ClientSession(ctx);
+        Player.PLAYER.setClientSession(clientSession);
     }
 
     // 断开连接
@@ -47,7 +55,14 @@ public class ClientHandler extends ChannelDuplexHandler {
                 buf.readBytes(data);
             }
 
-            Player.PLAYER.receiveMessage(msgId, resCode, data);
+            byte[] finalData = data;
+            Player.PLAYER.addTask(new AbstractTask() {
+                @Override
+                public void run() {
+                    MessageLite messageLite = MessageManager.inst().parseMessage(msgId, finalData);
+                    MessageManager.inst().doMessage(Player.PLAYER.getClientSession(), new ServerMessagePack(msgId, resCode, messageLite));
+                }
+            });
 
         } finally {
             buf.release();

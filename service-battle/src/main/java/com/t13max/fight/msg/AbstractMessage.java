@@ -1,9 +1,13 @@
 package com.t13max.fight.msg;
 
 import com.google.protobuf.MessageLite;
+import com.t13max.fight.FightMatch;
+import com.t13max.fight.MatchManager;
 import com.t13max.fight.member.FightMemberManager;
 import com.t13max.fight.member.IFightMember;
 import com.t13max.game.msg.IMessage;
+import com.t13max.game.msg.MessagePack;
+import com.t13max.game.session.BattleSession;
 import com.t13max.game.session.ISession;
 import com.t13max.util.Log;
 
@@ -14,16 +18,24 @@ import com.t13max.util.Log;
 public abstract class AbstractMessage<T extends MessageLite> implements IMessage<T> {
 
     @Override
-    public final void doMessage(ISession session, int msgId, T message) {
-        Log.common.info("receiveMessage, uuid={}, msgId={}, message={}", session.getUuid(), msgId, message, getClass().getSimpleName());
+    public final void doMessage(ISession session, MessagePack<T> messagePack) {
 
-        IFightMember playerMember = FightMemberManager.inst().getPlayerMember(session.getUuid());
-        if (playerMember == null) {
-            Log.common.error("member不存在, uuid={}", session.getUuid());
-            return;
+        try {
+            int msgId = messagePack.getMsgId();
+            T message = messagePack.getMessageLite();
+            Log.common.info("receiveMessage, uuid={}, msgId={}, message={}", session.getUuid(), msgId, message, getClass().getSimpleName());
+            if (!(session instanceof BattleSession battleSession)) {
+                Log.client.error("消息处理异常, session类型错误={}", session.getClass().getSimpleName());
+                return;
+            }
+
+            doMessage(battleSession, msgId, message);
+        } catch (Exception e) {
+            //消息异常处理
+            Log.client.error("消息处理异常, error={}", e.getMessage());
         }
-        doMessage(playerMember, msgId, message);
+
     }
 
-    protected abstract void doMessage(IFightMember member, int msgId, T Message);
+    protected abstract void doMessage(BattleSession battleSession, int msgId, T Message);
 }

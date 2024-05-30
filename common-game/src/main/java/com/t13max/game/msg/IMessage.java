@@ -9,5 +9,5 @@ import com.t13max.game.session.ISession;
  */
 public interface IMessage<T extends MessageLite> {
 
-    void doMessage(ISession session, int msgId, T message);
+    void doMessage(ISession session, MessagePack<T> messagePack);
 }

@@ -2,7 +2,6 @@ package com.t13max.client.view.login;
 
 import battle.api.LoginBattleReq;
 import com.t13max.client.player.Player;
-import com.t13max.client.player.task.msg.LoginRespMsgTask;
 import com.t13max.client.view.home.HomeFrame;
 import message.id.MessageId;
 
@@ -87,8 +86,6 @@ public class LoginFrame extends JFrame {
                     builder.setPassword(password);
                     //发送消息
                     Player.PLAYER.sendMessage(MessageId.C_BATTLE_LOGIN_VALUE, builder.build());
-                    //添加等待任务
-                    Player.PLAYER.addTask(new LoginRespMsgTask());
                 }
             }
 
