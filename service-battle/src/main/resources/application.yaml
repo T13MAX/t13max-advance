@@ -13,3 +13,6 @@ action:
 
 #测试
 test: true
+
+#数据库
+dbFile: /Users/antingbi/mc/SqlLiteDb/battle.db

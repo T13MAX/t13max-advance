@@ -97,7 +97,7 @@ public class SqlLiteUtil {
         return accountData;
     }
 
-    private static AccountData createAccountData(ResultSet rs)  {
+    private static AccountData createAccountData(ResultSet rs) {
         AccountData accountData = new AccountData();
         try {
             if (rs.next()) {
@@ -105,7 +105,7 @@ public class SqlLiteUtil {
                 accountData.setUsername(rs.getString("username"));
                 accountData.setPassword(rs.getString("password"));
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.data.error("createAccountData失败, rs={}", rs);
         }
         return accountData;
@@ -118,6 +118,7 @@ public class SqlLiteUtil {
             stat.executeUpdate(sql);
             stat.close();
         } catch (Exception e) {
+            //理论上 他不应该这样处理 应该有个专门的异常处理 重试队列之类的
             Log.data.error("数据插入失败, accountData={}", accountData);
         }
 

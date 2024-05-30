@@ -1,6 +1,7 @@
 package com.t13max.client;
 
-import com.t13max.client.frame.ClientMainFrame;
+import com.t13max.client.view.login.LoginFrame;
+import com.t13max.util.Log;
 
 /**
  * @author: t13max
@@ -9,8 +10,14 @@ import com.t13max.client.frame.ClientMainFrame;
 public class ClientApplication {
 
     public static void main(String[] args) {
-
-        ClientMainFrame clientMainFrame = new ClientMainFrame();
-        clientMainFrame.open();
+        try {
+            //FlatLightLaf.install();
+            //UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            //UIManager.put( "Button.arc", 0 );
+            //UIManager.put( "Component.arrowType", "chevron" );
+        } catch (Exception e) {
+            Log.client.error("启动失败, error={}", e.getMessage());
+        }
+        LoginFrame.LOGIN_FRAME.setVisible(true);
     }
 }

@@ -3,6 +3,7 @@ package com.t13max.fight.msg;
 import battle.api.JoinFightMatchReq;
 import com.t13max.fight.FightMatch;
 import com.t13max.fight.MatchManager;
+import com.t13max.fight.member.IFightMember;
 import com.t13max.game.session.ISession;
 import com.t13max.game.msg.Message;
 import com.t13max.util.Log;
@@ -16,9 +17,9 @@ import message.id.MessageId;
 public class JoinMatchMessage extends AbstractMessage<JoinFightMatchReq> {
 
     @Override
-    public void doMessage(ISession session, int msgId, JoinFightMatchReq message) {
-        long uuid = session.getUuid();
-        long matchId = message.getMatchId();
+    protected void doMessage(IFightMember member, int msgId, JoinFightMatchReq Message) {
+        long uuid = member.getId();
+        long matchId = Message.getMatchId();
         FightMatch fightMatch = MatchManager.inst().getFightMatch(matchId);
         if (fightMatch == null) {
             Log.battle.error("比赛不存在, uuid={}, matchId={}", uuid, matchId);

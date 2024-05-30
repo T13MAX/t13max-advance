@@ -20,7 +20,7 @@ public class SimpleHeroAI extends AbstractHeroAI {
 
     @Override
     public DoActionArgs doAction() {
-        DoActionArgs doActionArgs = new DoActionArgs(this.owner.getFightMember().getUid(), this.owner.getId());
+        DoActionArgs doActionArgs = new DoActionArgs(this.owner.getFightMember().getId(), this.owner.getId());
 
         IFightSkill ranAvaSkill = this.owner.getSkillManager().getRanAvaSkill();
         TemplateSkill templateSkill = ranAvaSkill.getTemplateSkill();

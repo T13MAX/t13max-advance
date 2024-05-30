@@ -4,6 +4,7 @@ import battle.api.LoginBattleReq;
 import battle.api.LoginBattleResp;
 import com.t13max.data.dao.SqlLiteUtil;
 import com.t13max.data.entity.AccountData;
+import com.t13max.data.util.UuidUtil;
 import com.t13max.fight.member.IFightMember;
 import com.t13max.game.msg.ErrorCode;
 import com.t13max.game.msg.IMessage;
@@ -25,8 +26,9 @@ public class LoginBattleMessage implements IMessage<LoginBattleReq> {
 
         AccountData accountData = SqlLiteUtil.selectAccount(message.getUsername());
         if (accountData == null) {
-            session.sendError(MessageId.S_BATTLE_LOGIN_VALUE, ErrorCode.FAIL);
-            return;
+            //session.sendError(MessageId.S_BATTLE_LOGIN_VALUE, ErrorCode.FAIL);
+            //为空自动注册
+            accountData = createAccountData(message);
         }
         if (!accountData.getPassword().equals(message.getPassword())) {
             session.sendError(MessageId.S_BATTLE_LOGIN_VALUE, ErrorCode.FAIL);
@@ -37,4 +39,14 @@ public class LoginBattleMessage implements IMessage<LoginBattleReq> {
         session.setUuid(accountData.getId());
         session.sendMessage(MessageId.S_BATTLE_LOGIN_VALUE, builder.build());
     }
+
+    private AccountData createAccountData(LoginBattleReq message) {
+        AccountData accountData = new AccountData();
+        accountData.setId(UuidUtil.getNextId());
+        accountData.setUsername(message.getUsername());
+        accountData.setPassword(message.getPassword());
+        SqlLiteUtil.insertAccount(accountData);
+        return accountData;
+    }
+
 }

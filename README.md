@@ -1,7 +1,7 @@
 傻呆呆
 
 [common-ai] 状态机 行为树的一些实现
-[common-game] game的一些基础东东
+[common-game] 一些基础东东
 [common-data] 持久化
 [common-proto] pb
 [common-template] 读表模块
@@ -15,4 +15,5 @@
 [service-client] 客户端 写着玩 理论上不应该用Java写客户端 主要是想把协议调通 且 好看效果
 
 备忘录
-行为树 rpc login gateway scene client展示 redis 跨进程事件系统 
+行为树 rpc login gateway scene client展示 redis 跨进程事件系统 包依赖层级优化
+功能: 活动 道具(装备,资源) 支付 game内存管理
