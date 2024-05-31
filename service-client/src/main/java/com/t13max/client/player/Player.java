@@ -2,6 +2,7 @@ package com.t13max.client.player;
 
 import com.google.protobuf.MessageLite;
 import com.t13max.client.client.NettyClient;
+import com.t13max.client.entity.MatchEntity;
 import com.t13max.client.player.task.SendMsgTask;
 import com.t13max.client.msg.ClientSession;
 import com.t13max.game.msg.MessagePack;
@@ -23,6 +24,10 @@ public class Player {
 
     @Setter
     private long uuid;
+    @Setter
+    private long matchId;
+    @Setter
+    private MatchEntity matchEntity;
 
     private BlockingQueue<Runnable> taskQueue = new LinkedBlockingQueue<>();
 

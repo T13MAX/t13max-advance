@@ -1,10 +1,6 @@
 package com.t13max.fight.msg;
 
 import com.google.protobuf.MessageLite;
-import com.t13max.fight.FightMatch;
-import com.t13max.fight.MatchManager;
-import com.t13max.fight.member.FightMemberManager;
-import com.t13max.fight.member.IFightMember;
 import com.t13max.game.msg.IMessage;
 import com.t13max.game.msg.MessagePack;
 import com.t13max.game.session.BattleSession;

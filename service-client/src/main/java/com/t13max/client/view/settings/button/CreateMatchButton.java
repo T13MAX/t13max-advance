@@ -25,8 +25,11 @@ public class CreateMatchButton extends JButton {
 
             @Override
             public void mouseClicked(MouseEvent e) {
+                if (Player.PLAYER.getMatchId() != 0) {
+                    return;
+                }
                 CreateFightMatchReq createFightMatchReq = createCreateFightMatchReq();
-
+                Player.PLAYER.setMatchId(createFightMatchReq.getMatchId());
                 new SendMsgTask(MessageId.C_CREATE_MATCH_VALUE, createFightMatchReq).submit();
             }
 

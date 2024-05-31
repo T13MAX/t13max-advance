@@ -4,12 +4,16 @@ import com.t13max.client.view.Const;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author: t13max
  * @since: 17:33 2024/5/29
  */
 public class BattlePanel extends JSplitPane {
+
+    public static Map<Integer, HeroPanel> heroPanelMap = new HashMap<>();
 
     public BattlePanel() {
         this.setBackground(Color.lightGray);

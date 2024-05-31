@@ -6,7 +6,6 @@ import battle.entity.FightPlayerInfoPb;
 import com.t13max.fight.event.FightEventBus;
 import com.t13max.fight.hero.FightHero;
 import com.t13max.fight.log.FightLogManager;
-import com.t13max.fight.member.FightMemberManager;
 import com.t13max.fight.member.IFightMember;
 import com.t13max.fight.member.MonsterMember;
 import com.t13max.fight.member.PlayerMember;
@@ -54,7 +53,6 @@ public class FightFactory {
             fightContext.getFightEventBus().register(fightContext.getFightLogManager());
 
             IFightMember attackerMember = createPlayerMember(fightContext, attackerPb.getPlayerId(), true);
-            FightMemberManager.inst().putPlayerMember(attackerMember);
 
             fightMatch.getMemberMap().put(attackerMember.getId(), attackerMember);
 
@@ -69,7 +67,6 @@ public class FightFactory {
                 defender = createHeroMap(fightContext, defenderMember, defenderPb.getMonsterGroupId());
             }
             fightMatch.getMemberMap().put(defenderMember.getId(), defenderMember);
-            FightMemberManager.inst().putPlayerMember(defenderMember);
 
             fightMatch.getHeroMap().putAll(attacker);
             fightMatch.getHeroMap().putAll(defender);
