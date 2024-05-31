@@ -1,6 +1,8 @@
-package com.t13max.client.view.settings.button;
+package com.t13max.client.view.button;
 
-import com.t13max.client.view.settings.LogFrame;
+import com.t13max.client.player.Player;
+import com.t13max.client.view.window.AbstractWindow;
+import com.t13max.client.view.window.LogWindow;
 
 import javax.swing.*;
 import java.awt.event.MouseEvent;
@@ -12,8 +14,6 @@ import java.awt.event.MouseListener;
  */
 public class LogButton extends JButton {
 
-    public static LogFrame logFrame = new LogFrame();
-
     public LogButton() {
         this.setText("日志");
 
@@ -21,10 +21,13 @@ public class LogButton extends JButton {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (logFrame.isVisible()) {
-                    logFrame.setVisible(false);
+                LogWindow logWindow = Player.PLAYER.getWindow("log");
+                if (logWindow == null) {
+                    Player.PLAYER.openWindow("log");
+                } else if (logWindow.isVisible()) {
+                    logWindow.closeWindow();
                 } else {
-                    logFrame.setVisible(true);
+                    logWindow.openWindow();
                 }
             }
 

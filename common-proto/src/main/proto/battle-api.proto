@@ -76,3 +76,13 @@ message LoginBattleReq{
 message LoginBattleResp{
   uint64 uuid = 1;
 }
+
+//销毁一场战斗
+message DestroyFightMatchReq{
+  //战斗唯一id
+  uint64 matchId = 1;
+}
+
+message DestroyFightMatchResp{
+
+}

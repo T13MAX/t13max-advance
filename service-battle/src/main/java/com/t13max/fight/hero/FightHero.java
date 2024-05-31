@@ -160,6 +160,7 @@ public class FightHero {
         FightHeroInfoPb.Builder builder = FightHeroInfoPb.newBuilder();
         builder.setHeroId(this.id);
         builder.setTemplateId(this.templateId);
+        builder.putAllAttrMap(this.fightAttrManager.getAttr());
         MoveBarUnit moveBarUnit = this.fightContext.getFightMatch().getActionMoveBar().getUnit(this.id);
         if (moveBarUnit != null) {
             builder.setMoveBar(moveBarUnit.buildBattleMoveBar());

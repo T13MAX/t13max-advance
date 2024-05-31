@@ -1,8 +1,7 @@
-package com.t13max.client.view.login;
+package com.t13max.client.view.window;
 
 import battle.api.LoginBattleReq;
 import com.t13max.client.player.Player;
-import com.t13max.client.view.home.HomeFrame;
 import message.id.MessageId;
 
 import javax.swing.*;
@@ -14,23 +13,34 @@ import java.awt.event.MouseListener;
  * @author: t13max
  * @since: 19:32 2024/5/29
  */
-public class LoginFrame extends JFrame {
-
-    public static LoginFrame LOGIN_FRAME = new LoginFrame();
+public class LoginWindow extends AbstractWindow {
 
     private volatile boolean logging;
 
-    private LoginFrame() throws HeadlessException {
-        init();
-        this.setTitle("登录");
-        this.setSize(530, 410);
+    public LoginWindow()  {
+        super("登录",new Dimension(530, 410),false);
         this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
-        this.setResizable(false);
-        this.setLocationRelativeTo(null);
+        initWindowContent();
     }
 
-    private void init() {
 
+    public void loginSuccess() {
+        Player.PLAYER.openWindow("home");
+        LoginWindow.this.dispose();
+    }
+
+    public void loginFail(String message) {
+        this.logging = false;
+        JOptionPane.showMessageDialog(LoginWindow.super.getContentPane(), message == null ? "账号或密码错误！" : message, "提示", JOptionPane.PLAIN_MESSAGE);
+    }
+
+    @Override
+    protected boolean onClose() {
+        return true;
+    }
+
+    @Override
+    protected void initWindowContent() {
         Container container = this.getContentPane();
 
         container.setLayout(null);
@@ -78,7 +88,7 @@ public class LoginFrame extends JFrame {
                 String name = jtName.getText();
                 String password = String.valueOf(jpf.getPassword());
                 if ("".equals(name) || password.isEmpty()) {
-                    JOptionPane.showMessageDialog(LoginFrame.super.getContentPane(), "账号密码不能为空！", "提示", JOptionPane.PLAIN_MESSAGE);
+                    JOptionPane.showMessageDialog(LoginWindow.super.getContentPane(), "账号密码不能为空！", "提示", JOptionPane.PLAIN_MESSAGE);
                 } else {
                     //尝试登录 正常应该http去login 拿到token在尝试连接gateway 但是太麻烦了 先直接连battle然后Login 这样方便测试
                     LoginBattleReq.Builder builder = LoginBattleReq.newBuilder();
@@ -109,15 +119,5 @@ public class LoginFrame extends JFrame {
 
             }
         });
-    }
-
-    public void loginSuccess() {
-        new HomeFrame();
-        LoginFrame.this.dispose();
-    }
-
-    public void loginFail(String message) {
-        this.logging = false;
-        JOptionPane.showMessageDialog(LoginFrame.super.getContentPane(), message == null ? "账号或密码错误！" : message, "提示", JOptionPane.PLAIN_MESSAGE);
     }
 }

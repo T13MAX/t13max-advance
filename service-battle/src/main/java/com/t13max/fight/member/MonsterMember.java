@@ -16,7 +16,7 @@ public class MonsterMember extends FightBaseMember {
     }
 
     @Override
-    public void sendMsg(MessageLite messageLite) {
+    public void sendMsg(int msgId, MessageLite messageLite) {
 
     }
 

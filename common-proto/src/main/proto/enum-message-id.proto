@@ -43,6 +43,9 @@ enum MessageId{
   //战斗服登录
   C_BATTLE_LOGIN = 30015;
   S_BATTLE_LOGIN = 30016;
+  //销毁一场战斗
+  C_DESTROY_MATCH = 30017;
+  S_DESTROY_MATCH = 30018;
 
 }
 

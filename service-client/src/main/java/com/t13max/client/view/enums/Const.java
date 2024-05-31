@@ -1,4 +1,4 @@
-package com.t13max.client.view;
+package com.t13max.client.view.enums;
 
 /**
  * @author: t13max
@@ -17,4 +17,12 @@ public interface Const {
     int GAME_WIDTH = MAIN_WIDTH - SETTINGS_WIDTH;
     int GAME_HEIGHT = MAIN_HEIGHT;
     int HERO_LENGTH = 110;
+
+    String LOGIN = "login";
+
+    String HP = " HP:";
+    String DEF = " DEF:";
+    String ATK = " ATK:";
+    String SKILL = " SKILL:";
+    String BUFF = " BUFF:";
 }

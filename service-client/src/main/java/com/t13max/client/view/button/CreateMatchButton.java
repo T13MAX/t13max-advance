@@ -1,4 +1,4 @@
-package com.t13max.client.view.settings.button;
+package com.t13max.client.view.button;
 
 import battle.api.CreateFightMatchReq;
 import battle.entity.FightHeroInfoPb;
@@ -57,7 +57,7 @@ public class CreateMatchButton extends JButton {
 
     private CreateFightMatchReq createCreateFightMatchReq() {
         CreateFightMatchReq.Builder messageBuilder = CreateFightMatchReq.newBuilder();
-        messageBuilder.setMatchId(TempIdUtil.getNextTempId());
+        messageBuilder.setMatchId(TempIdUtil.getNextTempId() + 10000000);
         messageBuilder.setAttacker(quickCreateSpecialPlayer());
         messageBuilder.setDefender(FightPlayerInfoPb.newBuilder().setMonsterGroupId(150001));
         return messageBuilder.build();
@@ -68,7 +68,7 @@ public class CreateMatchButton extends JButton {
         FightPlayerInfoPb.Builder playerInfoPb = FightPlayerInfoPb.newBuilder();
         playerInfoPb.setPlayerId(Player.PLAYER.getUuid());
         FightHeroInfoPb.Builder builder = FightHeroInfoPb.newBuilder();
-        builder.setHeroId(TempIdUtil.getNextTempId());
+        builder.setHeroId(TempIdUtil.getNextTempId() + 10000000);
         builder.setTemplateId(100001);
         playerInfoPb.addHeroList(builder);
         return playerInfoPb.build();

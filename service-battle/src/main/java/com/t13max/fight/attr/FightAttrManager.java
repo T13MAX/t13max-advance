@@ -149,6 +149,14 @@ public class FightAttrManager {
         }
     }
 
+    public Map<Integer, Double> getAttr() {
+        Map<Integer, Double> attr = new HashMap<>();
+        for (Map.Entry<FightAttrEnum, Double> entry : this.finalAttrMap.entrySet()) {
+            attr.put(entry.getKey().getId(), entry.getValue());
+        }
+        return attr;
+    }
+
     /**
      * //如果调整了最大生命值 则当前生命值同步修改
      *

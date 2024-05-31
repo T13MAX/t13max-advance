@@ -1,8 +1,10 @@
 package com.t13max.fight;
 
 import battle.api.CreateFightMatchReq;
+import battle.api.DestroyFightMatchResp;
 import battle.api.LoginBattleReq;
 import com.t13max.fight.msg.CreateMatchMessage;
+import com.t13max.fight.msg.DestroyMatchMessage;
 import com.t13max.fight.msg.LoginBattleMessage;
 import com.t13max.game.config.BattleConfig;
 import com.t13max.game.msg.MessageManager;
@@ -41,8 +43,9 @@ public class BattleApplication {
      * @Date 19:49 2024/5/30
      */
     private static void init() {
+
+        //特殊消息
         MessageManager.inst().addMessage(MessageId.C_BATTLE_LOGIN_VALUE, new LoginBattleMessage(), LoginBattleReq.class);
         MessageManager.inst().addMessage(MessageId.C_CREATE_MATCH_VALUE, new CreateMatchMessage(), CreateFightMatchReq.class);
-
     }
 }

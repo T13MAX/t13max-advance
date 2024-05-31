@@ -53,8 +53,6 @@ public class CreateMatchMessage implements IMessage<CreateFightMatchReq> {
 
         MatchManager.inst().addFightMatch(fightMatch);
         CreateFightMatchResp.Builder builder = CreateFightMatchResp.newBuilder();
-
-        IFightMember fightMember = fightMatch.getMemberMap().get(uuid);
-        fightMember.sendMsg(builder.build());
+        session.sendMessage(MessageId.S_CREATE_MATCH_VALUE,builder.build());
     }
 }

@@ -320,6 +320,10 @@ public class FightMatch {
         return this.heroMap.values().stream().filter(e -> e.isAttacker() != attacker).collect(Collectors.toList());
     }
 
+    public void forceStop() {
+        this.changeFightState(FightEnum.FINISHED);
+    }
+
     public void finish() {
         fightContext.getFightLogManager().printLog();
         Log.battle.info("FightMatch.finish, matchId={}", this.id);
@@ -333,7 +337,7 @@ public class FightMatch {
         //push
     }
 
-    private FightMatchPb buildFightMatchPb() {
+    public FightMatchPb buildFightMatchPb() {
         FightMatchPb.Builder builder = FightMatchPb.newBuilder();
         builder.setMatchId(this.id);
         for (IFightMember member : this.memberMap.values()) {

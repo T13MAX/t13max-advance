@@ -1,9 +1,10 @@
-package com.t13max.client.view.settings;
+package com.t13max.client.view.panel;
 
 
-import com.t13max.client.view.Const;
-import com.t13max.client.view.settings.button.CreateMatchButton;
-import com.t13max.client.view.settings.button.LogButton;
+import com.t13max.client.view.button.DestroyMatchButton;
+import com.t13max.client.view.enums.Const;
+import com.t13max.client.view.button.CreateMatchButton;
+import com.t13max.client.view.button.LogButton;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,6 +22,7 @@ public class SettingsPanel extends JPanel {
         this.add(new JButton("设置"));
         this.add(new JButton("退出"));
         this.add(new CreateMatchButton());
+        this.add(new DestroyMatchButton());
         this.add(new LogButton());
         this.add(new JButton("GM"));
     }

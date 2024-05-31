@@ -1,6 +1,7 @@
-package com.t13max.client.view.settings;
+package com.t13max.client.view.window;
 
-import com.t13max.client.view.Const;
+import com.t13max.client.view.enums.CloseAction;
+import com.t13max.client.view.enums.Const;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -12,20 +13,25 @@ import java.awt.*;
  * @author: t13max
  * @since: 13:14 2024/5/30
  */
-public class LogFrame extends JFrame {
+public class LogWindow extends AbstractWindow {
 
-    public static JScrollPane LOG_PANEL;
+    public LogWindow() {
+        super("日志", new Dimension(Const.LOG_WIDTH, Const.LOG_HEIGHT), false);
+    }
 
-    public LogFrame() throws HeadlessException {
-        this.setTitle("日志");
-        this.setSize(Const.LOG_WIDTH, Const.LOG_HEIGHT);
-        this.setDefaultCloseOperation(this.HIDE_ON_CLOSE);
-        this.setResizable(false);
+    @Override
+    protected boolean onClose() {
+        return true;
+    }
+
+    @Override
+    protected void initWindowContent() {
         this.setLocationRelativeTo(null);
-        JScrollPane logPanel = new JScrollPane(createTable());
-        this.add(logPanel);
-        LOG_PANEL = logPanel;
-        this.setVisible(false);
+        setDefaultCloseAction(CloseAction.DISPOSE);
+        JScrollPane jScrollPane = new JScrollPane();
+        this.addComponent("log.scroll", jScrollPane, panel -> {
+            this.addComponent(jScrollPane, "log.scroll.table", createTable());
+        });
     }
 
     private JTable createTable() {

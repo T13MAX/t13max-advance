@@ -5,6 +5,7 @@ import com.t13max.client.client.NettyClient;
 import com.t13max.client.entity.MatchEntity;
 import com.t13max.client.player.task.SendMsgTask;
 import com.t13max.client.msg.ClientSession;
+import com.t13max.client.view.window.*;
 import com.t13max.game.msg.MessagePack;
 import com.t13max.util.Log;
 import lombok.Getter;
@@ -32,6 +33,8 @@ public class Player {
     private BlockingQueue<Runnable> taskQueue = new LinkedBlockingQueue<>();
 
     private Map<Integer, BlockingQueue<MessagePack<? extends MessageLite>>> messageMap = new ConcurrentHashMap<>();
+
+    private Map<String, AbstractWindow> windowMap = new HashMap<>();
 
     //玩家主线程
     private ExecutorService playerExecutor = Executors.newSingleThreadExecutor();
@@ -133,5 +136,41 @@ public class Player {
         }
     }
 
+    /**
+     * 打开窗口
+     * 目前窗口也不多 就这样吧
+     *
+     * @Author t13max
+     * @Date 14:16 2024/5/31
+     */
+    public void openWindow(String name) {
+        AbstractWindow window = this.windowMap.get(name);
+        if (window != null) {
+            window.openWindow();
+            return;
+        }
+        switch (name) {
+            case "login" -> {
+                window = new LoginWindow();
+            }
+            case "home" -> {
+                window = new HomeWindow();
+            }
+            case "log" -> {
+                window = new LogWindow();
+            }
+            case "detail" -> {
+                window = new HeroDetailWindow();
+            }
+            default -> {
+                return;
+            }
+        }
+        this.windowMap.put(name, window);
+        window.openWindow();
+    }
 
+    public <T extends AbstractWindow> T getWindow(String name) {
+        return (T) windowMap.get(name);
+    }
 }

@@ -2,7 +2,8 @@ package com.t13max.client.msg;
 
 import battle.api.LoginBattleResp;
 import com.t13max.client.player.Player;
-import com.t13max.client.view.login.LoginFrame;
+import com.t13max.client.view.window.AbstractWindow;
+import com.t13max.client.view.window.LoginWindow;
 import com.t13max.game.msg.Message;
 import message.id.MessageId;
 
@@ -17,25 +18,27 @@ public class LoginBattleRespMessage extends AbstractMessage<LoginBattleResp> {
     public void doMessage(Player player, int msgId, LoginBattleResp message) {
         long uuid = message.getUuid();
         if (uuid == 0) {
-            loginFail(-1);
+            loginFail(player, -1);
         } else {
-            loginSuccess(player,uuid);
+            loginSuccess(player, uuid);
         }
     }
 
     @Override
     public void doErrorMessage(Player player, int msgId, int resCode) {
-        loginFail(resCode);
+        loginFail(player,resCode);
     }
 
 
-    private void loginFail(int resCode) {
-        LoginFrame.LOGIN_FRAME.loginFail("resCode=" + resCode);
+    private void loginFail(Player player, int resCode) {
+        LoginWindow loginWindow = player.getWindow("login");
+        loginWindow.loginFail("resCode=" + resCode);
     }
 
     private void loginSuccess(Player player, long uuid) {
         player.setUuid(uuid);
-        LoginFrame.LOGIN_FRAME.loginSuccess();
+        LoginWindow loginWindow = player.getWindow("login");
+        loginWindow.loginSuccess();
     }
 
 }

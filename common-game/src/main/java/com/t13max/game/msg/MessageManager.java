@@ -129,7 +129,7 @@ public class MessageManager extends ManagerBase {
             Log.common.error("msg不存在, msgId={}", msgId);
             return;
         }
-
+        Log.common.info("receiveMessage, uuid={}, msgId={}, message={}", session.getUuid(), msgId, message, getClass().getSimpleName());
         message.doMessage(session, messagePack);
     }
 
@@ -153,7 +153,7 @@ public class MessageManager extends ManagerBase {
         }
         ByteBuf byteBuf = messagePack.wrapBuffers();
         channel.writeAndFlush(byteBuf);
-        Log.common.info("sendMessage, uuid={}, msgId={}, MessagePack={}", session.getUuid(), session.getUuid(), messagePack);
+        Log.common.info("sendMessage, uuid={}, msgId={}, MessagePack={}", session.getUuid(), messagePack.getMsgId(), messagePack);
 
     }
 

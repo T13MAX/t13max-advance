@@ -19,7 +19,6 @@ public abstract class AbstractMessage<T extends MessageLite> implements IMessage
         try {
             int msgId = messagePack.getMsgId();
             T message = messagePack.getMessageLite();
-            Log.common.info("receiveMessage, uuid={}, msgId={}, message={}", session.getUuid(), msgId, message, getClass().getSimpleName());
             if (!(session instanceof BattleSession battleSession)) {
                 Log.client.error("消息处理异常, session类型错误={}", session.getClass().getSimpleName());
                 return;
@@ -33,5 +32,5 @@ public abstract class AbstractMessage<T extends MessageLite> implements IMessage
 
     }
 
-    protected abstract void doMessage(BattleSession battleSession, int msgId, T Message);
+    protected abstract void doMessage(BattleSession battleSession, int msgId, T message);
 }

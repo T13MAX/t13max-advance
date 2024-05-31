@@ -30,11 +30,14 @@ public class MatchEntity implements IEntity {
                 targetPlayer = new PlayerEntity(fightPlayerInfoPb);
             }
         }
+
+        onChange();
     }
 
 
     @Override
     public void onChange() {
-
+        selfPlayer.onChange();
+        targetPlayer.onChange();
     }
 }

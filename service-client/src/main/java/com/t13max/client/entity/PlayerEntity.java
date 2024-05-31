@@ -2,6 +2,7 @@ package com.t13max.client.entity;
 
 import battle.entity.FightHeroInfoPb;
 import battle.entity.FightPlayerInfoPb;
+import com.t13max.client.player.Player;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,12 +29,12 @@ public class PlayerEntity implements IEntity {
         }
         for (int i = 0; i < fightPlayerInfoPb.getHeroListList().size(); i++) {
             FightHeroInfoPb fightHeroInfoPb = fightPlayerInfoPb.getHeroList(i);
-            this.heroMap.put(fightHeroInfoPb.getHeroId(), new HeroEntity(fightHeroInfoPb, i));
+            this.heroMap.put(fightHeroInfoPb.getHeroId(), new HeroEntity(fightHeroInfoPb, fightPlayerInfoPb.getPlayerId() == Player.PLAYER.getUuid(), i));
         }
     }
 
     @Override
     public void onChange() {
-
+        heroMap.values().forEach(HeroEntity::onChange);
     }
 }

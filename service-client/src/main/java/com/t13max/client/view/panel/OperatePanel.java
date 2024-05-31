@@ -1,6 +1,6 @@
-package com.t13max.client.view.operate;
+package com.t13max.client.view.panel;
 
-import com.t13max.client.view.settings.SettingsPanel;
+import com.t13max.client.view.window.HomeWindow;
 
 import javax.swing.*;
 
@@ -10,7 +10,7 @@ import javax.swing.*;
  */
 public class OperatePanel extends JSplitPane {
 
-    public OperatePanel() {
+    public OperatePanel(HomeWindow homeWindow) {
         this.setOrientation(JSplitPane.VERTICAL_SPLIT);
         this.setDividerLocation(70);
         this.setDividerSize(10);
@@ -24,9 +24,4 @@ public class OperatePanel extends JSplitPane {
         this.setEnabled(false);
     }
 
-    private JTextArea createTextArea() {
-        JTextArea jTextArea = new JTextArea(100,10);
-        jTextArea.setText("3333333333333333333333333333333333");
-        return jTextArea;
-    }
 }

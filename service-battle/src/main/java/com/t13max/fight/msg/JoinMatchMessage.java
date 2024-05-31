@@ -1,8 +1,12 @@
 package com.t13max.fight.msg;
 
 import battle.api.JoinFightMatchReq;
+import battle.api.JoinFightMatchResp;
+import battle.entity.FightMatchPb;
 import com.t13max.fight.FightMatch;
 import com.t13max.fight.MatchManager;
+import com.t13max.fight.member.IFightMember;
+import com.t13max.fight.member.PlayerMember;
 import com.t13max.game.session.BattleSession;
 import com.t13max.game.msg.Message;
 import com.t13max.util.Log;
@@ -26,7 +30,19 @@ public class JoinMatchMessage extends AbstractMessage<JoinFightMatchReq> {
             return;
         }
         battleSession.setMatchId(matchId);
-
-        //xxxx
+        IFightMember fightMember = fightMatch.getMemberMap().get(uuid);
+        if (fightMember == null) {
+            Log.battle.error("fightMember不存在, uuid={}, matchId={}", uuid, matchId);
+            return;
+        }
+        if (!(fightMember instanceof PlayerMember playerMember)) {
+            Log.battle.error("playerMember不存在, uuid={}, matchId={}", uuid, matchId);
+            return;
+        }
+        playerMember.setSession(battleSession);
+        JoinFightMatchResp.Builder builder = JoinFightMatchResp.newBuilder();
+        FightMatchPb fightMatchPb = fightMatch.buildFightMatchPb();
+        builder.setFightMatchPb(fightMatchPb);
+        battleSession.sendMessage(MessageId.S_JOIN_MATCH_VALUE, builder.build());
     }
 }

@@ -1,6 +1,7 @@
 package com.t13max.client;
 
-import com.t13max.client.view.login.LoginFrame;
+import com.t13max.client.player.Player;
+import com.t13max.client.view.window.LogWindow;
 import com.t13max.game.config.ClientConfig;
 import com.t13max.game.run.Application;
 import com.t13max.game.run.ApplicationConfig;
@@ -13,9 +14,9 @@ import com.t13max.util.Log;
 @ApplicationConfig(configClazz = ClientConfig.class)
 public class ClientApplication {
 
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args) throws Exception {
 
-        Application.run(ClientApplication.class,args);
+        Application.run(ClientApplication.class, args);
 
         try {
             //FlatLightLaf.install();
@@ -25,7 +26,7 @@ public class ClientApplication {
         } catch (Exception e) {
             Log.client.error("启动失败, error={}", e.getMessage());
         }
-        LoginFrame.LOGIN_FRAME.setVisible(true);
+        Player.PLAYER.openWindow("login");
         Log.client.info("client run !!!");
 
     }
