@@ -138,6 +138,7 @@ public abstract class AbstractWindow extends JFrame {
         if (consumer != null)
             consumer.accept(component);
         this.componentMap.put(name, component);
+        this.add(component);
     }
 
     public final <T extends Component> void addComponent(String name, T component, Object constraints, Consumer<T> consumer) {

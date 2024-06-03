@@ -16,4 +16,4 @@
 
 备忘录
 行为树 rpc login gateway scene client展示 redis 跨进程事件系统 包依赖层级优化
-功能: 活动 道具(装备,资源) 支付 game内存管理
+功能: 活动 道具(装备,资源) 任务/成就 支付 game内存管理

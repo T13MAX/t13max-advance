@@ -143,10 +143,10 @@ public class Player {
      * @Author t13max
      * @Date 14:16 2024/5/31
      */
-    public void openWindow(String name) {
+    public void openWindow(String name, boolean open) {
         AbstractWindow window = this.windowMap.get(name);
         if (window != null) {
-            window.openWindow();
+            if (open) window.openWindow();
             return;
         }
         switch (name) {
@@ -167,7 +167,11 @@ public class Player {
             }
         }
         this.windowMap.put(name, window);
-        window.openWindow();
+        if (open) window.openWindow();
+    }
+
+    public void openWindow(String name) {
+        openWindow(name, true);
     }
 
     public <T extends AbstractWindow> T getWindow(String name) {

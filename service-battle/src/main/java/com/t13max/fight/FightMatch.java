@@ -114,6 +114,7 @@ public class FightMatch {
     private void changeFightState(FightEnum fightEnum) {
         this.fightEnum = fightEnum;
         this.lastFightStatusChangeMills = TimeUtil.nowMills();
+        Log.battle.info("changeFightState, newStatus={}", fightEnum);
     }
 
     private void smallRoundTick() {

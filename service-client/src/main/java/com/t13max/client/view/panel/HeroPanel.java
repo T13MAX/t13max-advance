@@ -49,11 +49,11 @@ public class HeroPanel extends JPanel {
         bottomButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                Player.PLAYER.openWindow("detail");
+                Player.PLAYER.openWindow("detail", false);
                 HeroDetailWindow detailWindow = Player.PLAYER.getWindow("detail");
 
                 if (heroEntity != null) {
-                    detailWindow.update(heroEntity, e.getX(), e.getY());
+                    detailWindow.update(heroEntity);
                     detailWindow.openWindow();
                 }
             }

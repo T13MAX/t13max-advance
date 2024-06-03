@@ -6,6 +6,7 @@ import message.id.MessageId;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -22,7 +23,6 @@ public class LoginWindow extends AbstractWindow {
         this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
         initWindowContent();
     }
-
 
     public void loginSuccess() {
         Player.PLAYER.openWindow("home");
@@ -51,13 +51,13 @@ public class LoginWindow extends AbstractWindow {
         JLabel ljName = new JLabel("账号:");
         JLabel ljName1 = new JLabel("密码:");
 
-        JTextField jtName = new JTextField("", 25);
+        JTextField jtName = new JTextField("1", 25);
         jtName.setBounds(125, 155, 300, 40);
         ljName.setBounds(75, 155, 50, 40);
         label1.setBounds(160, 30, 200, 100);
 
         //密码窗口设置
-        JPasswordField jpf = new JPasswordField(25);
+        JPasswordField jpf = new JPasswordField("1",25);
         jpf.setBounds(125, 200, 300, 40);
 
         JLabel fpd = new JLabel("忘记密码");
@@ -78,7 +78,7 @@ public class LoginWindow extends AbstractWindow {
         container.add(jpf);
         container.add(ljName1);
 
-        btn1.addMouseListener(new MouseListener() {
+        btn1.addMouseListener(new MouseAdapter() {
 
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -97,26 +97,6 @@ public class LoginWindow extends AbstractWindow {
                     //发送消息
                     Player.PLAYER.sendMessage(MessageId.C_BATTLE_LOGIN_VALUE, builder.build());
                 }
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-
             }
         });
     }

@@ -148,12 +148,12 @@ public class MessageManager extends ManagerBase {
     public <T extends MessageLite> void sendMessage(ISession session, MessagePack<T> messagePack) {
         Channel channel = session.getChannel();
         if (!channel.isActive()) {
-            Log.common.error("sendMessage failed, channel inactive, uuid={}, MessagePack={}", session.getUuid(), messagePack);
+            Log.common.error("sendMessage failed, channel inactive, uuid={}, class={}, MessagePack={}", session.getUuid(), messagePack.getMessageLite().getClass().getSimpleName(), messagePack);
             return;
         }
         ByteBuf byteBuf = messagePack.wrapBuffers();
         channel.writeAndFlush(byteBuf);
-        Log.common.info("sendMessage, uuid={}, msgId={}, MessagePack={}", session.getUuid(), messagePack.getMsgId(), messagePack);
+        Log.common.info("sendMessage, uuid={}, msgId={}, class={}, MessagePack={}", session.getUuid(), messagePack.getMsgId(), messagePack.getMessageLite().getClass().getSimpleName(), messagePack);
 
     }
 
