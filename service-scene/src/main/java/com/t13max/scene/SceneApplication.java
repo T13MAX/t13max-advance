@@ -14,7 +14,7 @@ import java.util.concurrent.locks.LockSupport;
 @ApplicationConfig(configClazz = SceneConfig.class)
 public class SceneApplication {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception{
 
         Application.run(SceneApplication.class, args);
 

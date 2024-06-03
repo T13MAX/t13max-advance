@@ -1,4 +1,4 @@
-package com.t13max.scene.subline;
+package com.t13max.scene.manager;
 
 /**
  * 分线
@@ -6,5 +6,5 @@ package com.t13max.scene.subline;
  * @author: t13max
  * @since: 17:22 2024/5/23
  */
-public class SubLineHelper {
+public class SubLineManager {
 }
