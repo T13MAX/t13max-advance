@@ -31,6 +31,8 @@ public class BaseConfig {
     //数据库文件
     protected String dbFile;
 
+    protected int saveThreadNum;
+
     /**
      * 校验数据
      *

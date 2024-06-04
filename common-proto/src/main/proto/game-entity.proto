@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+
+option java_package = "game.entity";
+option java_multiple_files = true;
+
+//道具
+message ItemDataPb{
+  map<uint32, uint64> itemMap = 1;
+}
+
+//装备
+message EquipDataPb{
+  uint64 id = 1;
+  uint32 templateId = 2;
+}

@@ -5,4 +5,6 @@ package com.t13max.data.entity;
  * @since: 11:50 2024/5/29
  */
 public interface IData {
+
+    long getId();
 }
