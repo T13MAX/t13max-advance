@@ -1,7 +1,7 @@
 package com.t13max.fight.buff.effect;
 
 import battle.event.entity.RemoveReason;
-import com.t13max.fight.FightContext;
+import com.t13max.fight.context.FightContext;
 import com.t13max.fight.hero.FightHero;
 import com.t13max.fight.event.IFightEvent;
 

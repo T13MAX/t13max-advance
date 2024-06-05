@@ -1,10 +1,7 @@
 package com.t13max.fight.impact;
 
-import com.t13max.fight.FightContext;
-import com.t13max.fight.FightTimeMachine;
+import com.t13max.fight.context.FightContext;
 import com.t13max.fight.event.AbstractEventListener;
-import com.t13max.fight.event.IFightEventListener;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 

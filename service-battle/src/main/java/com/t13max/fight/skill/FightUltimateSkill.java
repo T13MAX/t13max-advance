@@ -1,6 +1,6 @@
 package com.t13max.fight.skill;
 
-import com.t13max.fight.FightContext;
+import com.t13max.fight.context.FightContext;
 import com.t13max.fight.hero.FightHero;
 import com.t13max.fight.attr.FightAttrEnum;
 import com.t13max.fight.event.AttributeUpdateEvent;

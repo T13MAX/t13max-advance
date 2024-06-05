@@ -1,7 +1,11 @@
-package com.t13max.fight;
+package com.t13max.fight.context;
 
+import battle.api.DoActionResp;
+import battle.api.FightMatchActionUnitPush;
 import battle.api.FightMatchUpdatePush;
+import battle.entity.FightEventPb;
 import battle.entity.FightMatchPb;
+import com.google.protobuf.MessageLite;
 import com.t13max.fight.enums.FightEnum;
 import com.t13max.fight.enums.SmallRoundEnum;
 import com.t13max.fight.event.*;
@@ -15,6 +19,7 @@ import com.t13max.util.Log;
 import com.t13max.util.TimeUtil;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import message.id.MessageId;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -201,11 +206,21 @@ public class FightMatch {
         return false;
     }
 
-
     private void smallRoundEnd() {
         fightContext.getFightEventBus().postEvent(new SmallRoundEndEvent());
         fightContext.getFightTimeMachine().roll();
+        pushActionEnd();
         this.changeSmallRoundState(SmallRoundEnum.JUDGE);
+    }
+
+    private void pushActionEnd() {
+        List<FightEventPb> fightEventPbs = this.fightContext.getSmallRoundRecorder().buildEventList();
+        DoActionResp.Builder builder = DoActionResp.newBuilder();
+        builder.setRound(round);
+        builder.setHeroId(curActionHero.getId());
+        builder.setPlayerId(curActionHero.getFightMember().getId());
+        builder.addAllEvent(fightEventPbs);
+        broadcast(MessageId.S_MATCH_ACTION_VALUE, builder.build());
     }
 
     private void unitActionEnd() {
@@ -273,7 +288,7 @@ public class FightMatch {
         //抛出小回合开始事件
         fightContext.getFightEventBus().postEvent(new SmallRoundBeginEvent(curActionHero.getId(), round));
         fightContext.getFightTimeMachine().roll();
-
+        //推送最新状态
         //
         changeSmallRoundState(SmallRoundEnum.WAIT_MANUAL);
     }
@@ -282,6 +297,12 @@ public class FightMatch {
         curActionHero = null;
         curActionHero = getFastestUnit();
         doActionArgs = null;
+
+        FightMatchActionUnitPush.Builder builder = FightMatchActionUnitPush.newBuilder();
+        builder.setHeroId(curActionHero.getId());
+        builder.setPlayerId(curActionHero.getFightMember().getId());
+        broadcast(MessageId.S_ACTION_UNIT_PUSH_VALUE,builder.build());
+
         changeSmallRoundState(SmallRoundEnum.SMALL_ROUND_BEGIN);
     }
 
@@ -330,12 +351,25 @@ public class FightMatch {
         Log.battle.info("FightMatch.finish, matchId={}", this.id);
     }
 
+    public void broadcast(int msgId, MessageLite messageLite) {
+        for (IFightMember fightMember : this.memberMap.values()) {
+            fightMember.sendMsg(msgId, messageLite);
+        }
+    }
+
+    /**
+     * 推送数据
+     * 目前总开始和回合开始都推了 是不是可以优化
+     *
+     * @Author t13max
+     * @Date 16:34 2024/6/5
+     */
     private void pushFightMatchPb() {
 
         FightMatchUpdatePush.Builder builder = FightMatchUpdatePush.newBuilder();
         builder.setFightMatchPb(buildFightMatchPb());
 
-        //push
+        broadcast(MessageId.S_MATCH_UPDATE_PUSH_VALUE, builder.build());
     }
 
     public FightMatchPb buildFightMatchPb() {

@@ -1,4 +1,4 @@
-package com.t13max.fight;
+package com.t13max.fight.context;
 
 import com.t13max.util.TimeUtil;
 

@@ -1,5 +1,6 @@
 package com.t13max.fight.msg;
 
+import battle.api.DoActionReq;
 import lombok.Data;
 
 import java.util.List;
@@ -21,5 +22,11 @@ public class DoActionArgs {
     public DoActionArgs(long playerId, long heroId) {
         this.playerId = playerId;
         this.heroId = heroId;
+    }
+
+    public DoActionArgs(DoActionReq message) {
+        heroId = message.getHeroId();
+        skillId = message.getSkillId();
+        targetIds = message.getTargetIdsList();
     }
 }

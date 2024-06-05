@@ -1,8 +1,8 @@
 package com.t13max.fight.log;
 
-import com.t13max.fight.FightContext;
+import com.t13max.fight.context.FightContext;
 import com.t13max.fight.hero.FightHero;
-import com.t13max.fight.FightMatch;
+import com.t13max.fight.context.FightMatch;
 import com.t13max.fight.event.*;
 import com.t13max.util.Log;
 import lombok.extern.log4j.Log4j2;

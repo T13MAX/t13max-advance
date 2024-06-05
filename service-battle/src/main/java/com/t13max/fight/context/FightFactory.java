@@ -1,9 +1,10 @@
-package com.t13max.fight;
+package com.t13max.fight.context;
 
 import battle.api.CreateFightMatchReq;
 import battle.entity.FightHeroInfoPb;
 import battle.entity.FightPlayerInfoPb;
 import com.t13max.fight.event.FightEventBus;
+import com.t13max.fight.event.SmallRoundRecorder;
 import com.t13max.fight.hero.FightHero;
 import com.t13max.fight.log.FightLogManager;
 import com.t13max.fight.member.IFightMember;
@@ -26,6 +27,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 战斗工厂类
+ *
  * @author: t13max
  * @since: 13:53 2024/4/11
  */
@@ -41,37 +44,18 @@ public class FightFactory {
         try {
 
             fightMatch = new FightMatch(matchId);
-
             //创建战斗上下文
             FightContext fightContext = new FightContext();
+            //set
             fightMatch.setFightContext(fightContext);
-
+            //初始化上下文
             initFightContext(fightContext);
-
             //战斗上下文初始化后
             fightContext.setFightMatch(fightMatch);
-            fightContext.getFightEventBus().register(fightContext.getFightLogManager());
-
-            IFightMember attackerMember = createPlayerMember(fightContext, attackerPb.getPlayerId(), true);
-
-            fightMatch.getMemberMap().put(attackerMember.getId(), attackerMember);
-
-            Map<Long, FightHero> attacker = createHeroMap(fightContext, attackerMember, attackerPb);
-            Map<Long, FightHero> defender;
-            IFightMember defenderMember;
-            if (defenderPb.getMonsterGroupId() == 0) {
-                defenderMember = createPlayerMember(fightContext, attackerPb.getPlayerId(), false);
-                defender = createHeroMap(fightContext, defenderMember, defenderPb);
-            } else {
-                defenderMember = createMonsterMember(fightContext, TempIdUtil.getNextTempId(), false);
-                defender = createHeroMap(fightContext, defenderMember, defenderPb.getMonsterGroupId());
-            }
-            fightMatch.getMemberMap().put(defenderMember.getId(), defenderMember);
-
-            fightMatch.getHeroMap().putAll(attacker);
-            fightMatch.getHeroMap().putAll(defender);
-
-            fightMatch.setActionMoveBar(new ActionMoveBar(attacker, defender));
+            //初始化注册监听
+            initEventListen(fightContext);
+            //初始化玩家和英雄信息
+            initPlayerAndHero(fightContext, attackerPb, fightMatch, defenderPb);
 
         } catch (Exception exception) {
             Log.battle.error("战斗创建失败, error={}", exception.getMessage());
@@ -79,6 +63,18 @@ public class FightFactory {
         }
 
         return fightMatch;
+    }
+
+    /**
+     * 注册监听
+     *
+     * @Author t13max
+     * @Date 16:16 2024/6/5
+     */
+    private static void initEventListen(FightContext fightContext) {
+        FightEventBus fightEventBus = fightContext.getFightEventBus();
+        fightEventBus.register(fightContext.getFightLogManager());
+        fightEventBus.register(fightContext.getSmallRoundRecorder());
     }
 
     /**
@@ -91,6 +87,37 @@ public class FightFactory {
         fightContext.setFightEventBus(new FightEventBus(fightContext));
         fightContext.setFightTimeMachine(new FightTimeMachine(fightContext));
         fightContext.setFightLogManager(new FightLogManager(fightContext));
+        fightContext.setSmallRoundRecorder(new SmallRoundRecorder(fightContext));
+    }
+
+    /**
+     * 初始化玩家和英雄信息
+     *
+     * @Author t13max
+     * @Date 16:18 2024/6/5
+     */
+    private static void initPlayerAndHero(FightContext fightContext, FightPlayerInfoPb attackerPb, FightMatch fightMatch, FightPlayerInfoPb defenderPb) {
+        //初始化玩家双方及英雄
+        IFightMember attackerMember = createPlayerMember(fightContext, attackerPb.getPlayerId(), true);
+
+        fightMatch.getMemberMap().put(attackerMember.getId(), attackerMember);
+
+        Map<Long, FightHero> attacker = createHeroMap(fightContext, attackerMember, attackerPb);
+        Map<Long, FightHero> defender;
+        IFightMember defenderMember;
+        if (defenderPb.getMonsterGroupId() == 0) {
+            defenderMember = createPlayerMember(fightContext, attackerPb.getPlayerId(), false);
+            defender = createHeroMap(fightContext, defenderMember, defenderPb);
+        } else {
+            defenderMember = createMonsterMember(fightContext, TempIdUtil.getNextTempId(), false);
+            defender = createHeroMap(fightContext, defenderMember, defenderPb.getMonsterGroupId());
+        }
+        fightMatch.getMemberMap().put(defenderMember.getId(), defenderMember);
+
+        fightMatch.getHeroMap().putAll(attacker);
+        fightMatch.getHeroMap().putAll(defender);
+
+        fightMatch.setActionMoveBar(new ActionMoveBar(attacker, defender));
     }
 
     /**

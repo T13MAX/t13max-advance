@@ -1,5 +1,6 @@
 package com.t13max.client.view.window;
 
+import battle.api.DoActionResp;
 import com.t13max.client.player.Player;
 import com.t13max.client.view.window.AbstractWindow;
 import com.t13max.client.view.panel.BattlePanel;
@@ -54,5 +55,14 @@ public class HomeWindow extends AbstractWindow {
         this.addComponent(mainPanel, "home.main.operate", new OperatePanel(this), JSplitPane.RIGHT);
     }
 
-
+    /**
+     * 刷新界面
+     * 用于展示效果
+     *
+     * @Author t13max
+     * @Date 17:04 2024/6/5
+     */
+    public void update(DoActionResp message) {
+        //暂时没效果
+    }
 }

@@ -1,17 +1,27 @@
 package com.t13max.client.player;
 
+import battle.api.DoActionReq;
+import battle.api.DoActionResp;
 import com.google.protobuf.MessageLite;
 import com.t13max.client.client.NettyClient;
+import com.t13max.client.entity.HeroEntity;
 import com.t13max.client.entity.MatchEntity;
 import com.t13max.client.player.task.SendMsgTask;
 import com.t13max.client.msg.ClientSession;
+import com.t13max.client.view.panel.HeroPanel;
 import com.t13max.client.view.window.*;
 import com.t13max.game.msg.MessagePack;
+import com.t13max.template.helper.HeroHelper;
+import com.t13max.template.manager.TemplateManager;
+import com.t13max.template.temp.TemplateHero;
 import com.t13max.util.Log;
 import lombok.Getter;
 import lombok.Setter;
+import message.id.MessageId;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 import java.util.concurrent.*;
 
 /**
@@ -19,15 +29,15 @@ import java.util.concurrent.*;
  * @since: 19:09 2024/5/29
  */
 @Getter
+@Setter
 public class Player {
 
     public static final Player PLAYER = new Player();
 
-    @Setter
     private long uuid;
-    @Setter
+
     private long matchId;
-    @Setter
+
     private MatchEntity matchEntity;
 
     private BlockingQueue<Runnable> taskQueue = new LinkedBlockingQueue<>();
@@ -41,12 +51,17 @@ public class Player {
 
     private NettyClient nettyClient = new NettyClient();
 
-    @Setter
     private ClientSession clientSession;
 
     private volatile boolean stop;
 
     private volatile long lastTickMills;
+
+    private long curHeroId;
+
+    private int skillIndex;
+
+    private int targetIndex;
 
     public Player() {
 
@@ -117,6 +132,60 @@ public class Player {
         }
 
         clientSession.close();
+    }
+
+    public void doAction() {
+        if (curHeroId == 0) {
+            return;
+        }
+        HeroEntity heroEntity = this.matchEntity.getSelfPlayer().getHeroMap().get(curHeroId);
+        if (heroEntity == null) {
+            Log.client.error("英雄不存在, heroId={}", curHeroId);
+            return;
+        }
+        HeroEntity targetHero = this.matchEntity.getTargetHero(targetIndex);
+        if (targetHero == null) {
+            Log.client.error("英雄不存在, targetIndex", targetIndex);
+            return;
+        }
+        TemplateHero template = TemplateManager.inst().helper(HeroHelper.class).getTemplate(heroEntity.getTemplateId());
+        if (template == null) {
+            Log.client.error("模板不存在, heroId={}, templateId={}", curHeroId, heroEntity.getTemplateId());
+            return;
+        }
+        if (template.getSkill().length <= skillIndex) {
+            Log.client.error("技能选择错误, heroId={}, skillIndex={}, template={}", curHeroId, skillIndex, template.getSkill());
+            return;
+        }
+        int skillId = template.getSkill()[skillIndex];
+        DoActionReq.Builder builder = DoActionReq.newBuilder();
+        builder.setHeroId(this.curHeroId);
+        builder.setSkillId(skillId);
+        builder.addTargetIds(targetHero.getHeroId());
+        sendMessage(MessageId.C_MATCH_ACTION_VALUE, builder.build());
+        clearAction();
+    }
+
+    private void clearAction() {
+        this.skillIndex = 0;
+        this.targetIndex = 0;
+        this.curHeroId = 0;
+    }
+
+    public void actionHero(long heroId) {
+        this.curHeroId = heroId;
+        HeroEntity heroEntity = this.matchEntity.getSelfPlayer().getHeroMap().get(heroId);
+        if (heroEntity == null) {
+            Log.client.error("英雄不存在, heroId={}", heroId);
+            return;
+        }
+        HeroPanel heroPanel = heroEntity.getPanel();
+        if (heroPanel == null) {
+            Log.client.error("panel不存在, heroId={}", heroId);
+            return;
+        }
+        heroPanel.setBackground(Color.GREEN);
+        heroPanel.repaint();
     }
 
     public void sendMessage(int msgId, MessageLite messageLite) {

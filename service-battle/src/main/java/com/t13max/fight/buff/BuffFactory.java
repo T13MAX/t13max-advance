@@ -1,6 +1,6 @@
 package com.t13max.fight.buff;
 
-import com.t13max.fight.FightContext;
+import com.t13max.fight.context.FightContext;
 import com.t13max.fight.buff.condition.IEventCondition;
 import com.t13max.fight.buff.effect.AbstractEffect;
 import com.t13max.fight.buff.effect.BuffEffectEnum;

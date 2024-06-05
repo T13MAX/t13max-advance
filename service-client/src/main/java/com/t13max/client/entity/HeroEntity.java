@@ -1,11 +1,16 @@
 package com.t13max.client.entity;
 
 import battle.entity.FightHeroInfoPb;
+import battle.entity.FightMatchPb;
 import battle.event.entity.BattleMoveBar;
+import com.google.protobuf.MessageLite;
 import com.t13max.client.player.Player;
 import com.t13max.client.view.enums.AttrEnum;
+import com.t13max.client.view.enums.Const;
 import com.t13max.client.view.panel.BattlePanel;
 import com.t13max.client.view.panel.HeroPanel;
+import com.t13max.client.view.progress.ActionProgress;
+import com.t13max.client.view.progress.HpProgress;
 import com.t13max.client.view.window.AbstractWindow;
 import com.t13max.client.view.window.HomeWindow;
 import com.t13max.util.Log;
@@ -48,24 +53,69 @@ public class HeroEntity implements IEntity {
 
     @Override
     public void onChange() {
-        HomeWindow homeWindow = Player.PLAYER.getWindow("home");
 
-        HeroPanel heroPanel = homeWindow.getComponent(getName());
+        HeroPanel heroPanel = this.getPanel();
         if (heroPanel == null) {
             Log.client.error("未找到对应panel. name={}");
             return;
         }
+
+        //属性变化
+        onAttrChange(heroPanel);
+
+        //行动条change
+        onActionChange(heroPanel);
+
+        heroPanel.setHeroEntity(this);
+    }
+
+    @Override
+    public <T extends MessageLite> void update(T t) {
+        if (!(t instanceof FightHeroInfoPb heroInfoPb)) {
+            return;
+        }
+        this.heroId = heroInfoPb.getHeroId();
+        this.templateId = heroInfoPb.getTemplateId();
+        this.attrMap.putAll(heroInfoPb.getAttrMapMap());
+        this.moveBar.update(heroInfoPb.getMoveBar());
+    }
+
+    private void onActionChange(HeroPanel heroPanel) {
+        ActionProgress progress = heroPanel.getComponent(Const.ACTION);
+        moveBar.onChange(progress);
+        progress.repaint();
+    }
+
+    private void onAttrChange(HeroPanel heroPanel) {
         for (Map.Entry<Integer, Double> entry : this.attrMap.entrySet()) {
 
             AttrEnum attrEnum = AttrEnum.getAttrEnum(entry.getKey());
             if (attrEnum == null || !attrEnum.hasName()) {
                 continue;
             }
-            JLabel jLabel = heroPanel.getComponent(attrEnum.getName());
-            jLabel.setText(attrEnum.getName() + ": " + String.format("%.2f", entry.getValue()));
-            jLabel.repaint();
+
+            Double value = entry.getValue();
+
+            switch (attrEnum) {
+                //血量进度条处理
+                case CUR_HP -> {
+                    Double maxHp = this.attrMap.get(AttrEnum.MAX_HP.getId());
+                    if (maxHp == null) {
+                        maxHp = 100D;
+                    }
+                    HpProgress progress = heroPanel.getComponent(attrEnum.getName());
+                    progress.setValue((int) (value / maxHp) * Const.MAX_PROCESS);
+                    progress.repaint();
+                }
+                //其他默认属性
+                default -> {
+                    JLabel jLabel = heroPanel.getComponent(attrEnum.getName());
+                    jLabel.setText(attrEnum.getName() + ": " + String.format("%.2f", value));
+                    jLabel.repaint();
+                }
+            }
+
         }
-        heroPanel.setHeroEntity(this);
     }
 
     private String getName() {
@@ -80,5 +130,11 @@ public class HeroEntity implements IEntity {
             side = "target";
         }
         return side;
+    }
+
+    public HeroPanel getPanel() {
+        HomeWindow homeWindow = Player.PLAYER.getWindow("home");
+        HeroPanel heroPanel = homeWindow.getComponent(getName());
+        return heroPanel;
     }
 }

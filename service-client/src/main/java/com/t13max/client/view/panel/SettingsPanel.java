@@ -16,7 +16,7 @@ import java.awt.*;
 public class SettingsPanel extends JPanel {
 
     public SettingsPanel() {
-        this.setSize(new Dimension(Const.SETTINGS_WIDTH, Const.SETTINGS_HEIGHT));
+        this.setSize(new Dimension(Const.SETTINGS_WIDTH,0));
         this.setLayout(new FlowLayout(FlowLayout.LEFT, 1, 1));
         this.setBackground(Color.GRAY);
         this.add(new JButton("设置"));

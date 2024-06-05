@@ -5,6 +5,8 @@ import com.t13max.client.player.Player;
 import com.t13max.client.view.button.PlaceholderButton;
 import com.t13max.client.view.enums.Const;
 import com.t13max.client.view.label.AttrLabel;
+import com.t13max.client.view.progress.ActionProgress;
+import com.t13max.client.view.progress.HpProgress;
 import com.t13max.client.view.window.AbstractWindow;
 import com.t13max.client.view.window.HeroDetailWindow;
 import lombok.Getter;
@@ -30,7 +32,6 @@ public class HeroPanel extends JPanel {
     private Map<String, Component> componentMap = new HashMap<>();
 
     public HeroPanel() {
-        //this.setSize(new Dimension(Const.HERO_LENGTH, Const.HERO_LENGTH));
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black));
         init();
@@ -38,8 +39,10 @@ public class HeroPanel extends JPanel {
 
     private void init() {
 
-        this.add(new PlaceholderButton());
-        addComponent(Const.HP, new AttrLabel(Const.HP));
+        //this.add(new PlaceholderButton());
+        //addComponent(Const.HP, new AttrLabel(Const.HP));
+        addComponent(Const.HP, new HpProgress());
+        addComponent(Const.ACTION, new ActionProgress());
         addComponent(Const.ATK, new AttrLabel(Const.ATK));
         addComponent(Const.DEF, new AttrLabel(Const.DEF));
         addComponent(Const.SKILL, new AttrLabel(Const.SKILL));

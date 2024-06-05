@@ -1,6 +1,6 @@
 package com.t13max.fight.event;
 
-import com.t13max.fight.FightMatch;
+import com.t13max.fight.context.FightMatch;
 import lombok.Getter;
 
 /**

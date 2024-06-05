@@ -38,7 +38,8 @@ message DoActionReq{
 message DoActionResp{
   uint64 playerId = 1;
   uint64 heroId = 2;
-  repeated FightEventPb event = 3;
+  uint32 round = 3;
+  repeated FightEventPb event = 4;
 }
 
 //客户端退出

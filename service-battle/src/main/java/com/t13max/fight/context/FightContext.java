@@ -1,6 +1,7 @@
-package com.t13max.fight;
+package com.t13max.fight.context;
 
 import com.t13max.fight.event.FightEventBus;
+import com.t13max.fight.event.SmallRoundRecorder;
 import com.t13max.fight.log.FightLogManager;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,6 +24,9 @@ public class FightContext {
 
     private FightLogManager fightLogManager;
 
+    private SmallRoundRecorder smallRoundRecorder;
 
 
+    public FightContext() {
+    }
 }

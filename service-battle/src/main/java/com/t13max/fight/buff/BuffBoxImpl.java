@@ -2,7 +2,7 @@ package com.t13max.fight.buff;
 
 import battle.event.entity.BuffStatus;
 import battle.event.entity.RemoveReason;
-import com.t13max.fight.FightContext;
+import com.t13max.fight.context.FightContext;
 import com.t13max.fight.buff.effect.IBuffEffect;
 import com.t13max.fight.event.*;
 import com.t13max.game.exception.BattleException;

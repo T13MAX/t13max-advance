@@ -1,7 +1,7 @@
 package com.t13max.fight.member;
 
 import com.google.protobuf.MessageLite;
-import com.t13max.fight.FightContext;
+import com.t13max.fight.context.FightContext;
 
 /**
  * @author: t13max

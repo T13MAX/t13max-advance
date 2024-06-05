@@ -1,6 +1,6 @@
 package com.t13max.fight.event;
 
-import com.t13max.fight.FightContext;
+import com.t13max.fight.context.FightContext;
 
 import java.util.*;
 

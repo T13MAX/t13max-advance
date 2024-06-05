@@ -1,7 +1,7 @@
 package com.t13max.fight.member;
 
 import battle.entity.FightPlayerInfoPb;
-import com.t13max.fight.FightContext;
+import com.t13max.fight.context.FightContext;
 import com.t13max.fight.hero.FightHero;
 import lombok.Data;
 

@@ -1,7 +1,7 @@
 package com.t13max.fight.action;
 
 import com.t13max.fight.hero.FightHero;
-import com.t13max.fight.FightMatch;
+import com.t13max.fight.context.FightMatch;
 import com.t13max.fight.buff.BuffBoxImpl;
 import com.t13max.fight.buff.BuffFactory;
 import com.t13max.fight.event.FightEventBus;

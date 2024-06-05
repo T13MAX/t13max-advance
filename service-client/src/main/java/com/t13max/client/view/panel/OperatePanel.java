@@ -18,7 +18,7 @@ public class OperatePanel extends JSplitPane {
         this.setOneTouchExpandable(true);
         this.setContinuousLayout(true);
 
-        this.setBottomComponent(new JPanel());
+        this.setBottomComponent(new SkillPanel());
         this.setTopComponent(new SettingsPanel());
 
         this.setEnabled(false);

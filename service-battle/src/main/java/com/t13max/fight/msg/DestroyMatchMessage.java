@@ -2,8 +2,8 @@ package com.t13max.fight.msg;
 
 import battle.api.DestroyFightMatchReq;
 import battle.api.DestroyFightMatchResp;
-import com.t13max.fight.FightMatch;
-import com.t13max.fight.MatchManager;
+import com.t13max.fight.context.FightMatch;
+import com.t13max.fight.context.MatchManager;
 import com.t13max.game.msg.Message;
 import com.t13max.game.session.BattleSession;
 import com.t13max.util.Log;

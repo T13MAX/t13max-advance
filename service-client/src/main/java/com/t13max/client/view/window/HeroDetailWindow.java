@@ -19,7 +19,7 @@ import java.awt.event.MouseEvent;
 public class HeroDetailWindow extends AbstractWindow {
 
     public HeroDetailWindow() {
-        super("英雄详细信息", new Dimension(150, 150), false);
+        super("英雄详细信息", new Dimension(Const.HERO_DETAIL_WIDTH, Const.HERO_DETAIL_HEIGHT), false);
         initWindowContent();
     }
 
@@ -30,13 +30,9 @@ public class HeroDetailWindow extends AbstractWindow {
 
     @Override
     protected void initWindowContent() {
-        //Point point = new Point();
-        //this.setLocation(point);
         this.setDefaultCloseAction(CloseAction.DISPOSE);
-        //this.addComponent("11",new Button("1111111111"),null);
         this.addComponent("hero.detail.panel", new JPanel(), panel -> {
-            panel.setSize(150, 150);
-            //panel.setLayout(new FlowLayout(FlowLayout.LEFT, 1, 1));
+            panel.setSize(Const.HERO_DETAIL_WIDTH, Const.HERO_DETAIL_HEIGHT);
             panel.setBackground(Color.GRAY);
             JTextArea jTextArea = new JTextArea("3333333333333333");
             jTextArea.setLineWrap(true);
@@ -51,13 +47,13 @@ public class HeroDetailWindow extends AbstractWindow {
         }
 
         Point location = MouseInfo.getPointerInfo().getLocation();
-        this.setBounds((int) location.getX() + 1, (int) location.getY() + 1, 150, 150);
+        this.setBounds((int) location.getX() + 1, (int) location.getY() + 1, Const.HERO_DETAIL_WIDTH, Const.HERO_DETAIL_HEIGHT);
         //显示详细信息
         JTextArea label = getComponent("hero.detail.panel.label");
         if (label == null) {
             return;
         }
         label.setText(heroEntity.toString());
-        //this.repaint();
+        label.repaint();
     }
 }
