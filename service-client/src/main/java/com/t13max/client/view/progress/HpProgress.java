@@ -3,6 +3,7 @@ package com.t13max.client.view.progress;
 import com.t13max.client.view.enums.Const;
 
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicProgressBarUI;
 import java.awt.*;
 
 /**
@@ -15,4 +16,6 @@ public class HpProgress extends JProgressBar {
         super(JProgressBar.HORIZONTAL, 0, Const.MAX_PROCESS);
         this.setPreferredSize(new Dimension(Const.HERO_WIDTH, 10));
     }
+
+
 }

@@ -28,7 +28,7 @@ public class BuffBoxImpl extends AbstractEventListener implements IBuffBox {
 
     private long ownerId;
 
-    private BuffStatus buffStatus;
+    private BuffStatus buffStatus = BuffStatus.IDLE;
 
     //先默认全是任意一个
     private DisposedRule disposedRule = DisposedRule.ANY;
@@ -138,7 +138,7 @@ public class BuffBoxImpl extends AbstractEventListener implements IBuffBox {
 
         TemplateBuff templateBuff = TemplateManager.inst().helper(BuffHelper.class).getTemplate(buffId);
         if (templateBuff == null) {
-            throw new BattleException("buff不存在, id="+buffId);
+            throw new BattleException("buff不存在, id=" + buffId);
         }
         int[] effect = templateBuff.getEffect();
         String[] params = templateBuff.getParams();
@@ -179,7 +179,7 @@ public class BuffBoxImpl extends AbstractEventListener implements IBuffBox {
                 fightContext.getFightEventBus().postEvent(new BuffSwitchToActiveEvent(this));
                 break;
             case DISPOSED:
-                fightContext.getFightMatch().getFightHero(this.ownerId).getBuffManager().removeBuff(this.id,removeReason);
+                fightContext.getFightMatch().getFightHero(this.ownerId).getBuffManager().removeBuff(this.id, removeReason);
                 this.onDestroy(removeReason);
                 break;
         }

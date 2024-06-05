@@ -42,8 +42,15 @@ public class Action_1_Attack extends AbstractAction {
 
         for (Long targetHeroId : targetHeroIds) {
             FightHero targetHero = fightMatch.getFightHero(targetHeroId);
+            if (targetHero == null) {
+                continue;
+            }
             double damage = new DefaultDamageCalculator(fightHero, targetHero, this.param).calcDamage();
             damageMap.put(targetHeroId, damage);
+        }
+
+        if (damageMap.isEmpty()) {
+            return;
         }
 
         postEvent(new ReadyToSubHpEvent(fightHero.getId(), damageMap));

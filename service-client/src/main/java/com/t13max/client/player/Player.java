@@ -19,6 +19,7 @@ import lombok.Getter;
 import lombok.Setter;
 import message.id.MessageId;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.*;
 import java.util.List;
@@ -163,13 +164,16 @@ public class Player {
         builder.setSkillId(skillId);
         builder.addTargetIds(targetHero.getHeroId());
         sendMessage(MessageId.C_MATCH_ACTION_VALUE, builder.build());
-        clearAction();
+        clearAction(heroEntity);
     }
 
-    private void clearAction() {
+    private void clearAction(HeroEntity heroEntity) {
         this.skillIndex = 0;
         this.targetIndex = 0;
         this.curHeroId = 0;
+        HeroPanel heroPanel = heroEntity.getPanel();
+        heroPanel.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black));
+        heroPanel.repaint();
     }
 
     public void actionHero(long heroId) {
@@ -184,7 +188,7 @@ public class Player {
             Log.client.error("panel不存在, heroId={}", heroId);
             return;
         }
-        heroPanel.setBackground(Color.GREEN);
+        heroPanel.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.green));
         heroPanel.repaint();
     }
 

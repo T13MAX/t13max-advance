@@ -24,6 +24,7 @@ public class LogWindow extends AbstractWindow {
 
     public LogWindow() {
         super("日志", new Dimension(Const.LOG_WIDTH, Const.LOG_HEIGHT), false);
+        initWindowContent();
     }
 
     @Override
@@ -35,10 +36,8 @@ public class LogWindow extends AbstractWindow {
     protected void initWindowContent() {
         this.setLocationRelativeTo(null);
         setDefaultCloseAction(CloseAction.DISPOSE);
-        JScrollPane jScrollPane = new JScrollPane();
-        this.addComponent("log.scroll", jScrollPane, panel -> {
-            this.addComponent(jScrollPane, "log.scroll.table", createTable());
-        });
+        JScrollPane jScrollPane = new JScrollPane(createTable());
+        this.addComponent("log.scroll", jScrollPane, panel -> {});
     }
 
     private JTable createTable() {
@@ -46,7 +45,7 @@ public class LogWindow extends AbstractWindow {
         Object[] columnNames = {"回合", "事件", "值"};
 
         // 表格所有行数据
-        Object[][] rowData = new Object[][]{{"1", "1", "1"}, {"11", "11", "11"}};//orderInforService.findOrder(uname);
+        Object[][] rowData = new Object[][]{};
 
         tableModel = new DefaultTableModel(rowData, columnNames);
 
@@ -66,7 +65,7 @@ public class LogWindow extends AbstractWindow {
         //设置表头是否可移动
         jTableHeader.setReorderingAllowed(true);
 
-        table.setSelectionBackground(Color.lightGray);
+        table.setSelectionBackground(Color.red);
         //设置指定列的宽度
         table.getColumnModel().getColumn(0).setPreferredWidth(20);
         table.getColumnModel().getColumn(1).setPreferredWidth(50);
@@ -89,8 +88,8 @@ public class LogWindow extends AbstractWindow {
         int round = doActionResp.getRound();
         for (FightEventPb fightEventPb : doActionResp.getEventList()) {
             FightEventPb.EventCase eventCase = fightEventPb.getEventCase();
-            String eventName = eventCase.getClass().getSimpleName();
-            String info = eventCase.toString();
+            String eventName = eventCase.toString();
+            String info = fightEventPb.toString();
             tableModel.addRow(new Object[]{round, eventName, info});
         }
     }

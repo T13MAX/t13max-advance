@@ -22,6 +22,7 @@ public class DoActionRespMessage extends AbstractMessage<DoActionResp> {
         LogWindow logWindow = Player.PLAYER.getWindow("log");
         if (logWindow == null) {
             Player.PLAYER.openWindow("log", false);
+            logWindow = Player.PLAYER.getWindow("log");
         }
 
         logWindow.update(message);

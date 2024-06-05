@@ -3,6 +3,7 @@ package com.t13max.client.view.progress;
 import com.t13max.client.view.enums.Const;
 
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicProgressBarUI;
 import java.awt.*;
 
 /**

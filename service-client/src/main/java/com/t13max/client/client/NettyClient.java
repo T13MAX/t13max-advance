@@ -13,6 +13,9 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 
 /**
+ * 客户端
+ * 自动重连 待优化
+ *
  * @author: t13max
  * @since: 19:44 2024/5/29
  */

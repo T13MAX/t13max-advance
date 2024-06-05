@@ -13,7 +13,7 @@ import message.id.MessageId;
  * @since: 16:37 2024/6/5
  */
 @Message(value = MessageId.C_MATCH_ACTION_VALUE)
-public class DoActionMessage extends AbstractMessage<DoActionReq>{
+public class DoActionMessage extends AbstractMessage<DoActionReq> {
 
     @Override
     protected void doMessage(BattleSession battleSession, int msgId, DoActionReq message) {
@@ -24,7 +24,7 @@ public class DoActionMessage extends AbstractMessage<DoActionReq>{
             Log.battle.error("fightMatch不存在, id={}", matchId);
             return;
         }
-        DoActionArgs doActionArgs = new DoActionArgs(message);
+        DoActionArgs doActionArgs = new DoActionArgs(uuid, message);
         fightMatch.setDoActionArgs(doActionArgs);
     }
 }

@@ -34,7 +34,7 @@ public abstract class AbstractMessage<T extends MessageLite> implements IMessage
             doMessage(player, msgId, messageLite);
         } catch (Exception e) {
             //消息异常处理
-            Log.client.error("消息处理异常, error={}", e.getMessage());
+            Log.client.error("消息处理异常, clazz={}, error={}", this.getClass().getSimpleName(), e.getMessage());
         }
 
     }

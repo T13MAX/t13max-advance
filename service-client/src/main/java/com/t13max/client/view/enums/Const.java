@@ -24,6 +24,7 @@ public interface Const {
     String LOGIN = "login";
 
     String HP = " HP:";
+    String HP_PROCESS = " HP: PROCESS";
     String ACTION = " ACTION:";
     String DEF = " DEF:";
     String ATK = " ATK:";

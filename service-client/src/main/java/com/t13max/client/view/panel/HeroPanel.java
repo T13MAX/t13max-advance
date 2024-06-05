@@ -41,8 +41,9 @@ public class HeroPanel extends JPanel {
 
         //this.add(new PlaceholderButton());
         //addComponent(Const.HP, new AttrLabel(Const.HP));
-        addComponent(Const.HP, new HpProgress());
+        addComponent(Const.HP_PROCESS, new HpProgress());
         addComponent(Const.ACTION, new ActionProgress());
+        addComponent(Const.HP, new AttrLabel(Const.HP));
         addComponent(Const.ATK, new AttrLabel(Const.ATK));
         addComponent(Const.DEF, new AttrLabel(Const.DEF));
         addComponent(Const.SKILL, new AttrLabel(Const.SKILL));

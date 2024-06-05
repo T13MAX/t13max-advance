@@ -24,7 +24,8 @@ public class DoActionArgs {
         this.heroId = heroId;
     }
 
-    public DoActionArgs(DoActionReq message) {
+    public DoActionArgs(long playerId, DoActionReq message) {
+        this.playerId = playerId;
         heroId = message.getHeroId();
         skillId = message.getSkillId();
         targetIds = message.getTargetIdsList();

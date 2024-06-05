@@ -103,9 +103,12 @@ public class HeroEntity implements IEntity {
                     if (maxHp == null) {
                         maxHp = 100D;
                     }
-                    HpProgress progress = heroPanel.getComponent(attrEnum.getName());
+                    HpProgress progress = heroPanel.getComponent(Const.HP_PROCESS);
                     progress.setValue((int) (value / maxHp) * Const.MAX_PROCESS);
                     progress.repaint();
+                    JLabel jLabel = heroPanel.getComponent(attrEnum.getName());
+                    jLabel.setText(attrEnum.getName() + ": " + String.format("%.2f", value));
+                    jLabel.repaint();
                 }
                 //其他默认属性
                 default -> {
