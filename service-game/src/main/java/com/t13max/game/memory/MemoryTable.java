@@ -1,5 +1,7 @@
 package com.t13max.game.memory;
 
+import com.t13max.game.feature.equip.EquipMemory;
+import com.t13max.game.feature.item.ItemMemory;
 import lombok.Getter;
 
 import java.util.HashMap;

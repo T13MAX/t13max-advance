@@ -1,6 +1,7 @@
-package com.t13max.game.memory;
+package com.t13max.game.feature.item;
 
 import com.t13max.data.entity.ItemData;
+import com.t13max.game.memory.SingleMemory;
 import game.entity.ItemDataPb;
 
 /**

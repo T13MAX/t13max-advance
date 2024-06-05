@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+
+option java_package = "game.entity";
+option java_multiple_files = true;
+
+//活动
+message ActivityDataPb{
+  uint32 actId = 1;
+
+}
+
+//签到活动
+message SignInActPb{
+
+}
