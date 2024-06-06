@@ -127,9 +127,7 @@ public class LogWindow extends AbstractWindow {
                         continue;
                     }
                     double delta = attributeUpdateEventPb.getDelta();
-                    double finalValue = attributeUpdateEventPb.getFinalValue();
-                    attributeUpdateEventPb.get
-                    info = "属性发生变化!" + attributeUpdateEventPb.getHeroId() + "的" + attrEnum.name() + (delta > 0 ? "增加" : "减少") + "了" + delta;
+                    info = "属性发生变化!" + attributeUpdateEventPb.getHeroId() + "的" + attrEnum.name() + (delta > 0 ? "增加" : "减少") + "了" + Math.abs(delta);
                 }
                 case MOVEBARUPDATEEVENTPB -> {
                     MoveBarUpdateEventPb moveBarUpdateEventPb = fightEventPb.getMoveBarUpdateEventPb();
