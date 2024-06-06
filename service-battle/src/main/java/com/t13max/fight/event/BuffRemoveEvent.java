@@ -28,7 +28,7 @@ public class BuffRemoveEvent extends AbstractEvent implements IFightEventPackage
     public FightEventPb pack() {
         FightEventPb.Builder builder = FightEventPb.newBuilder();
         BuffRemoveEventPb.Builder eventBuilder = BuffRemoveEventPb.newBuilder();
-        eventBuilder.setBuffStatus(buff.getBuffStatus());
+        eventBuilder.setBuffBox(buff.pack());
         eventBuilder.setReason(removeReason);
         builder.setBuffRemoveEventPb(eventBuilder);
         return builder.build();

@@ -70,6 +70,14 @@ public class HeroEntity implements IEntity {
     }
 
     @Override
+    public void clear() {
+        this.heroId = 0;
+        this.templateId = 0;
+        this.attrMap.clear();
+        this.moveBar.clear();
+    }
+
+    @Override
     public <T extends MessageLite> void update(T t) {
         if (!(t instanceof FightHeroInfoPb heroInfoPb)) {
             return;
@@ -99,21 +107,26 @@ public class HeroEntity implements IEntity {
             switch (attrEnum) {
                 //血量进度条处理
                 case CUR_HP -> {
+
                     Double maxHp = this.attrMap.get(AttrEnum.MAX_HP.getId());
                     if (maxHp == null) {
                         maxHp = 100D;
                     }
                     HpProgress progress = heroPanel.getComponent(Const.HP_PROCESS);
-                    progress.setValue((int) (value / maxHp) * Const.MAX_PROCESS);
+                    progress.setValue((int) (value / maxHp * Const.MAX_PROCESS));
                     progress.repaint();
                     JLabel jLabel = heroPanel.getComponent(attrEnum.getName());
-                    jLabel.setText(attrEnum.getName() + ": " + String.format("%.2f", value));
+                    jLabel.setText(attrEnum.getName() + String.format("%.2f", value));
                     jLabel.repaint();
+                    if (value <= 0) {
+                        heroPanel.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.red));
+                        heroPanel.repaint();
+                    }
                 }
                 //其他默认属性
                 default -> {
                     JLabel jLabel = heroPanel.getComponent(attrEnum.getName());
-                    jLabel.setText(attrEnum.getName() + ": " + String.format("%.2f", value));
+                    jLabel.setText(attrEnum.getName() + String.format("%.2f", value));
                     jLabel.repaint();
                 }
             }

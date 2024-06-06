@@ -45,6 +45,10 @@ public class NettyClient {
         });
     }
 
+    public ChannelFuture connect() throws InterruptedException {
+        return connect("127.0.0.1", 24000);
+    }
+
     public ChannelFuture connect(String host, int port) throws InterruptedException {
         return bootstrap.connect(host, port);
     }

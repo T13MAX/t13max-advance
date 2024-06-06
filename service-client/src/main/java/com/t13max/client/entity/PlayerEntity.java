@@ -41,6 +41,12 @@ public class PlayerEntity implements IEntity {
     }
 
     @Override
+    public void clear() {
+        this.playerId=0;
+        this.heroMap.values().forEach(HeroEntity::clear);
+    }
+
+    @Override
     public <T extends MessageLite> void update(T t) {
 
         if (!(t instanceof FightPlayerInfoPb playerInfoPb)) {

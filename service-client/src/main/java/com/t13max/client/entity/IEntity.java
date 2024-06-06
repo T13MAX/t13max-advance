@@ -10,5 +10,7 @@ public interface IEntity {
 
     void onChange();
 
+    void clear();
+
     <T extends MessageLite> void update(T t);
 }

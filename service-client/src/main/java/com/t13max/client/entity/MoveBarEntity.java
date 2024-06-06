@@ -31,12 +31,17 @@ public class MoveBarEntity implements IEntity {
     }
 
     public void onChange(ActionProgress progress) {
-        int value = (int) currDistance / totalDistance * Const.MAX_PROCESS;
+        int value = (int) (currDistance / totalDistance * Const.MAX_PROCESS);
         progress.setValue(value);
     }
 
     @Override
     public void onChange() {
+
+    }
+
+    @Override
+    public void clear() {
 
     }
 

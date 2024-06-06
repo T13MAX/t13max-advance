@@ -70,7 +70,7 @@ public class Player {
 
         nettyClient.start();
         try {
-            nettyClient.connect("127.0.0.1", 24000);
+            nettyClient.connect();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

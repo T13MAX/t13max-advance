@@ -36,7 +36,7 @@ public class FightUltimateSkill extends AbstractSkill {
         }
         Double oldValue = fightHero.getFightAttrManager().getFinalAttr(FightAttrEnum.CHARGE);
         fightHero.getFightAttrManager().modifyValueAttr(FightAttrEnum.CHARGE, oldValue, false);
-        this.fightContext.getFightEventBus().postEvent(new AttributeUpdateEvent(this.ownerId, this.ownerId, FightAttrEnum.CHARGE, oldValue, oldValue, false));
+        this.fightContext.getFightEventBus().postEvent(new AttributeUpdateEvent(this.ownerId, this.ownerId, FightAttrEnum.CHARGE, oldValue, -oldValue, false));
         return true;
     }
 

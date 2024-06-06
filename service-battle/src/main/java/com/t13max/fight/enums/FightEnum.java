@@ -6,6 +6,9 @@ package com.t13max.fight.enums;
  */
 public enum FightEnum {
 
+    //创建好以后 等待玩家登录
+    WAIT_CLIENT_LOGIN,
+
     INIT,
 
     SMALL_ROUND,

@@ -40,6 +40,7 @@ public class BuffFactory {
             buffBox.onCreate();
         } catch (Exception e) {
             Log.battle.error("createBuffBoxImpl, error={}", e.getMessage());
+            e.printStackTrace();
             return null;
         }
         return buffBox;

@@ -17,5 +17,7 @@ public interface IFightMember {
 
     void sendMsg(int msgId, MessageLite messageLite);
 
+    boolean isReady();
+
     FightPlayerInfoPb buildFightPlayerInfoPb();
 }

@@ -43,6 +43,12 @@ public class MatchEntity implements IEntity {
     }
 
     @Override
+    public void clear() {
+        selfPlayer.clear();
+        targetPlayer.clear();
+    }
+
+    @Override
     public <T extends MessageLite> void update(T t) {
 
         if (!(t instanceof FightMatchPb fightMatchPb)) {

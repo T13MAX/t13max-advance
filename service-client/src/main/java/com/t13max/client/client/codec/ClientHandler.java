@@ -3,15 +3,12 @@ package com.t13max.client.client.codec;
 import com.google.protobuf.MessageLite;
 import com.t13max.client.msg.ClientSession;
 import com.t13max.client.player.Player;
-import com.t13max.client.player.task.AbstractTask;
-import com.t13max.game.msg.ClientMessagePack;
+import com.t13max.client.player.task.AutoRetryTask;
+import com.t13max.client.player.task.ReconnectTask;
 import com.t13max.game.msg.MessageManager;
 import com.t13max.game.msg.ServerMessagePack;
-import com.t13max.game.session.ISession;
-import com.t13max.game.session.SessionManager;
 import com.t13max.util.Log;
 import io.netty.buffer.ByteBuf;
-import io.netty.channel.Channel;
 import io.netty.channel.ChannelDuplexHandler;
 import io.netty.channel.ChannelHandlerContext;
 
@@ -39,6 +36,7 @@ public class ClientHandler extends ChannelDuplexHandler {
     // 断开连接
     public void channelInactive(ChannelHandlerContext ctx) {
         Log.common.info("{} inactive!!!");
+        new ReconnectTask().submit();
     }
 
     // 收到消息
@@ -56,7 +54,7 @@ public class ClientHandler extends ChannelDuplexHandler {
             }
 
             byte[] finalData = data;
-            Player.PLAYER.addTask(new AbstractTask() {
+            Player.PLAYER.addTask(new AutoRetryTask() {
                 @Override
                 public void run() {
                     MessageLite messageLite = MessageManager.inst().parseMessage(msgId, finalData);

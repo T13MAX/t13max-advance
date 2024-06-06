@@ -1,5 +1,6 @@
 package com.t13max.fight.buff;
 
+import battle.event.entity.BuffBoxPb;
 import battle.event.entity.BuffStatus;
 import battle.event.entity.RemoveReason;
 import com.t13max.fight.context.FightContext;
@@ -41,5 +42,7 @@ public interface IBuffBox {
 
     //获取buff效果
     Set<IBuffEffect> getBuffEffects();
+
+    BuffBoxPb pack();
 
 }

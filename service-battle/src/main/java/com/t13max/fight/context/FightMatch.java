@@ -2,6 +2,7 @@ package com.t13max.fight.context;
 
 import battle.api.DoActionResp;
 import battle.api.FightMatchActionUnitPush;
+import battle.api.FightMatchFinishPush;
 import battle.api.FightMatchUpdatePush;
 import battle.entity.FightEventPb;
 import battle.entity.FightMatchPb;
@@ -81,13 +82,19 @@ public class FightMatch {
         Log.battle.debug("开始tick!");
         switch (this.fightEnum) {
             case INIT -> {
+                //等待玩家进入
+                changeFightState(FightEnum.WAIT_CLIENT_LOGIN);
+            }
+            case WAIT_CLIENT_LOGIN -> {
                 //超时销毁
                 if (checkTimeout(FightConst.WAIT_JOIN_TIMEOUT_MILLS)) {
                     changeFightState(FightEnum.FINISHED);
                     return;
                 }
-                //暂时没有其他操作 直接进入回合
-                changeFightState(FightEnum.SMALL_ROUND);
+                boolean allMatch = this.memberMap.values().stream().allMatch(IFightMember::isReady);
+                if (allMatch) {
+                    changeFightState(FightEnum.SMALL_ROUND);
+                }
             }
             case SMALL_ROUND -> {
                 smallRoundTick();
@@ -105,6 +112,10 @@ public class FightMatch {
 
         fightContext.getFightEventBus().postEvent(new FootUpEvent(this));
 
+        FightMatchFinishPush.Builder builder = FightMatchFinishPush.newBuilder();
+        builder.setMatchId(this.id);
+        //builder.setWin()
+        broadcast(MessageId.S_MATCH_FINISH_PUSH_VALUE,builder.build());
         changeFightState(FightEnum.FINISHED);
     }
 
@@ -301,7 +312,7 @@ public class FightMatch {
         FightMatchActionUnitPush.Builder builder = FightMatchActionUnitPush.newBuilder();
         builder.setHeroId(curActionHero.getId());
         builder.setPlayerId(curActionHero.getFightMember().getId());
-        broadcast(MessageId.S_ACTION_UNIT_PUSH_VALUE,builder.build());
+        broadcast(MessageId.S_ACTION_UNIT_PUSH_VALUE, builder.build());
 
         changeSmallRoundState(SmallRoundEnum.SMALL_ROUND_BEGIN);
     }

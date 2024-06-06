@@ -23,7 +23,7 @@ public class BuffUpdateEvent extends AbstractEvent implements IFightEventPackage
     public FightEventPb pack() {
         FightEventPb.Builder builder = FightEventPb.newBuilder();
         BuffUpdateEventPb.Builder eventBuilder = BuffUpdateEventPb.newBuilder();
-        eventBuilder.setBuffStatus(buffBox.getBuffStatus());
+        eventBuilder.setBuffBox(buffBox.pack());
         builder.setBuffUpdateEventPb(eventBuilder);
         return builder.build();
     }

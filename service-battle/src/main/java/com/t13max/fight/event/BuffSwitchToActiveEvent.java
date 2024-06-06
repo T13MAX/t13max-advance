@@ -23,7 +23,7 @@ public class BuffSwitchToActiveEvent extends AbstractEvent implements IFightEven
     public FightEventPb pack() {
         FightEventPb.Builder builder = FightEventPb.newBuilder();
         BuffActionEventPb.Builder eventBuilder = BuffActionEventPb.newBuilder();
-        eventBuilder.setBuffStatus(buffBox.getBuffStatus());
+        eventBuilder.setBuffBox(buffBox.pack());
         builder.setBuffActionEventPb(eventBuilder);
         return builder.build();
     }

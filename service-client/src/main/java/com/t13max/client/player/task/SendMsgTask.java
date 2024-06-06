@@ -1,13 +1,9 @@
 package com.t13max.client.player.task;
 
 import com.google.protobuf.MessageLite;
+import com.t13max.client.player.IPlayerTask;
 import com.t13max.game.msg.ClientMessagePack;
-import com.t13max.game.msg.MessageConst;
 import com.t13max.game.msg.MessageManager;
-import com.t13max.util.Log;
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.PooledByteBufAllocator;
-import io.netty.channel.Channel;
 import lombok.Data;
 
 /**

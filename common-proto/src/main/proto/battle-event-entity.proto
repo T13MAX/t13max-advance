@@ -30,24 +30,30 @@ message DeadEventPb {
 
 // Buff添加事件
 message BuffAddEventPb {
-  uint32 buffId = 1;
-  BuffStatus buffStatus = 2; // buff信息
+  BuffBoxPb buffBox = 1;
 }
 
 // Buff更新事件
 message BuffUpdateEventPb {
-  BuffStatus buffStatus = 1; // buff信息
+  BuffBoxPb buffBox = 1;
 }
 
 // Buff生效事件
 message BuffActionEventPb {
-  BuffStatus buffStatus = 1; // buff信息
+  BuffBoxPb buffBox = 1;
 }
 
 // Buff移除事件
 message BuffRemoveEventPb {
-  BuffStatus buffStatus = 1; // buff信息
+  BuffBoxPb buffBox = 1;
   RemoveReason reason = 2; // 原因 1正常消散 2驱散
+}
+
+message BuffBoxPb{
+  uint64 id = 1;//buff唯一id
+  uint64 buffId = 2;//buff模板Id
+  uint64 ownerId = 3;//英雄id
+  BuffStatus buffStatus = 4; // buff状态
 }
 
 message AttributeUpdateEventPb {

@@ -20,5 +20,10 @@ public class MonsterMember extends FightBaseMember {
 
     }
 
+    @Override
+    public boolean isReady() {
+        return true;
+    }
+
 
 }

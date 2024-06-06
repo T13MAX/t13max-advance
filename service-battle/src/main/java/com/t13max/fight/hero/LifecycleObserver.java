@@ -105,7 +105,7 @@ public class LifecycleObserver implements IFightEventListener {
         }
         fightHero.getFightAttrManager().subHp(subValue);
 
-        AttributeUpdateEvent attributeUpdateEvent = new AttributeUpdateEvent(readyToSubHpEvent.getGenerateHeroId(), fightHero.getId(), FightAttrEnum.CUR_HP, oldValue, subValue, false);
+        AttributeUpdateEvent attributeUpdateEvent = new AttributeUpdateEvent(readyToSubHpEvent.getGenerateHeroId(), fightHero.getId(), FightAttrEnum.CUR_HP, oldValue, -subValue, false);
         //原因传过去
         attributeUpdateEvent.setAttrUpdateReason(readyToSubHpEvent.getAttrUpdateReason());
 

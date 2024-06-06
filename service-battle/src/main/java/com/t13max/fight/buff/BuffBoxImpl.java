@@ -1,5 +1,6 @@
 package com.t13max.fight.buff;
 
+import battle.event.entity.BuffBoxPb;
 import battle.event.entity.BuffStatus;
 import battle.event.entity.RemoveReason;
 import com.t13max.fight.context.FightContext;
@@ -183,5 +184,15 @@ public class BuffBoxImpl extends AbstractEventListener implements IBuffBox {
                 this.onDestroy(removeReason);
                 break;
         }
+    }
+
+    @Override
+    public BuffBoxPb pack() {
+        BuffBoxPb.Builder builder = BuffBoxPb.newBuilder();
+        builder.setId(id);
+        builder.setBuffId(buffId);
+        builder.setOwnerId(ownerId);
+        builder.setBuffStatus(buffStatus);
+        return builder.build();
     }
 }

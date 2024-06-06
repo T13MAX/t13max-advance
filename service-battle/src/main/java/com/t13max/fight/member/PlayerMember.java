@@ -24,9 +24,13 @@ public class PlayerMember extends FightBaseMember {
         this.uid = uid;
     }
 
+    @Override
+    public boolean isReady() {
+        return session != null;
+    }
 
     @Override
     public void sendMsg(int msgId, MessageLite messageLite) {
-        session.sendMessage(msgId,messageLite);
+        session.sendMessage(msgId, messageLite);
     }
 }

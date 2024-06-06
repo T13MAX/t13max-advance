@@ -2,7 +2,9 @@ package com.t13max.client.view.window;
 
 import battle.api.DoActionResp;
 import battle.entity.FightEventPb;
+import battle.event.entity.*;
 import com.t13max.client.player.Player;
+import com.t13max.client.view.enums.AttrEnum;
 import com.t13max.client.view.enums.CloseAction;
 import com.t13max.client.view.enums.Const;
 import com.t13max.util.Log;
@@ -37,7 +39,8 @@ public class LogWindow extends AbstractWindow {
         this.setLocationRelativeTo(null);
         setDefaultCloseAction(CloseAction.DISPOSE);
         JScrollPane jScrollPane = new JScrollPane(createTable());
-        this.addComponent("log.scroll", jScrollPane, panel -> {});
+        this.addComponent("log.scroll", jScrollPane, panel -> {
+        });
     }
 
     private JTable createTable() {
@@ -88,8 +91,67 @@ public class LogWindow extends AbstractWindow {
         int round = doActionResp.getRound();
         for (FightEventPb fightEventPb : doActionResp.getEventList()) {
             FightEventPb.EventCase eventCase = fightEventPb.getEventCase();
+            String info;
+            switch (eventCase) {
+                case DOACTIONEVENT -> {
+                    DoActionEventPb doActionEvent = fightEventPb.getDoActionEvent();
+                    info = doActionEvent.getHeroId() + "对" + doActionEvent.getTargetIdList() + "发动了" + doActionEvent.getSkillId();
+                }
+                case DAMAGEEVENTPB -> {
+                    DamageEventPb damageEventPb = fightEventPb.getDamageEventPb();
+                    FightDamage damages = damageEventPb.getDamages();
+                    info = "对" + damages.getTargetHeroId() + "造成" + damages.getDamage() + "伤害";
+                }
+                case CUREEVENTPB -> {
+                    CureEventPb cureEventPb = fightEventPb.getCureEventPb();
+                    info = "对" + cureEventPb.getTargetHeroId() + "治疗" + cureEventPb.getValue();
+                }
+                case DEADEVENTPB -> {
+                    DeadEventPb deadEventPb = fightEventPb.getDeadEventPb();
+                    info = deadEventPb.getDeadHeroId() + "死了";
+                }
+                case BUFFADDEVENTPB -> {
+                    BuffAddEventPb buffAddEventPb = fightEventPb.getBuffAddEventPb();
+                    BuffBoxPb buffBox = buffAddEventPb.getBuffBox();
+                    info = "挂上了" + buffBox.getBuffId() + "buff, " + "当前状态+" + buffBox.getBuffStatus();
+                }
+                case BUFFREMOVEEVENTPB -> {
+                    BuffRemoveEventPb buffRemoveEventPb = fightEventPb.getBuffRemoveEventPb();
+                    BuffBoxPb buffBox = buffRemoveEventPb.getBuffBox();
+                    info = buffBox.getOwnerId() + "的buff" + buffBox.getBuffId() + "被移除! reason=" + buffRemoveEventPb.getReason();
+                }
+                case ATTRIBUTEUPDATEEVENTPB -> {
+                    AttributeUpdateEventPb attributeUpdateEventPb = fightEventPb.getAttributeUpdateEventPb();
+                    AttrEnum attrEnum = AttrEnum.getAttrEnum(attributeUpdateEventPb.getAttributeType());
+                    if (attrEnum == null) {
+                        continue;
+                    }
+                    double delta = attributeUpdateEventPb.getDelta();
+                    double finalValue = attributeUpdateEventPb.getFinalValue();
+                    attributeUpdateEventPb.get
+                    info = "属性发生变化!" + attributeUpdateEventPb.getHeroId() + "的" + attrEnum.name() + (delta > 0 ? "增加" : "减少") + "了" + delta;
+                }
+                case MOVEBARUPDATEEVENTPB -> {
+                    MoveBarUpdateEventPb moveBarUpdateEventPb = fightEventPb.getMoveBarUpdateEventPb();
+                    BattleMoveBar moveBars = moveBarUpdateEventPb.getMoveBars();
+                    info = "行动条变化! " + moveBars.getHeroId() + "当前为" + moveBars.getCurrDistance();
+                }
+                case BUFFUPDATEEVENTPB -> {
+                    BuffUpdateEventPb buffUpdateEventPb = fightEventPb.getBuffUpdateEventPb();
+                    BuffBoxPb buffBox = buffUpdateEventPb.getBuffBox();
+                    info = buffBox.getOwnerId() + "的buff" + buffBox.getBuffId() + "状态更新, 当前为" + buffBox.getBuffStatus();
+                }
+                case BUFFACTIONEVENTPB -> {
+                    BuffActionEventPb buffActionEventPb = fightEventPb.getBuffActionEventPb();
+                    BuffBoxPb buffBox = buffActionEventPb.getBuffBox();
+                    info = buffBox.getOwnerId() + "的buff" + buffBox.getBuffId() + "生效!";
+                }
+                default -> {
+                    continue;
+                }
+            }
             String eventName = eventCase.toString();
-            String info = fightEventPb.toString();
+
             tableModel.addRow(new Object[]{round, eventName, info});
         }
     }
