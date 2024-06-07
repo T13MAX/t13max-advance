@@ -9,8 +9,8 @@ import com.t13max.util.TimeUtil;
 public interface FightConst {
 
     //行动超时时间
-    int ACTION_TIMEOUT_MILLS = 60 * TimeUtil.SECOND;
+    int ACTION_TIMEOUT_MILLS = 60 * TimeUtil.SEC;
 
     //等待进入超时时间
-    int WAIT_JOIN_TIMEOUT_MILLS = 60 * TimeUtil.SECOND;
+    int WAIT_JOIN_TIMEOUT_MILLS = 60 * TimeUtil.SEC;
 }

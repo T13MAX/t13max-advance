@@ -100,4 +100,8 @@ public class Player {
             this.roleData.setUnlockMemory(this.roleData.getUnlockMemory() | (0x1L << managerId));
         }
     }
+
+    public void sendMsg(int msgId, MessageLite messageLite) {
+
+    }
 }

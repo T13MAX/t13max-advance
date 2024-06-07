@@ -6,6 +6,8 @@ import com.t13max.game.manager.ManagerBase;
 import com.t13max.game.run.Application;
 import lombok.Getter;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -43,5 +45,9 @@ public class PlayerManager extends ManagerBase {
 
     public Player getPlayer(long uuid) {
         return playerMap.get(uuid);
+    }
+
+    public List<Player> getOnlinePlayerList() {
+        return new LinkedList<>(playerMap.values());
     }
 }

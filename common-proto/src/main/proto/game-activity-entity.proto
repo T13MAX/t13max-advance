@@ -7,10 +7,22 @@ option java_multiple_files = true;
 //活动
 message ActivityDataPb{
   uint32 actId = 1;
+  uint32 type = 2;
+  uint64 startMills = 3;
+  uint64 endMills = 4;
 
+  //各种活动自己的数据
+  oneof data{
+    SignInActPb signInActPb = 10;
+  }
+}
+
+message ActivityDataListPb{
+  repeated ActivityDataPb activityDataList = 1;
 }
 
 //签到活动
 message SignInActPb{
-
+  //已签到的index
+  repeated uint32 signInList = 1;
 }

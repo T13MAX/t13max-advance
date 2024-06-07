@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+
+option java_package = "game.entity";
+option java_multiple_files = true;
+import "game-activity-entity.proto";
+
+//请求活动数据
+message ActivityDataReq{
+
+}
+
+//
+message ActivityDataResp{
+  ActivityDataListPb dataList = 1;
+}
+
+//签到
+message ActSignInReq{
+  uint32 actId = 1;
+  uint32 index = 2;
+}
+
+message ActSignInResp{
+  uint32 actId = 1;
+  uint32 index = 2;
+}

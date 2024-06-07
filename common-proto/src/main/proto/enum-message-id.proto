@@ -19,6 +19,10 @@ enum MessageId{
   C_LOGIN_GAME = 10001;
   S_LOGIN_GAME = 10002;
 
+  C_GET_ACT_DATA = 10003;
+  S_GET_ACT_DATA = 10004;
+  C_ACT_SIGN_IN = 10005;
+  S_ACT_SIGN_IN = 10006;
 
   //********************//
 
