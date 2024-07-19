@@ -1,6 +1,7 @@
 package com.t13max.login.service;
 
-import com.t13max.game.ioc.annotaion.Component;
+
+import com.t13max.common.ioc.annotaion.Component;
 
 /**
  * @author: t13max

@@ -3,7 +3,7 @@ package com.t13max.scene;
 import com.t13max.game.config.SceneConfig;
 import com.t13max.game.run.Application;
 import com.t13max.game.run.ApplicationConfig;
-import com.t13max.util.Log;
+import com.t13max.game.util.Log;
 
 import java.util.concurrent.locks.LockSupport;
 

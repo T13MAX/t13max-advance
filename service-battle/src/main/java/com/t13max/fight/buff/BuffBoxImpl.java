@@ -7,10 +7,10 @@ import com.t13max.fight.context.FightContext;
 import com.t13max.fight.buff.effect.IBuffEffect;
 import com.t13max.fight.event.*;
 import com.t13max.game.exception.BattleException;
+import com.t13max.game.util.Log;
 import com.t13max.template.helper.BuffHelper;
 import com.t13max.template.manager.TemplateManager;
 import com.t13max.template.temp.TemplateBuff;
-import com.t13max.util.Log;
 import lombok.Getter;
 import lombok.Setter;
 

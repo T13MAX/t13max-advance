@@ -4,7 +4,7 @@ import com.t13max.fight.hero.FightHero;
 import com.t13max.fight.context.FightMatch;
 import com.t13max.fight.damage.DefaultDamageCalculator;
 import com.t13max.fight.event.ReadyToSubHpEvent;
-import com.t13max.util.Log;
+import com.t13max.game.util.Log;
 
 import java.util.HashMap;
 import java.util.List;

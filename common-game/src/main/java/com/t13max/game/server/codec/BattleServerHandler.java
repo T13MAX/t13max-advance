@@ -1,15 +1,14 @@
 package com.t13max.game.server.codec;
 
 import com.google.protobuf.MessageLite;
-import com.t13max.game.event.GameEventBus;
+import com.t13max.common.event.GameEventBus;
 import com.t13max.game.event.SessionCLoseEvent;
 import com.t13max.game.msg.ClientMessagePack;
 import com.t13max.game.msg.MessageManager;
-import com.t13max.game.msg.ServerMessagePack;
 import com.t13max.game.session.SessionManager;
 import com.t13max.game.session.BattleSession;
 import com.t13max.game.session.ISession;
-import com.t13max.util.Log;
+import com.t13max.game.util.Log;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelDuplexHandler;
@@ -31,7 +30,7 @@ public class BattleServerHandler extends ChannelDuplexHandler {
 
     public void channelActive(ChannelHandlerContext ctx) {
         SocketAddress socketAddress = ctx.channel().remoteAddress();
-        Log.common.info("{} active!!!", socketAddress);
+        Log.msg.info("{} active!!!", socketAddress);
         ISession session = new BattleSession(ctx);
         SessionManager.inst().putSession(session);
     }
@@ -41,7 +40,7 @@ public class BattleServerHandler extends ChannelDuplexHandler {
         final ISession session = SessionManager.inst().removeSession(ctx.channel());
         if (session == null) return;
         GameEventBus.inst().postEvent(new SessionCLoseEvent(session.getUuid()));
-        Log.common.info("{} inactive!!!", session);
+        Log.msg.info("{} inactive!!!", session);
     }
 
     // 收到消息
@@ -52,7 +51,7 @@ public class BattleServerHandler extends ChannelDuplexHandler {
         final ISession session = SessionManager.inst().getSession(channel);
 
         if (session == null) {
-            Log.common.error("session为空, 无法接收消息 ");
+            Log.msg.error("session为空, 无法接收消息 ");
             return;
         }
 
@@ -80,6 +79,6 @@ public class BattleServerHandler extends ChannelDuplexHandler {
         // 异常
         final ISession session = SessionManager.inst().getSession(ctx.channel());
         ctx.channel().close();
-        Log.common.error("close game session because of error: {} {}", session, cause);
+        Log.msg.error("close game session because of error: {} {}", session, cause);
     }
 }

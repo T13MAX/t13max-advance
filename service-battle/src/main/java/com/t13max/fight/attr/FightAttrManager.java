@@ -2,10 +2,10 @@ package com.t13max.fight.attr;
 
 import com.t13max.fight.hero.FightHero;
 import com.t13max.game.exception.BattleException;
+import com.t13max.game.util.Log;
 import com.t13max.template.helper.HeroHelper;
 import com.t13max.template.manager.TemplateManager;
 import com.t13max.template.temp.TemplateHero;
-import com.t13max.util.Log;
 import lombok.Getter;
 
 import java.util.HashMap;

@@ -4,7 +4,7 @@ import com.t13max.fight.context.FightContext;
 import com.t13max.fight.action.AbstractAction;
 import com.t13max.fight.action.IAction;
 import com.t13max.game.exception.BattleException;
-import com.t13max.util.Log;
+import com.t13max.game.util.Log;
 import lombok.extern.log4j.Log4j2;
 
 import java.lang.reflect.Constructor;

@@ -1,10 +1,6 @@
 package com.t13max.fight.member;
 
-import com.t13max.game.event.GameEventEnum;
-import com.t13max.game.event.IGameEvent;
-import com.t13max.game.event.IGameEventListener;
-import com.t13max.game.event.SessionCLoseEvent;
-import com.t13max.game.manager.ManagerBase;
+
 
 import java.util.Collections;
 import java.util.Map;

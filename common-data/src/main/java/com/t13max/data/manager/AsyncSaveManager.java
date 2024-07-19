@@ -1,10 +1,9 @@
 package com.t13max.data.manager;
 
+import com.t13max.common.manager.ManagerBase;
 import com.t13max.data.dao.MongoUtil;
 import com.t13max.data.entity.IData;
-import com.t13max.game.manager.ManagerBase;
-import com.t13max.game.run.Application;
-import com.t13max.util.Log;
+import com.t13max.game.util.Log;
 import com.t13max.util.ThreadNameFactory;
 
 import java.lang.reflect.Constructor;

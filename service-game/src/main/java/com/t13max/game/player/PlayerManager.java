@@ -1,8 +1,8 @@
 package com.t13max.game.player;
 
+import com.t13max.common.action.ActionExecutor;
+import com.t13max.common.manager.ManagerBase;
 import com.t13max.game.config.ActionConfig;
-import com.t13max.game.config.BaseConfig;
-import com.t13max.game.manager.ManagerBase;
 import com.t13max.game.run.Application;
 import lombok.Getter;
 

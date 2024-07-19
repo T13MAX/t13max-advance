@@ -1,8 +1,8 @@
 package com.t13max.fight.context;
 
+import com.t13max.common.manager.ManagerBase;
 import com.t13max.fight.enums.FightEnum;
-import com.t13max.game.manager.ManagerBase;
-import com.t13max.util.Log;
+import com.t13max.game.util.Log;
 import com.t13max.util.ThreadNameFactory;
 import com.t13max.util.TimeUtil;
 import lombok.extern.log4j.Log4j2;

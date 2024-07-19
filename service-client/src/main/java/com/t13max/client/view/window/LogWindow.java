@@ -3,17 +3,13 @@ package com.t13max.client.view.window;
 import battle.api.DoActionResp;
 import battle.entity.FightEventPb;
 import battle.event.entity.*;
-import com.t13max.client.player.Player;
 import com.t13max.client.view.enums.AttrEnum;
 import com.t13max.client.view.enums.CloseAction;
 import com.t13max.client.view.enums.Const;
-import com.t13max.util.Log;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableModel;
 import java.awt.*;
 
 /**

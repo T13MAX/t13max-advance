@@ -1,11 +1,13 @@
 package com.t13max.game.player;
 
 import com.google.protobuf.MessageLite;
+import com.t13max.common.action.ActionQueue;
+import com.t13max.common.action.IJobName;
 import com.t13max.data.entity.IData;
 import com.t13max.data.entity.RoleData;
 import com.t13max.game.memory.MemoryTable;
 import com.t13max.game.memory.IMemory;
-import com.t13max.util.Log;
+import com.t13max.game.util.Log;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -47,7 +49,7 @@ public class Player {
      * @Author t13max
      * @Date 20:39 2024/6/4
      */
-    public void execute(JobName jobName, Runnable action) {
+    public void execute(IJobName jobName, Runnable action) {
         actionQueue.execute(jobName, action);
     }
 

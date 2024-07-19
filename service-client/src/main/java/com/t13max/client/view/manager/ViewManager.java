@@ -1,7 +1,7 @@
 package com.t13max.client.view.manager;
 
 import com.t13max.client.view.window.AbstractWindow;
-import com.t13max.game.manager.ManagerBase;
+import com.t13max.common.manager.ManagerBase;
 
 
 /**

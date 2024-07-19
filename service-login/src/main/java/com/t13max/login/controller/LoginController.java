@@ -1,7 +1,7 @@
 package com.t13max.login.controller;
 
-import com.t13max.game.ioc.annotaion.Autowired;
-import com.t13max.game.ioc.annotaion.Component;
+import com.t13max.common.ioc.annotaion.Autowired;
+import com.t13max.common.ioc.annotaion.Component;
 import com.t13max.login.service.LoginService;
 
 /**

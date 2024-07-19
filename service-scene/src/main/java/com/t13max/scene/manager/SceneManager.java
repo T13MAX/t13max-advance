@@ -1,6 +1,6 @@
 package com.t13max.scene.manager;
 
-import com.t13max.game.manager.ManagerBase;
+import com.t13max.common.manager.ManagerBase;
 import com.t13max.scene.object.role.SceneRole;
 import com.t13max.scene.stage.Scene;
 
@@ -34,7 +34,7 @@ public class SceneManager extends ManagerBase {
     @Override
     public void init() {
         //初始化场景线程组
-        SceneThreadManager.inst().initThreads();
-        updateLineNum(ServerConfig.getInstance().getLineNum());
+        //SceneThreadManager.inst().initThreads();
+        //updateLineNum(ServerConfig.getInstance().getLineNum());
     }
 }

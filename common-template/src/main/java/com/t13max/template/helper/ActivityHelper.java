@@ -2,8 +2,6 @@ package com.t13max.template.helper;
 
 import com.t13max.template.ITemplate;
 import com.t13max.template.temp.TemplateActivity;
-import com.t13max.template.temp.TemplateBuff;
-import com.t13max.util.Log;
 
 /**
  * @author: t13max

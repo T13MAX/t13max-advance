@@ -2,7 +2,7 @@ package com.t13max.data.util;
 
 import com.t13max.game.config.BaseConfig;
 import com.t13max.game.run.Application;
-import com.t13max.util.Log;
+import com.t13max.game.util.Log;
 import lombok.experimental.UtilityClass;
 
 import java.util.concurrent.atomic.AtomicLong;

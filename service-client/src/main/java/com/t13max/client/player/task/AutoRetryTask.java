@@ -1,8 +1,7 @@
 package com.t13max.client.player.task;
 
-import com.t13max.client.player.IPlayerTask;
 import com.t13max.client.player.Player;
-import com.t13max.util.Log;
+import com.t13max.game.util.Log;
 import lombok.Data;
 
 /**

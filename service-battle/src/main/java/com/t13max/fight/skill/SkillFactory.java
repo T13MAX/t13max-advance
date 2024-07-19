@@ -1,8 +1,8 @@
 package com.t13max.fight.skill;
 
 import com.t13max.fight.context.FightContext;
+import com.t13max.game.util.Log;
 import com.t13max.template.temp.TemplateSkill;
-import com.t13max.util.Log;
 import lombok.experimental.UtilityClass;
 
 /**

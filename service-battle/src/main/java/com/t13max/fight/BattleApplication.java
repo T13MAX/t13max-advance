@@ -12,7 +12,7 @@ import com.t13max.game.run.Application;
 import com.t13max.game.run.NettyServer;
 import com.t13max.game.run.ApplicationConfig;
 import com.t13max.game.server.BattleServer;
-import com.t13max.util.Log;
+import com.t13max.game.util.Log;
 import message.id.MessageId;
 
 import java.util.concurrent.locks.LockSupport;

@@ -12,7 +12,7 @@ import com.t13max.fight.hero.FightHero;
 import com.t13max.game.config.BattleConfig;
 import com.t13max.game.run.Application;
 import com.t13max.game.run.ApplicationConfig;
-import com.t13max.util.Log;
+import com.t13max.game.util.Log;
 import com.t13max.util.TempIdUtil;
 import org.junit.Test;
 
@@ -28,7 +28,7 @@ import java.util.concurrent.locks.LockSupport;
 public class BattleQuickTest {
 
     @Test
-    public void test() {
+    public void test() throws Exception{
 
         String[] args = new String[]{};
 

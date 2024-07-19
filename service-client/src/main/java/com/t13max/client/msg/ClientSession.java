@@ -1,7 +1,7 @@
 package com.t13max.client.msg;
 
 import com.google.protobuf.MessageLite;
-import com.t13max.game.exception.CommonException;
+import com.t13max.common.exception.CommonException;
 import com.t13max.game.msg.ClientMessagePack;
 import com.t13max.game.msg.MessageManager;
 import com.t13max.game.session.BaseSession;

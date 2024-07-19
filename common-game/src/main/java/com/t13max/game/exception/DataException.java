@@ -2,15 +2,11 @@ package com.t13max.game.exception;
 
 /**
  * @author: t13max
- * @since: 16:37 2024/4/22
+ * @since: 18:06 2024/7/19
  */
-public class DataException extends CommonException{
+public class DataException extends RuntimeException{
 
     public DataException(String message) {
         super(message);
-    }
-
-    public DataException(Throwable cause) {
-        super(cause);
     }
 }

@@ -4,7 +4,7 @@ import com.google.protobuf.MessageLite;
 import com.t13max.data.dao.MongoUtil;
 import com.t13max.data.entity.IData;
 import com.t13max.data.manager.AsyncSaveManager;
-import com.t13max.util.Log;
+import com.t13max.game.util.Log;
 
 import java.util.HashMap;
 import java.util.LinkedList;

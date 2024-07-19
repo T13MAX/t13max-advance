@@ -2,7 +2,7 @@ package com.t13max.fight.buff;
 
 import com.t13max.fight.buff.condition.ConditionEnum;
 import com.t13max.fight.buff.condition.IEventCondition;
-import com.t13max.util.Log;
+import com.t13max.game.util.Log;
 import lombok.experimental.UtilityClass;
 
 import java.util.LinkedList;

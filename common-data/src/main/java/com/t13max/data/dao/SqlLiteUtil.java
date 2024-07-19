@@ -4,7 +4,7 @@ import com.t13max.data.entity.AccountData;
 import com.t13max.game.config.BaseConfig;
 import com.t13max.game.exception.DataException;
 import com.t13max.game.run.Application;
-import com.t13max.util.Log;
+import com.t13max.game.util.Log;
 import com.t13max.util.TextUtil;
 import lombok.experimental.UtilityClass;
 
@@ -60,7 +60,7 @@ public class SqlLiteUtil {
             boolean execute = statement.execute(sql);
             if (!execute) {
                 //表已存在会返回false
-                Log.common.info("checkCreate, sql执行失败");
+                Log.data.info("checkCreate, sql执行失败");
             }
         } catch (Exception e) {
             throw new DataException("创建表失败, error=" + e.getMessage());

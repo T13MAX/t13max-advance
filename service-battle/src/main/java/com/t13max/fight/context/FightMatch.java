@@ -16,7 +16,7 @@ import com.t13max.fight.moveBar.ActionMoveBar;
 import com.t13max.fight.moveBar.MoveBarUnit;
 import com.t13max.fight.msg.DoActionArgs;
 import com.t13max.fight.skill.IFightSkill;
-import com.t13max.util.Log;
+import com.t13max.game.util.Log;
 import com.t13max.util.TimeUtil;
 import lombok.Data;
 import lombok.NoArgsConstructor;

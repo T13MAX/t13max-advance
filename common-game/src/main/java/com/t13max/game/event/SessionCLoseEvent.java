@@ -1,18 +1,13 @@
 package com.t13max.game.event;
 
-import lombok.Getter;
+import com.t13max.common.event.AbstractEvent;
 
 /**
  * @author: t13max
- * @since: 14:56 2024/5/29
+ * @since: 18:02 2024/7/19
  */
-@Getter
-public class SessionCLoseEvent extends AbstractGameEvent {
-
-    private long uuid;
-
+public class SessionCLoseEvent extends AbstractEvent {
     public SessionCLoseEvent(long uuid) {
-        this.gameEventEnum = GameEventEnum.SESSION_CLOSE;
-        this.uuid = uuid;
+
     }
 }

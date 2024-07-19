@@ -1,10 +1,10 @@
 package com.t13max.game.msg;
 
 import com.google.protobuf.MessageLite;
-import com.t13max.game.exception.CommonException;
-import com.t13max.game.manager.ManagerBase;
+import com.t13max.common.exception.CommonException;
+import com.t13max.common.manager.ManagerBase;
 import com.t13max.game.session.ISession;
-import com.t13max.util.Log;
+import com.t13max.game.util.Log;
 import com.t13max.util.PackageUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
@@ -100,13 +100,13 @@ public class MessageManager extends ManagerBase {
     public <T extends MessageLite> T parseMessage(int msgId, byte[] data) {
         Method parseMethod = this.getParseMethod(msgId);
         if (parseMethod == null) {
-            Log.common.error("parseMethod不存在, msgId={}", msgId);
+            Log.msg.error("parseMethod不存在, msgId={}", msgId);
             return null;
         }
 
         Class<?> clazz = this.classMap.get(msgId);
         if (clazz == null) {
-            Log.common.error("clazz不存在, msgId={}", msgId);
+            Log.msg.error("clazz不存在, msgId={}", msgId);
             return null;
         }
 
@@ -117,7 +117,7 @@ public class MessageManager extends ManagerBase {
             messageLite = (T) instance.getParserForType().parseFrom(data);
         } catch (Exception e) {
             //后续添加异常处理
-            Log.common.error("doMessage error, msgId={}, error={}", msgId, e.getMessage());
+            Log.msg.error("doMessage error, msgId={}, error={}", msgId, e.getMessage());
         }
         return messageLite;
     }
@@ -126,10 +126,10 @@ public class MessageManager extends ManagerBase {
         int msgId = messagePack.getMsgId();
         IMessage<T> message = this.getMessage(msgId);
         if (message == null) {
-            Log.common.error("msg不存在, msgId={}", msgId);
+            Log.msg.error("msg不存在, msgId={}", msgId);
             return;
         }
-        Log.common.info("receiveMessage, uuid={}, msgId={}, message={}", session.getUuid(), msgId, message, getClass().getSimpleName());
+        Log.msg.info("receiveMessage, uuid={}, msgId={}, message={}", session.getUuid(), msgId, message, getClass().getSimpleName());
         message.doMessage(session, messagePack);
     }
 
@@ -148,12 +148,12 @@ public class MessageManager extends ManagerBase {
     public <T extends MessageLite> void sendMessage(ISession session, MessagePack<T> messagePack) {
         Channel channel = session.getChannel();
         if (!channel.isActive()) {
-            Log.common.error("sendMessage failed, channel inactive, uuid={}, class={}, MessagePack={}", session.getUuid(), messagePack.getMessageLite().getClass().getSimpleName(), messagePack);
+            Log.msg.error("sendMessage failed, channel inactive, uuid={}, class={}, MessagePack={}", session.getUuid(), messagePack.getMessageLite().getClass().getSimpleName(), messagePack);
             return;
         }
         ByteBuf byteBuf = messagePack.wrapBuffers();
         channel.writeAndFlush(byteBuf);
-        Log.common.info("sendMessage, uuid={}, msgId={}, class={}, MessagePack={}", session.getUuid(), messagePack.getMsgId(), messagePack.getMessageLite().getClass().getSimpleName(), messagePack);
+        Log.msg.info("sendMessage, uuid={}, msgId={}, class={}, MessagePack={}", session.getUuid(), messagePack.getMsgId(), messagePack.getMessageLite().getClass().getSimpleName(), messagePack);
 
     }
 

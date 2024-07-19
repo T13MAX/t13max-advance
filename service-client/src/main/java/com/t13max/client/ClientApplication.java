@@ -1,11 +1,10 @@
 package com.t13max.client;
 
 import com.t13max.client.player.Player;
-import com.t13max.client.view.window.LogWindow;
 import com.t13max.game.config.ClientConfig;
 import com.t13max.game.run.Application;
 import com.t13max.game.run.ApplicationConfig;
-import com.t13max.util.Log;
+import com.t13max.game.util.Log;
 
 /**
  * @author: t13max

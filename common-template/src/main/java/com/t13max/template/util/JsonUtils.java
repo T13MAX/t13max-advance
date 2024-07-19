@@ -2,7 +2,7 @@ package com.t13max.template.util;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
-import com.t13max.game.exception.CommonException;
+import com.t13max.common.exception.CommonException;
 import com.t13max.template.ITemplate;
 import com.t13max.util.TextUtil;
 import lombok.experimental.UtilityClass;

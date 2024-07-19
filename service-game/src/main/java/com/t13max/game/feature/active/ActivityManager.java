@@ -1,18 +1,17 @@
 package com.t13max.game.feature.active;
 
+import com.t13max.common.manager.ManagerBase;
 import com.t13max.game.feature.active.enums.ActModelEnum;
 import com.t13max.game.feature.active.enums.ActOpenEnum;
-import com.t13max.game.manager.ManagerBase;
 import com.t13max.game.player.Player;
 import com.t13max.game.player.PlayerManager;
+import com.t13max.game.util.Log;
 import com.t13max.template.helper.ActivityHelper;
 import com.t13max.template.manager.TemplateManager;
 import com.t13max.template.temp.TemplateActivity;
-import com.t13max.util.Log;
 import com.t13max.util.TimeUtil;
 import lombok.Getter;
 
-import java.time.DayOfWeek;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;

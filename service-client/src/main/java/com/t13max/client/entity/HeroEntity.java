@@ -1,22 +1,16 @@
 package com.t13max.client.entity;
 
 import battle.entity.FightHeroInfoPb;
-import battle.entity.FightMatchPb;
-import battle.event.entity.BattleMoveBar;
 import com.google.protobuf.MessageLite;
 import com.t13max.client.player.Player;
 import com.t13max.client.view.enums.AttrEnum;
 import com.t13max.client.view.enums.Const;
-import com.t13max.client.view.panel.BattlePanel;
 import com.t13max.client.view.panel.HeroPanel;
 import com.t13max.client.view.progress.ActionProgress;
 import com.t13max.client.view.progress.HpProgress;
-import com.t13max.client.view.window.AbstractWindow;
 import com.t13max.client.view.window.HomeWindow;
-import com.t13max.util.Log;
+import com.t13max.game.util.Log;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import javax.swing.*;
 import java.awt.*;

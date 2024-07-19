@@ -5,7 +5,7 @@ import com.t13max.fight.buff.condition.IEventCondition;
 import com.t13max.fight.buff.effect.AbstractEffect;
 import com.t13max.fight.buff.effect.BuffEffectEnum;
 import com.t13max.fight.buff.effect.IBuffEffect;
-import com.t13max.util.Log;
+import com.t13max.game.util.Log;
 import com.t13max.util.TempIdUtil;
 import lombok.experimental.UtilityClass;
 import lombok.extern.log4j.Log4j2;

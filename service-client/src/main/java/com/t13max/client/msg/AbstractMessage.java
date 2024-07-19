@@ -6,7 +6,7 @@ import com.t13max.game.msg.IMessage;
 import com.t13max.game.msg.MessagePack;
 import com.t13max.game.msg.ServerMessagePack;
 import com.t13max.game.session.ISession;
-import com.t13max.util.Log;
+import com.t13max.game.util.Log;
 
 /**
  * @author: t13max

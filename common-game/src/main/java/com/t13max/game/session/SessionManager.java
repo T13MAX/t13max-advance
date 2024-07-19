@@ -1,6 +1,6 @@
 package com.t13max.game.session;
 
-import com.t13max.game.manager.ManagerBase;
+import com.t13max.common.manager.ManagerBase;
 import io.netty.channel.Channel;
 
 import java.util.Map;

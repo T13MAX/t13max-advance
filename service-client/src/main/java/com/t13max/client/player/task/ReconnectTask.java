@@ -2,8 +2,7 @@ package com.t13max.client.player.task;
 
 import com.t13max.client.client.NettyClient;
 import com.t13max.client.msg.ClientSession;
-import com.t13max.util.Log;
-import io.netty.channel.ChannelFuture;
+import com.t13max.game.util.Log;
 
 /**
  * @author: t13max

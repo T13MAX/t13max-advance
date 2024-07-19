@@ -12,6 +12,7 @@ import com.t13max.fight.member.MonsterMember;
 import com.t13max.fight.member.PlayerMember;
 import com.t13max.fight.moveBar.ActionMoveBar;
 import com.t13max.game.exception.BattleException;
+import com.t13max.game.util.Log;
 import com.t13max.template.helper.HeroHelper;
 import com.t13max.template.helper.MonsterGroupHelper;
 import com.t13max.template.helper.MonsterHelper;
@@ -19,7 +20,6 @@ import com.t13max.template.manager.TemplateManager;
 import com.t13max.template.temp.TemplateHero;
 import com.t13max.template.temp.TemplateMonster;
 import com.t13max.template.temp.TemplateMonsterGroup;
-import com.t13max.util.Log;
 import com.t13max.util.TempIdUtil;
 import lombok.experimental.UtilityClass;
 
