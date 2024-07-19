@@ -16,9 +16,7 @@ public class BehaviorTest {
 
     @Test
     public void testLoadTree() {
-        BehaviorTreeManager
-                .getInstance()
-                .bindDataSource(new DefaultDataSource(), Objects.requireNonNull(BehaviorTest.class.getClassLoader().getResource("")).getPath());
+        BehaviorTreeManager.getInstance().bindDataSource(new DefaultDataSource(), Objects.requireNonNull(BehaviorTest.class.getClassLoader().getResource("")).getPath());
         BehaviorTree<TestAgent> behaviorTree = BehaviorTreeManager.getInstance().createBehaviorTree("TestBT");
         behaviorTree.setAgent(new TestAgent());
         behaviorTree.update();

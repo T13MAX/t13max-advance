@@ -8,7 +8,6 @@ package com.t13max.ai.behavior4j.attachments;
  */
 public abstract class PreActionNode<E> extends AttachmentNode<E> {
 
-
     @Override
     public abstract boolean preCondition();
 

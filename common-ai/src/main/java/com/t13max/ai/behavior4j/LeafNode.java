@@ -13,6 +13,12 @@ public abstract class LeafNode<E> extends BTNode<E> {
     public LeafNode() {
     }
 
+    /**
+     * 子类实现具体的执行逻辑
+     *
+     * @Author t13max
+     * @Date 14:57 2024/7/19
+     */
     public abstract Status execute();
 
     /**

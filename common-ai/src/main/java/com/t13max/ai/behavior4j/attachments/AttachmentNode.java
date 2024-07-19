@@ -15,6 +15,7 @@ import java.lang.reflect.InvocationTargetException;
  */
 @Setter
 public abstract class AttachmentNode<E> extends BTNode<E> {
+
     public enum Operator {
         And,
         Or,

@@ -107,10 +107,11 @@ public abstract class BTNode<E> {
             return;
         }
 
-        // check precondition
+        // 存在附件
         if (attachments.isEmpty()) {
             run();
         } else {
+            //校验前置条件
             if (predicate(AttachmentNode.PHASE_UPDATE)) {
                 run();
             } else {
@@ -186,14 +187,12 @@ public abstract class BTNode<E> {
         status = Status.BT_FAILURE;
 
         if (!attachments.isEmpty()) {
-            attachments.stream()
-                    .filter(attachment -> attachment.checkPhase(AttachmentNode.PHASE_FAIL))
-                    .forEach(AttachmentNode::effect);
+            attachments.stream().filter(attachment -> attachment.checkPhase(AttachmentNode.PHASE_FAIL)).forEach(AttachmentNode::effect);
         }
 
         end();
-        if (parent != null)
-            parent.childFail(this);
+
+        if (parent != null) parent.childFail(this);
     }
 
     /**
