@@ -10,6 +10,10 @@
     </parent>
 
     <artifactId>common-template</artifactId>
+    <packaging>jar</packaging>
+
+    <name>common-template</name>
+    <url>https://gitee.com/t13max</url>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
