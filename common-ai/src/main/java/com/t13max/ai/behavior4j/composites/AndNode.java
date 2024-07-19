@@ -11,6 +11,7 @@ import java.util.List;
  * @Date 16:13 2024/5/17
  */
 public class AndNode<E> extends ConditionOperatorNode<E> {
+
     public AndNode() {
         super();
     }

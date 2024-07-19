@@ -3,9 +3,10 @@ package com.t13max.ai.fsm;
 import com.t13max.ai.Blackboard;
 
 /**
- * @author zhoupeng
- * @date 2019/11/11
  * 状态机
+ *
+ * @Author t13max
+ * @Date 16:35 2024/7/19
  */
 public interface StateMachine<T, S> {
 
@@ -27,7 +28,8 @@ public interface StateMachine<T, S> {
 
     T getOwner();
 
-    default void addState(EState<T> eState, S state) {}
+    default void addState(EState<T> eState, S state) {
+    }
 
     boolean handleEvent(StateEvent event);
 
