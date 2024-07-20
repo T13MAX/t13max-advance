@@ -18,8 +18,8 @@
 | [service-client]  | 客户端    | 写着玩 理论上不应该用Java写客户端 主要是想把协议调通 且 好看效果 |
 
 ### 备忘录
-* 后续更新前 先改为使用 t13max-common 替换util和ai 修改maven版本控制
-* 行为树 rpc login gateway redis 跨进程事件系统 包依赖层级优化
+* 行为树 rpc login gateway redis 跨进程事件系统 
+* 热更 使用t13max-common的打表
 * 功能:  任务/成就(进度) 支付 消息同步(全量/变化 合并) 全自动打表生成类
 * GC 虚拟线程
 * data和proto 依赖
