@@ -11,7 +11,7 @@
     <packaging>jar</packaging>
 
     <name>service-client</name>
-    <url>http://maven.apache.org</url>
+    <url>https://gitee.com/t13max</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

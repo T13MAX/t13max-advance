@@ -10,6 +10,8 @@
     </parent>
 
     <artifactId>common-game</artifactId>
+    <name>common-game</name>
+    <url>https://gitee.com/t13max</url>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -20,13 +22,13 @@
     <dependencies>
         <dependency>
             <groupId>com.t13max</groupId>
-            <artifactId>common-util</artifactId>
-            <version>${common-util.version}</version>
+            <artifactId>t13max-util</artifactId>
+            <version>${t13max-util.version}</version>
         </dependency>
         <dependency>
             <groupId>com.t13max</groupId>
-            <artifactId>common-core</artifactId>
-            <version>${common-core.version}</version>
+            <artifactId>t13max-core</artifactId>
+            <version>${t13max-core.version}</version>
         </dependency>
 
         <dependency>
