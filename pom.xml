@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.t13max</groupId>
+    <groupId>com.t13max.advance</groupId>
     <artifactId>t13max-advance</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <packaging>pom</packaging>
     <modules>
         <module>service-battle</module>
@@ -28,11 +28,14 @@
 
         <t13max-core.version>1.0.1</t13max-core.version>
         <t13max-util.version>1.0.1</t13max-util.version>
-        <common-data.version>1.0-SNAPSHOT</common-data.version>
-        <common-game.version>1.0-SNAPSHOT</common-game.version>
-        <common-proto.version>1.0-SNAPSHOT</common-proto.version>
-        <common-template.version>1.0-SNAPSHOT</common-template.version>
+        <t13max-advance.version>1.0.0</t13max-advance.version>
+        <common-data.version>1.0.0</common-data.version>
+        <common-game.version>1.0.0</common-game.version>
+        <common-proto.version>1.0.0</common-proto.version>
+        <common-template.version>1.0.0</common-template.version>
 
+        <log4j.version>2.17.2</log4j.version>
+        <lombok.version>1.18.30</lombok.version>
         <sqllite.version>3.41.2.2</sqllite.version>
         <snakeyaml.version>2.2</snakeyaml.version>
         <netty.version>4.1.108.Final</netty.version>
@@ -49,26 +52,25 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.30</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-api</artifactId>
-            <version>2.17.2</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>2.17.2</version>
-        </dependency>
-        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j.version}</version>
         </dependency>
     </dependencies>
 </project>

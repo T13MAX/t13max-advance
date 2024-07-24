@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.t13max</groupId>
+        <groupId>com.t13max.advance</groupId>
         <artifactId>t13max-advance</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0.0</version>
     </parent>
 
     <artifactId>common-game</artifactId>
@@ -21,12 +21,12 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.t13max</groupId>
+            <groupId>com.t13max.common</groupId>
             <artifactId>t13max-util</artifactId>
             <version>${t13max-util.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.t13max</groupId>
+            <groupId>com.t13max.common</groupId>
             <artifactId>t13max-core</artifactId>
             <version>${t13max-core.version}</version>
         </dependency>

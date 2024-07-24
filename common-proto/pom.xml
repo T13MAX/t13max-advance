@@ -2,9 +2,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.t13max</groupId>
+        <groupId>com.t13max.advance</groupId>
         <artifactId>t13max-advance</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0.0</version>
     </parent>
 
     <artifactId>common-proto</artifactId>
@@ -16,6 +16,29 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <profiles>
+        <profile>
+            <id>windows</id>
+            <properties>
+                <protobuf.protoc>com.google.protobuf:protoc:${protobuf.version}:exe:${os.detected.classifier}</protobuf.protoc>
+                <protobuf.grpc-java>io.grpc:protoc-gen-grpc-java:${grpc.version}:exe:${os.detected.classifier}</protobuf.grpc-java>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>mac</id>
+            <properties>
+                <protobuf.protoc>com.google.protobuf:protoc:${protobuf.version}:exe:osx-x86_64</protobuf.protoc>
+                <protobuf.grpc-java>io.grpc:protoc-gen-grpc-java:1.48.1:exe:osx-x86_64</protobuf.grpc-java>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+    </profiles>
 
     <build>
         <extensions>
@@ -31,15 +54,17 @@
                 <groupId>org.xolstice.maven.plugins</groupId>
                 <artifactId>protobuf-maven-plugin</artifactId>
                 <version>${protobuf-maven-plugin.version}</version>
+
                 <configuration>
                     <protocArtifact>
-                        com.google.protobuf:protoc:${protobuf.version}:exe:${os.detected.classifier}
+                        ${protobuf.protoc}
                     </protocArtifact>
                     <pluginId>grpc-java</pluginId>
                     <pluginArtifact>
-                        io.grpc:protoc-gen-grpc-java:${grpc.version}:exe:${os.detected.classifier}
+                        ${protobuf.grpc-java}
                     </pluginArtifact>
                 </configuration>
+
                 <executions>
                     <execution>
                         <goals>
