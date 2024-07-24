@@ -37,7 +37,7 @@
                 <protobuf.grpc-java>io.grpc:protoc-gen-grpc-java:1.48.1:exe:osx-x86_64</protobuf.grpc-java>
             </properties>
             <activation>
-                <activeByDefault>true</activeByDefault>
+                <activeByDefault>false</activeByDefault>
             </activation>
         </profile>
     </profiles>
