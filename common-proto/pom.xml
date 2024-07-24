@@ -21,7 +21,9 @@
         <profile>
             <id>windows</id>
             <properties>
+                <!--suppress UnresolvedMavenProperty -->
                 <protobuf.protoc>com.google.protobuf:protoc:${protobuf.version}:exe:${os.detected.classifier}</protobuf.protoc>
+                <!--suppress UnresolvedMavenProperty -->
                 <protobuf.grpc-java>io.grpc:protoc-gen-grpc-java:${grpc.version}:exe:${os.detected.classifier}</protobuf.grpc-java>
             </properties>
             <activation>
