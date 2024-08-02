@@ -11,7 +11,7 @@
     <packaging>jar</packaging>
 
     <name>service-gateway</name>
-    <url>https://gitee.com/t13max</url>
+    <url>https://github.com/T13MAX</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

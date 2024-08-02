@@ -13,7 +13,7 @@
     <packaging>jar</packaging>
 
     <name>service-game</name>
-    <url>https://gitee.com/t13max</url>
+    <url>https://github.com/T13MAX</url>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>

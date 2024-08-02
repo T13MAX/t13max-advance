@@ -13,7 +13,6 @@
         <module>service-game</module>
         <module>common-template</module>
         <module>common-game</module>
-        <module>service-scene</module>
         <module>common-proto</module>
         <module>common-data</module>
         <module>service-client</module>
