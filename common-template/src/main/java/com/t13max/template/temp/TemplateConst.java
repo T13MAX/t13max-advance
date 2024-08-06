@@ -1,23 +1,38 @@
 package com.t13max.template.temp;
 
+import java.util.*;
 import com.t13max.template.ITemplate;
-import com.t13max.template.util.JsonUtils;
-import lombok.Data;
-import lombok.Getter;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.alibaba.excel.annotation.ExcelProperty;
+import com.t13max.template.converter.*;
 
 /**
- * @author: t13max
- * @since: 14:02 2024/4/11
+ * const.xlsx
+ * 
+ *
+ * @author t13max-template
+ *
+ * 系统生成类 请勿修改
  */
-@Data
-public class TemplateConst implements ITemplate{
+public class TemplateConst implements ITemplate {
 
-    private int id;
+    /** id */
+    @ExcelProperty("id")
+    public final int id;
+    /** params */
+    @ExcelProperty("params")
+    public final String params;
+    /** des */
+    @ExcelProperty("des")
+    public final String des;
 
-    private String params;
+    public TemplateConst(int id, String params, String des) {
+        this.id = id;
+        this.params = params;
+        this.des = des;
+    }
 
+    @Override
+    public int getId() {
+        return id;
+    }
 }

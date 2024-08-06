@@ -24,7 +24,7 @@ public class SimpleHeroAI extends AbstractHeroAI {
 
         IFightSkill ranAvaSkill = this.owner.getSkillManager().getRanAvaSkill();
         TemplateSkill templateSkill = ranAvaSkill.getTemplateSkill();
-        SelectorEnum otherSelector = SelectorEnum.getSelectorEnum(templateSkill.getOtherSelector());
+        SelectorEnum otherSelector = SelectorEnum.getSelectorEnum(templateSkill.otherSelector);
         doActionArgs.setSkillId(templateSkill.getId());
         doActionArgs.setTargetIds(otherSelector.select(this.owner));
         return doActionArgs;

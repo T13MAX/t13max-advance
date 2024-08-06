@@ -1,28 +1,54 @@
 package com.t13max.template.temp;
 
+import java.util.*;
 import com.t13max.template.ITemplate;
-import com.t13max.template.util.JsonUtils;
-import lombok.Data;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.alibaba.excel.annotation.ExcelProperty;
+import com.t13max.template.converter.*;
 
 /**
- * @author: t13max
- * @since: 14:02 2024/4/11
+ * buff.xlsx
+ * 
+ *
+ * @author t13max-template
+ *
+ * 系统生成类 请勿修改
  */
-@Data
-public class TemplateBuff implements ITemplate{
+public class TemplateBuff implements ITemplate {
 
-    private int id;
+    /** id */
+    @ExcelProperty("id")
+    public final int id;
+    /** disposedRule */
+    @ExcelProperty("disposedRule")
+    public final int disposedRule;
+    /** activeCondition */
+    @ExcelProperty(value = "activeCondition", converter = ToStrListConverter.class)
+    public final List<String> activeCondition;
+    /** disposedCondition */
+    @ExcelProperty(value = "disposedCondition", converter = ToStrListConverter.class)
+    public final List<String> disposedCondition;
+    /** effect */
+    @ExcelProperty(value = "effect", converter = ToIntListConverter.class)
+    public final List<Integer> effect;
+    /** params */
+    @ExcelProperty(value = "params", converter = ToStrListConverter.class)
+    public final List<String> params;
+    /** des */
+    @ExcelProperty("des")
+    public final String des;
 
-    private String[] activeCondition;
+    public TemplateBuff(int id, int disposedRule, List<String> activeCondition, List<String> disposedCondition, List<Integer> effect, List<String> params, String des) {
+        this.id = id;
+        this.disposedRule = disposedRule;
+        this.activeCondition = activeCondition;
+        this.disposedCondition = disposedCondition;
+        this.effect = effect;
+        this.params = params;
+        this.des = des;
+    }
 
-    private String[] disposedCondition;
-
-    private int[] effect;
-
-    private String[] params;
-
+    @Override
+    public int getId() {
+        return id;
+    }
 }

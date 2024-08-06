@@ -29,7 +29,7 @@ public class BattleApplication {
 
         Application.run(BattleApplication.class, args);
 
-        Log.scene.info("BattleApplication run!");
+        Log.battle.info("BattleApplication run!");
 
         init();
 

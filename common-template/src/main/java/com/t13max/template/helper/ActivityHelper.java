@@ -10,7 +10,7 @@ import com.t13max.template.temp.TemplateActivity;
 public class ActivityHelper extends TemplateHelper<TemplateActivity> {
 
     public ActivityHelper() {
-        super("activity.json");
+        super("TemplateActivity.json");
     }
 
     @Override

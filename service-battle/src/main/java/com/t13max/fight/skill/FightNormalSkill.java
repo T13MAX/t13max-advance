@@ -25,7 +25,7 @@ public class FightNormalSkill extends AbstractSkill {
 
     @Override
     public boolean consumeCost() {
-        collDown += templateSkill.getCollDown();
+        collDown += templateSkill.coldDown;
         return false;
     }
 

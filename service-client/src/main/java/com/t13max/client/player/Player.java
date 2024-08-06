@@ -154,11 +154,11 @@ public class Player {
             Log.client.error("模板不存在, heroId={}, templateId={}", curHeroId, heroEntity.getTemplateId());
             return;
         }
-        if (template.getSkill().length <= skillIndex) {
-            Log.client.error("技能选择错误, heroId={}, skillIndex={}, template={}", curHeroId, skillIndex, template.getSkill());
+        if (template.skill.size() <= skillIndex) {
+            Log.client.error("技能选择错误, heroId={}, skillIndex={}, template={}", curHeroId, skillIndex, template.skill);
             return;
         }
-        int skillId = template.getSkill()[skillIndex];
+        int skillId = template.skill.get(skillIndex);
         DoActionReq.Builder builder = DoActionReq.newBuilder();
         builder.setHeroId(this.curHeroId);
         builder.setSkillId(skillId);

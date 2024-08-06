@@ -1,20 +1,34 @@
 package com.t13max.template.temp;
 
+import java.util.*;
 import com.t13max.template.ITemplate;
-import lombok.Data;
+import com.alibaba.excel.annotation.ExcelProperty;
+import com.t13max.template.converter.*;
 
 /**
- * @author: t13max
- * @since: 16:07 2024/5/28
+ * monster.xlsx
+ * 
+ *
+ * @author t13max-template
+ *
+ * 系统生成类 请勿修改
  */
-@Data
 public class TemplateMonster implements ITemplate {
 
-    private int id;
+    /** id */
+    @ExcelProperty("id")
+    public final int id;
+    /** heroTempId */
+    @ExcelProperty("heroTempId")
+    public final int heroTempId;
 
-    //英雄模板Id
-    private int heroTempId;
+    public TemplateMonster(int id, int heroTempId) {
+        this.id = id;
+        this.heroTempId = heroTempId;
+    }
 
-    //养成相关的详细修正?
-
+    @Override
+    public int getId() {
+        return id;
+    }
 }

@@ -1,7 +1,6 @@
 package com.t13max.template.helper;
 
 import com.t13max.template.ITemplate;
-import com.t13max.template.temp.TemplateBuff;
 import com.t13max.template.temp.TemplateSkill;
 
 /**
@@ -11,7 +10,7 @@ import com.t13max.template.temp.TemplateSkill;
 public class SkillHelper extends TemplateHelper<TemplateSkill>{
 
     public SkillHelper() {
-        super("skill.json");
+        super("TemplateSkill.json");
     }
 
     @Override

@@ -1,7 +1,6 @@
 package com.t13max.template.helper;
 
 import com.t13max.template.ITemplate;
-import com.t13max.template.temp.TemplateHero;
 import com.t13max.template.temp.TemplateMonster;
 
 /**
@@ -11,7 +10,7 @@ import com.t13max.template.temp.TemplateMonster;
 public class MonsterHelper extends TemplateHelper<TemplateMonster>{
 
     public MonsterHelper() {
-        super("monster.json");
+        super("TemplateMonster.json");
     }
 
     @Override

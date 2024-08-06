@@ -1,7 +1,6 @@
 package com.t13max.template.helper;
 
 import com.t13max.template.ITemplate;
-import com.t13max.template.temp.TemplateBuff;
 import com.t13max.template.temp.TemplateConst;
 import lombok.Getter;
 
@@ -12,7 +11,7 @@ import lombok.Getter;
 public class ConstHelper extends TemplateHelper<TemplateConst> {
 
     public ConstHelper() {
-        super("const.json");
+        super("TemplateConst.json");
     }
 
     @Override
@@ -30,7 +29,7 @@ public class ConstHelper extends TemplateHelper<TemplateConst> {
         if (templateConst == null) {
             return 0;
         }
-        return Integer.parseInt(templateConst.getParams());
+        return Integer.parseInt(templateConst.params);
     }
 
     public int getInt(ConstEnum constEnum, int def) {
@@ -38,7 +37,7 @@ public class ConstHelper extends TemplateHelper<TemplateConst> {
         if (templateConst == null) {
             return def;
         }
-        return Integer.parseInt(templateConst.getParams());
+        return Integer.parseInt(templateConst.params);
     }
 
     public enum ConstEnum {

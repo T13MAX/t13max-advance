@@ -83,9 +83,9 @@ public class ActivityManager extends ManagerBase {
     }
 
     private void onStart(TemplateActivity templateActivity) {
-        ActModelEnum actModelEnum = ActModelEnum.getActModelEnum(templateActivity.getType());
+        ActModelEnum actModelEnum = ActModelEnum.getActModelEnum(templateActivity.type);
         if (actModelEnum == null) {
-            Log.game.error("活动开启失败, model不存在, act={}, model={}", templateActivity.getId(), templateActivity.getType());
+            Log.game.error("活动开启失败, model不存在, act={}, model={}", templateActivity.getId(), templateActivity.type);
             return;
         }
 
@@ -97,9 +97,9 @@ public class ActivityManager extends ManagerBase {
     }
 
     private void onEnd(TemplateActivity templateActivity) {
-        ActModelEnum actModelEnum = ActModelEnum.getActModelEnum(templateActivity.getType());
+        ActModelEnum actModelEnum = ActModelEnum.getActModelEnum(templateActivity.type);
         if (actModelEnum == null) {
-            Log.game.error("活动结束失败, model不存在, act={}, model={}", templateActivity.getId(), templateActivity.getType());
+            Log.game.error("活动结束失败, model不存在, act={}, model={}", templateActivity.getId(), templateActivity.type);
             return;
         }
 
@@ -124,11 +124,11 @@ public class ActivityManager extends ManagerBase {
 
     public long parseMills(TemplateActivity templateActivity, boolean start) {
         long mills = -1;
-        ActOpenEnum actOpenEnum = ActOpenEnum.getActOpenEnum(templateActivity.getOpenType());
+        ActOpenEnum actOpenEnum = ActOpenEnum.getActOpenEnum(templateActivity.openType);
         if (actOpenEnum == null) {
             return mills;
         }
-        String startTime = start ? templateActivity.getStartTime() : templateActivity.getEndTime();
+        String startTime = start ? templateActivity.startTime : templateActivity.endTime;
 
         switch (actOpenEnum) {
             case WEEK_DAY -> {

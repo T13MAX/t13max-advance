@@ -29,11 +29,11 @@ public class ActionMoveBar {
         int actionDistance = constHelper.getInt(ConstHelper.ConstEnum.行动值, 100);
         for (FightHero fightHero : attacker.values()) {
             TemplateHero template = heroHelper.getTemplate(fightHero.getTemplateId());
-            actionUnitMap.put(fightHero.getId(), new MoveBarUnit(fightHero.getId(), true, template.getSpeed(), 0, actionDistance));
+            actionUnitMap.put(fightHero.getId(), new MoveBarUnit(fightHero.getId(), true, template.speed, 0, actionDistance));
         }
         for (FightHero fightHero : defender.values()) {
             TemplateHero template = heroHelper.getTemplate(fightHero.getTemplateId());
-            actionUnitMap.put(fightHero.getId(), new MoveBarUnit(fightHero.getId(), false, template.getSpeed(), 0, actionDistance));
+            actionUnitMap.put(fightHero.getId(), new MoveBarUnit(fightHero.getId(), false, template.speed, 0, actionDistance));
         }
         this.actionUnitMap = actionUnitMap;
     }

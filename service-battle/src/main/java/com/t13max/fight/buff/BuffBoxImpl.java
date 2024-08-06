@@ -15,6 +15,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -141,16 +142,16 @@ public class BuffBoxImpl extends AbstractEventListener implements IBuffBox {
         if (templateBuff == null) {
             throw new BattleException("buff不存在, id=" + buffId);
         }
-        int[] effect = templateBuff.getEffect();
-        String[] params = templateBuff.getParams();
-        String[] activeConditions = templateBuff.getActiveCondition();
-        String[] disposedConditions = templateBuff.getDisposedCondition();
+       List<Integer> effect = templateBuff.effect;
+       List<String> params = templateBuff.params;
+       List<String> activeConditions = templateBuff.activeCondition;
+       List<String> disposedConditions = templateBuff.disposedCondition;
 
-        for (int i = 0; i < effect.length; i++) {
-            int effectId = effect[i];
-            String param = params[i];
-            String activeCondition = activeConditions[i];
-            String disposedCondition = disposedConditions[i];
+        for (int i = 0; i < effect.size(); i++) {
+            int effectId = effect.get(i);
+            String param = params.get(i);
+            String activeCondition = activeConditions.get(i);
+            String disposedCondition = disposedConditions.get(i);
             IBuffEffect buffEffect = BuffFactory.createBuffEffect(this, effectId, param, activeCondition, disposedCondition);
             this.buffEffects.add(buffEffect);
         }

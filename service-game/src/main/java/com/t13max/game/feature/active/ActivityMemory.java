@@ -54,9 +54,9 @@ public class ActivityMemory extends SingleMemory<ActivityDataListPb, ActivityDat
                 Log.game.error("活动开启失败, template不存在, act={}, model={}", activityId);
                 continue;
             }
-            ActModelEnum actModelEnum = ActModelEnum.getActModelEnum(templateActivity.getType());
+            ActModelEnum actModelEnum = ActModelEnum.getActModelEnum(templateActivity.type);
             if (actModelEnum == null) {
-                Log.game.error("活动开启失败, model不存在, act={}, model={}", templateActivity.getId(), templateActivity.getType());
+                Log.game.error("活动开启失败, model不存在, act={}, model={}", templateActivity.getId(), templateActivity.type);
                 continue;
             }
             actModelEnum.getActModel().onEnd(player, templateActivity);
@@ -68,9 +68,9 @@ public class ActivityMemory extends SingleMemory<ActivityDataListPb, ActivityDat
                 Log.game.error("活动开启失败, template不存在, act={}, model={}", activityId);
                 continue;
             }
-            ActModelEnum actModelEnum = ActModelEnum.getActModelEnum(templateActivity.getType());
+            ActModelEnum actModelEnum = ActModelEnum.getActModelEnum(templateActivity.type);
             if (actModelEnum == null) {
-                Log.game.error("活动开启失败, model不存在, act={}, model={}", templateActivity.getId(), templateActivity.getType());
+                Log.game.error("活动开启失败, model不存在, act={}, model={}", templateActivity.getId(), templateActivity.type);
                 continue;
             }
             actModelEnum.getActModel().onStart(player, templateActivity);

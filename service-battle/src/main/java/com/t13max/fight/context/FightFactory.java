@@ -151,12 +151,12 @@ public class FightFactory {
 
         Map<Long, FightHero> result = new HashMap<>();
         MonsterHelper monsterHelper = TemplateManager.inst().helper(MonsterHelper.class);
-        for (int monsterId : monsterGroup.getMonsters()) {
+        for (int monsterId : monsterGroup.monsters) {
             TemplateMonster template = monsterHelper.getTemplate(monsterId);
             if (template == null) {
                 throw new BattleException("TemplateMonster为空, monsterId=" + monsterId);
             }
-            FightHero fightHero = createHero(fightContext, fightMember, TempIdUtil.getNextTempId(), template.getHeroTempId());
+            FightHero fightHero = createHero(fightContext, fightMember, TempIdUtil.getNextTempId(), template.heroTempId);
             fightHero.setAutoAction(true);
             result.put(fightHero.getId(), fightHero);
         }

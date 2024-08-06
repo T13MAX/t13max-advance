@@ -1,10 +1,8 @@
 package com.t13max.template.helper;
 
-import com.t13max.template.ITemplate;
-import com.t13max.template.temp.TemplateBuff;
-import com.t13max.template.temp.TemplateHero;
 
-import java.util.Collection;
+import com.t13max.template.ITemplate;
+import com.t13max.template.temp.TemplateHero;
 
 /**
  * @author: t13max
@@ -13,7 +11,7 @@ import java.util.Collection;
 public class HeroHelper extends TemplateHelper<TemplateHero>{
 
     public HeroHelper() {
-        super("hero.json");
+        super("TemplateHero.json");
     }
 
     @Override

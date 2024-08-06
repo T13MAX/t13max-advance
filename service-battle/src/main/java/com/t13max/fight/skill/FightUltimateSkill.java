@@ -25,7 +25,7 @@ public class FightUltimateSkill extends AbstractSkill {
             return false;
         }
         Double finalAttr = fightHero.getFightAttrManager().getFinalAttr(FightAttrEnum.CHARGE);
-        return finalAttr >= templateSkill.getCollDown();
+        return finalAttr >= templateSkill.coldDown;
     }
 
     @Override

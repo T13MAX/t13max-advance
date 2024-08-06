@@ -13,7 +13,7 @@ import lombok.experimental.UtilityClass;
 public class SkillFactory {
 
     public static IFightSkill createFightSkill(FightContext fightContext, long ownerId, TemplateSkill templateSkill) {
-        switch (templateSkill.getType()) {
+        switch (templateSkill.type) {
             case 0 -> {
                 return createFightNormalSkill(fightContext, ownerId, templateSkill);
             }
@@ -24,7 +24,7 @@ public class SkillFactory {
                 return createFightPassiveSkill(fightContext,ownerId,templateSkill);
             }
             default -> {
-                Log.battle.error("未知技能类型. type={}", templateSkill.getType());
+                Log.battle.error("未知技能类型. type={}", templateSkill.type);
                 return null;
             }
         }

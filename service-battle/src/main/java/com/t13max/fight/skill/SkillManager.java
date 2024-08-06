@@ -37,7 +37,7 @@ public class SkillManager extends AbstractEventListener {
         }
 
 
-        for (int skillId : templateHero.getSkill()) {
+        for (int skillId : templateHero.skill) {
             TemplateSkill templateSkill = skillHelper.getTemplate(skillId);
             if (templateSkill == null) {
                 throw new BattleException("TemplateSkill为空, id=" + skillId);

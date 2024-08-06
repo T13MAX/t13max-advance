@@ -11,22 +11,22 @@ import com.t13max.template.temp.TemplateBuff;
 public class BuffHelper extends TemplateHelper<TemplateBuff> {
 
     public BuffHelper() {
-        super("buff.json");
+        super("TemplateBuff.json");
     }
 
     @Override
     public boolean configCheck() {
         for (TemplateBuff templateBuff : getTempAll()) {
-            int length = templateBuff.getEffect().length;
-            if (length != templateBuff.getParams().length) {
+            int length = templateBuff.effect.size();
+            if (length != templateBuff.params.size()) {
                 Log.battle.error("配表错误, templateBuff.getParams().length, id={}", templateBuff.getId());
                 return false;
             }
-            if (length != templateBuff.getActiveCondition().length) {
+            if (length != templateBuff.activeCondition.size()) {
                 Log.battle.error("配表错误, templateBuff.getActiveCondition().length, id={}", templateBuff.getId());
                 return false;
             }
-            if (length != templateBuff.getDisposedCondition().length) {
+            if (length != templateBuff.disposedCondition.size()) {
                 Log.battle.error("配表错误, templateBuff.getDisposedCondition().length, id={}", templateBuff.getId());
                 return false;
             }

@@ -26,6 +26,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <t13max-core.version>1.0.1</t13max-core.version>
+        <t13max-template.version>1.0.1</t13max-template.version>
         <t13max-util.version>1.0.1</t13max-util.version>
         <t13max-advance.version>1.0.0</t13max-advance.version>
         <common-data.version>1.0.0</common-data.version>
@@ -47,7 +48,6 @@
         <protobuf-maven-plugin.version>0.6.1</protobuf-maven-plugin.version>
         <maven-surefire-plugin.version>2.20</maven-surefire-plugin.version>
     </properties>
-
 
     <dependencies>
         <dependency>

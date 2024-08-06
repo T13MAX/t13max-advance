@@ -41,12 +41,12 @@ public class FightAttrManager {
         if (template == null) {
             throw new BattleException("TemplateHero为空, id=" + owner.getTemplateId());
         }
-        valueAttrMap.put(FightAttrEnum.ATTACK, (double) template.getAtk());
-        valueAttrMap.put(FightAttrEnum.MAX_HP, (double) template.getHp());
-        valueAttrMap.put(FightAttrEnum.DEF, (double) template.getDef());
-        valueAttrMap.put(FightAttrEnum.SPEED, (double) template.getSpeed());
-        valueAttrMap.put(FightAttrEnum.ELEMENT, (double) template.getElement());
-        valueAttrMap.put(FightAttrEnum.MASTERY, (double) template.getMastery());
+        valueAttrMap.put(FightAttrEnum.ATTACK, (double) template.atk);
+        valueAttrMap.put(FightAttrEnum.MAX_HP, (double) template.hp);
+        valueAttrMap.put(FightAttrEnum.DEF, (double) template.def);
+        valueAttrMap.put(FightAttrEnum.SPEED, (double) template.speed);
+        valueAttrMap.put(FightAttrEnum.ELEMENT, (double) template.element);
+        valueAttrMap.put(FightAttrEnum.MASTERY, (double) template.mastery);
 
         //临时
         rateAttrMap.put(FightAttrEnum.ATTACK, random.nextDouble(100));

@@ -116,21 +116,21 @@ public class FightHero {
 
         FightTimeMachine fightTimeMachine = fightContext.getFightTimeMachine();
 
-        int[] toSelfImpacts = template.getToSelfImpacts();
-        String[] selfParams = template.getSelfParams();
-        for (int i = 0; i < toSelfImpacts.length; i++) {
-            int impactId = toSelfImpacts[i];
-            IImpact impact = ImpactFactory.createImpact(fightContext, this.getId(), skillId, selfParams[i], impactId, this.isAttacker(), 0, fight.getRound(), Collections.singletonList(this.id));
+        List<Integer> toSelfImpacts = template.toSelfImpacts;
+        List<String> selfParams = template.selfParams;
+        for (int i = 0; i < toSelfImpacts.size(); i++) {
+            int impactId = toSelfImpacts.get(i);
+            IImpact impact = ImpactFactory.createImpact(fightContext, this.getId(), skillId, selfParams.get(i), impactId, this.isAttacker(), 0, fight.getRound(), Collections.singletonList(this.id));
             if (impact != null) {
                 fightTimeMachine.addImpactToTimeLine(impact);
             }
         }
 
-        int[] toOtherImpacts = template.getToOtherImpacts();
-        String[] otherParams = template.getOtherParams();
-        for (int i = 0; i < toOtherImpacts.length; i++) {
-            int impactId = toOtherImpacts[i];
-            IImpact impact = ImpactFactory.createImpact(fightContext, this.getId(), skillId, otherParams[i], impactId, this.isAttacker(), 0, fight.getRound(), targetIds);
+        List<Integer> toOtherImpacts = template.toOtherImpacts;
+        List<String> otherParams = template.otherParams;
+        for (int i = 0; i < toOtherImpacts.size(); i++) {
+            int impactId = toOtherImpacts.get(i);
+            IImpact impact = ImpactFactory.createImpact(fightContext, this.getId(), skillId, otherParams.get(i), impactId, this.isAttacker(), 0, fight.getRound(), targetIds);
             if (impact != null) {
                 fightTimeMachine.addImpactToTimeLine(impact);
             }
