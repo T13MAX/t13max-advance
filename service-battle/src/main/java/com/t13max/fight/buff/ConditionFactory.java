@@ -3,6 +3,7 @@ package com.t13max.fight.buff;
 import com.t13max.fight.buff.condition.ConditionEnum;
 import com.t13max.fight.buff.condition.IEventCondition;
 import com.t13max.game.util.Log;
+import com.t13max.util.StringUtil;
 import lombok.experimental.UtilityClass;
 
 import java.util.LinkedList;
@@ -21,7 +22,7 @@ public class ConditionFactory {
 
         List<IEventCondition> result = new LinkedList<>();
 
-        String[] split = conditionListStr.split(";");
+        String[] split = conditionListStr.split(StringUtil.ASTERISK);
         for (String string : split) {
             IEventCondition eventCondition = createEventCondition(string);
             if (eventCondition == null) continue;
@@ -32,7 +33,7 @@ public class ConditionFactory {
     }
 
     public IEventCondition createEventCondition(String conditionStr) {
-        String[] split = conditionStr.split(",");
+        String[] split = conditionStr.split(StringUtil.ASTERISK);
         int id = 0;
         String param = null;
         if (split.length > 0) {

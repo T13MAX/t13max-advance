@@ -6,6 +6,7 @@ import com.t13max.game.util.Log;
 import com.t13max.template.helper.HeroHelper;
 import com.t13max.template.manager.TemplateManager;
 import com.t13max.template.temp.TemplateHero;
+import com.t13max.util.StringUtil;
 import lombok.Getter;
 
 import java.util.HashMap;
@@ -134,9 +135,9 @@ public class FightAttrManager {
     }
 
     public void modifyAttr(String param, boolean add) {
-        String[] split = param.split(";");
+        String[] split = param.split(StringUtil.ASTERISK);
         for (String string : split) {
-            String[] split1 = string.split(",");
+            String[] split1 = string.split(StringUtil.COLON);
             int attr = Integer.parseInt(split1[0]);
             int rate = Integer.parseInt(split1[1]);
             int value = Integer.parseInt(split1[2]);

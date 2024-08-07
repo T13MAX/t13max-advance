@@ -2,8 +2,6 @@ package com.t13max.template.temp;
 
 import java.util.*;
 import com.t13max.template.ITemplate;
-import com.alibaba.excel.annotation.ExcelProperty;
-import com.t13max.template.converter.*;
 
 /**
  * MonsterGroup.xlsx
@@ -16,15 +14,13 @@ import com.t13max.template.converter.*;
 public class TemplateMonsterGroup implements ITemplate {
 
     /** id */
-    @ExcelProperty("id")
     public final int id;
     /** monsters */
-    @ExcelProperty(value = "monsters", converter = ToIntListConverter.class)
     public final List<Integer> monsters;
 
     public TemplateMonsterGroup(int id, List<Integer> monsters) {
         this.id = id;
-        this.monsters = monsters;
+        this.monsters = Collections.unmodifiableList(monsters);
     }
 
     @Override

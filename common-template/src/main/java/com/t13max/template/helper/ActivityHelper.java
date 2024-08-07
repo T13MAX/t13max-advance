@@ -15,7 +15,7 @@ public class ActivityHelper extends TemplateHelper<TemplateActivity> {
 
     @Override
     public boolean configCheck() {
-        for (TemplateActivity templateActivity : this.getAll()) {
+        for (TemplateActivity templateActivity : this.getTempAll()) {
 
         }
         return true;

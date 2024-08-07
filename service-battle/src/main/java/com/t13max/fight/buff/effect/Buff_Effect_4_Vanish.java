@@ -10,6 +10,7 @@ import com.t13max.fight.event.IFightEvent;
 import com.t13max.fight.event.ReadyToSubHpEvent;
 import com.t13max.fight.hero.FightHero;
 import com.t13max.game.Const;
+import com.t13max.util.StringUtil;
 
 import java.util.Collections;
 
@@ -27,7 +28,7 @@ public class Buff_Effect_4_Vanish extends AbstractEffect {
 
     @Override
     protected void onInit() {
-        String[] split = this.param.split(",");
+        String[] split = this.param.split(StringUtil.ASTERISK);
         if (split.length > 0) {
             overlay = Integer.parseInt(split[0]);
         }

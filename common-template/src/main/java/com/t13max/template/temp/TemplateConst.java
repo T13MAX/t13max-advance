@@ -2,8 +2,6 @@ package com.t13max.template.temp;
 
 import java.util.*;
 import com.t13max.template.ITemplate;
-import com.alibaba.excel.annotation.ExcelProperty;
-import com.t13max.template.converter.*;
 
 /**
  * const.xlsx
@@ -16,13 +14,10 @@ import com.t13max.template.converter.*;
 public class TemplateConst implements ITemplate {
 
     /** id */
-    @ExcelProperty("id")
     public final int id;
     /** params */
-    @ExcelProperty("params")
     public final String params;
     /** des */
-    @ExcelProperty("des")
     public final String des;
 
     public TemplateConst(int id, String params, String des) {

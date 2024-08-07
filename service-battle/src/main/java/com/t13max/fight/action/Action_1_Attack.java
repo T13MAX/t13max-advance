@@ -5,6 +5,7 @@ import com.t13max.fight.context.FightMatch;
 import com.t13max.fight.damage.DefaultDamageCalculator;
 import com.t13max.fight.event.ReadyToSubHpEvent;
 import com.t13max.game.util.Log;
+import com.t13max.util.StringUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -25,7 +26,7 @@ public class Action_1_Attack extends AbstractAction {
 
     @Override
     public boolean paramCheck() {
-        String[] split = this.param.split(",");
+        String[] split = this.param.split(StringUtil.ASTERISK);
         if (split.length < 2) {
             Log.battle.error("Action_1_Attack.paramCheck, split.length < 2, id={}", this.skillId);
             return false;

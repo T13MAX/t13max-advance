@@ -2,8 +2,6 @@ package com.t13max.template.temp;
 
 import java.util.*;
 import com.t13max.template.ITemplate;
-import com.alibaba.excel.annotation.ExcelProperty;
-import com.t13max.template.converter.*;
 
 /**
  * monster.xlsx
@@ -16,10 +14,8 @@ import com.t13max.template.converter.*;
 public class TemplateMonster implements ITemplate {
 
     /** id */
-    @ExcelProperty("id")
     public final int id;
     /** heroTempId */
-    @ExcelProperty("heroTempId")
     public final int heroTempId;
 
     public TemplateMonster(int id, int heroTempId) {

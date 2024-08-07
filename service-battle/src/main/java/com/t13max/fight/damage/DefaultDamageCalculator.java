@@ -3,6 +3,7 @@ package com.t13max.fight.damage;
 import com.t13max.fight.hero.FightHero;
 import com.t13max.fight.attr.FightAttrEnum;
 import com.t13max.fight.attr.FightAttrManager;
+import com.t13max.util.StringUtil;
 
 /**
  * 默认伤害计算器
@@ -35,7 +36,7 @@ public class DefaultDamageCalculator implements ICalculator {
         Double defValue = targetAttrManager.getFinalAttr(FightAttrEnum.DEF);
         Double vulnerability = targetAttrManager.getFinalAttr(FightAttrEnum.VULNERABILITY);
 
-        String[] split = param.split(",");
+        String[] split = param.split(StringUtil.ASTERISK);
         int attr = Integer.parseInt(split[0]);
 
         FightAttrEnum fightAttrEnum = FightAttrEnum.getFightAttrEnum(attr);
