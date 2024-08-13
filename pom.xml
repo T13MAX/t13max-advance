@@ -18,6 +18,7 @@
         <module>service-client</module>
         <module>service-gateway</module>
         <module>service-login</module>
+        <module>service-match</module>
     </modules>
 
     <properties>
