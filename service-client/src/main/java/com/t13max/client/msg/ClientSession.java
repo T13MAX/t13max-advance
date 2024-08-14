@@ -2,8 +2,8 @@ package com.t13max.client.msg;
 
 import com.google.protobuf.MessageLite;
 import com.t13max.common.exception.CommonException;
+import com.t13max.common.msg.MessageManager;
 import com.t13max.game.msg.ClientMessagePack;
-import com.t13max.game.msg.MessageManager;
 import com.t13max.game.session.BaseSession;
 import io.netty.channel.ChannelHandlerContext;
 

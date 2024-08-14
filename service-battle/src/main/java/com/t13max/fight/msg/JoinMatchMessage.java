@@ -3,12 +3,12 @@ package com.t13max.fight.msg;
 import battle.api.JoinFightMatchReq;
 import battle.api.JoinFightMatchResp;
 import battle.entity.FightMatchPb;
+import com.t13max.common.msg.Message;
 import com.t13max.fight.context.FightMatch;
 import com.t13max.fight.context.MatchManager;
 import com.t13max.fight.member.IFightMember;
 import com.t13max.fight.member.PlayerMember;
 import com.t13max.game.session.BattleSession;
-import com.t13max.game.msg.Message;
 import com.t13max.game.util.Log;
 import message.id.MessageId;
 

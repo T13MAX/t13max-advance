@@ -1,13 +1,11 @@
 package com.t13max.fight;
 
 import battle.api.CreateFightMatchReq;
-import battle.api.DestroyFightMatchResp;
 import battle.api.LoginBattleReq;
+import com.t13max.common.msg.MessageManager;
 import com.t13max.fight.msg.CreateMatchMessage;
-import com.t13max.fight.msg.DestroyMatchMessage;
 import com.t13max.fight.msg.LoginBattleMessage;
 import com.t13max.game.config.BattleConfig;
-import com.t13max.game.msg.MessageManager;
 import com.t13max.game.run.Application;
 import com.t13max.game.run.NettyServer;
 import com.t13max.game.run.ApplicationConfig;

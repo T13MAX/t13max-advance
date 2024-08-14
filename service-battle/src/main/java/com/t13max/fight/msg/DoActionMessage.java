@@ -1,9 +1,9 @@
 package com.t13max.fight.msg;
 
 import battle.api.DoActionReq;
+import com.t13max.common.msg.Message;
 import com.t13max.fight.context.FightMatch;
 import com.t13max.fight.context.MatchManager;
-import com.t13max.game.msg.Message;
 import com.t13max.game.session.BattleSession;
 import com.t13max.game.util.Log;
 import message.id.MessageId;

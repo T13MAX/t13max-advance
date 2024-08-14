@@ -1,9 +1,8 @@
 package com.t13max.client.player.task;
 
 import com.google.protobuf.MessageLite;
-import com.t13max.client.player.IPlayerTask;
+import com.t13max.common.msg.MessageManager;
 import com.t13max.game.msg.ClientMessagePack;
-import com.t13max.game.msg.MessageManager;
 import lombok.Data;
 
 /**

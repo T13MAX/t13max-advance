@@ -1,10 +1,10 @@
 package com.t13max.game.feature.active.msg;
 
+import com.t13max.common.msg.Message;
 import com.t13max.game.feature.active.ActivityManager;
 import com.t13max.game.feature.active.ActivityMemory;
 import com.t13max.game.feature.active.data.SignInActData;
 import com.t13max.game.msg.AbstractMessage;
-import com.t13max.game.msg.Message;
 import com.t13max.game.player.Player;
 import com.t13max.game.util.Log;
 import game.entity.ActSignInReq;

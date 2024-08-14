@@ -1,10 +1,10 @@
 package com.t13max.fight.msg;
 
 import com.google.protobuf.MessageLite;
-import com.t13max.game.msg.IMessage;
-import com.t13max.game.msg.MessagePack;
+import com.t13max.common.msg.IMessage;
+import com.t13max.common.msg.MessagePack;
+import com.t13max.common.session.ISession;
 import com.t13max.game.session.BattleSession;
-import com.t13max.game.session.ISession;
 import com.t13max.game.util.Log;
 
 /**

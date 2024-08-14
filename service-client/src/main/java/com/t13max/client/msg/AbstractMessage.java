@@ -2,10 +2,10 @@ package com.t13max.client.msg;
 
 import com.google.protobuf.MessageLite;
 import com.t13max.client.player.Player;
-import com.t13max.game.msg.IMessage;
-import com.t13max.game.msg.MessagePack;
+import com.t13max.common.msg.IMessage;
+import com.t13max.common.msg.MessagePack;
+import com.t13max.common.session.ISession;
 import com.t13max.game.msg.ServerMessagePack;
-import com.t13max.game.session.ISession;
 import com.t13max.game.util.Log;
 
 /**

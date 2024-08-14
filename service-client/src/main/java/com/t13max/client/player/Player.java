@@ -10,7 +10,7 @@ import com.t13max.client.player.task.SendMsgTask;
 import com.t13max.client.msg.ClientSession;
 import com.t13max.client.view.panel.HeroPanel;
 import com.t13max.client.view.window.*;
-import com.t13max.game.msg.MessagePack;
+import com.t13max.common.msg.MessagePack;
 import com.t13max.game.util.Log;
 import com.t13max.template.helper.HeroHelper;
 import com.t13max.template.manager.TemplateManager;

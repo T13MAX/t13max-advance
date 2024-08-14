@@ -4,7 +4,7 @@ import battle.api.JoinFightMatchResp;
 import battle.entity.FightMatchPb;
 import com.t13max.client.entity.MatchEntity;
 import com.t13max.client.player.Player;
-import com.t13max.game.msg.Message;
+import com.t13max.common.msg.Message;
 import message.id.MessageId;
 
 /**

@@ -1,11 +1,9 @@
 package com.t13max.client.msg;
 
-import battle.api.DestroyFightMatchResp;
 import battle.api.FightMatchFinishPush;
 import com.t13max.client.player.Player;
-import com.t13max.client.view.window.AbstractWindow;
 import com.t13max.client.view.window.HomeWindow;
-import com.t13max.game.msg.Message;
+import com.t13max.common.msg.Message;
 import message.id.MessageId;
 
 import javax.swing.*;

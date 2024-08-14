@@ -5,7 +5,7 @@ import com.t13max.client.msg.ClientSession;
 import com.t13max.client.player.Player;
 import com.t13max.client.player.task.AutoRetryTask;
 import com.t13max.client.player.task.ReconnectTask;
-import com.t13max.game.msg.MessageManager;
+import com.t13max.common.msg.MessageManager;
 import com.t13max.game.msg.ServerMessagePack;
 import com.t13max.game.util.Log;
 import io.netty.buffer.ByteBuf;

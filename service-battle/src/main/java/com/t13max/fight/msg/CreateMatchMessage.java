@@ -2,16 +2,16 @@ package com.t13max.fight.msg;
 
 import battle.api.CreateFightMatchReq;
 import battle.api.CreateFightMatchResp;
+import com.t13max.common.msg.IMessage;
+import com.t13max.common.msg.Message;
+import com.t13max.common.msg.MessagePack;
+import com.t13max.common.session.ISession;
 import com.t13max.fight.context.FightFactory;
 import com.t13max.fight.context.FightMatch;
 import com.t13max.fight.context.MatchManager;
 import com.t13max.fight.buff.BuffBoxImpl;
 import com.t13max.fight.buff.BuffFactory;
 import com.t13max.fight.hero.FightHero;
-import com.t13max.game.msg.IMessage;
-import com.t13max.game.msg.MessagePack;
-import com.t13max.game.session.ISession;
-import com.t13max.game.msg.Message;
 import com.t13max.game.util.Log;
 import message.id.MessageId;
 

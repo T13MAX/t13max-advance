@@ -1,7 +1,8 @@
 package com.t13max.game.session;
 
 import com.google.protobuf.MessageLite;
-import com.t13max.game.msg.MessageManager;
+import com.t13max.common.msg.MessageManager;
+import com.t13max.common.session.ISession;
 import com.t13max.game.msg.ServerMessagePack;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;

@@ -1,8 +1,8 @@
 package com.t13max.fight.member;
 
 import com.google.protobuf.MessageLite;
+import com.t13max.common.session.ISession;
 import com.t13max.fight.context.FightContext;
-import com.t13max.game.session.ISession;
 import lombok.Setter;
 
 /**

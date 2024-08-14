@@ -2,9 +2,8 @@ package com.t13max.client.msg;
 
 import battle.api.LoginBattleResp;
 import com.t13max.client.player.Player;
-import com.t13max.client.view.window.AbstractWindow;
 import com.t13max.client.view.window.LoginWindow;
-import com.t13max.game.msg.Message;
+import com.t13max.common.msg.Message;
 import message.id.MessageId;
 
 /**

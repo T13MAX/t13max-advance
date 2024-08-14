@@ -2,7 +2,7 @@ package com.t13max.client.msg;
 
 import battle.api.DestroyFightMatchResp;
 import com.t13max.client.player.Player;
-import com.t13max.game.msg.Message;
+import com.t13max.common.msg.Message;
 import message.id.MessageId;
 
 /**

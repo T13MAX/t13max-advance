@@ -1,8 +1,8 @@
 package com.t13max.game.feature.active.msg;
 
+import com.t13max.common.msg.Message;
 import com.t13max.game.feature.active.ActivityMemory;
 import com.t13max.game.msg.AbstractMessage;
-import com.t13max.game.msg.Message;
 import com.t13max.game.player.Player;
 import game.entity.ActivityDataListPb;
 import game.entity.ActivityDataReq;

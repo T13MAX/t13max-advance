@@ -1,6 +1,7 @@
 package com.t13max.game.msg;
 
 import com.google.protobuf.MessageLite;
+import com.t13max.common.msg.MessagePack;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.PooledByteBufAllocator;
 
