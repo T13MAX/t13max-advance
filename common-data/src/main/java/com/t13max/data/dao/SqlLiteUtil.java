@@ -12,11 +12,13 @@ import java.sql.*;
 
 /**
  * 开发阶段凑合用 后续把数据存储改为MongoDB 账号存MySQL 中间件用Redis
+ * 废弃 后续写一个更好的 这里问题很大 但是没时间改
  *
  * @author: t13max
  * @since: 11:10 2024/5/29
  */
 @UtilityClass
+@Deprecated
 public class SqlLiteUtil {
 
     //暂时就单链接 后续补充优化
