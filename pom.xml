@@ -19,6 +19,7 @@
         <module>service-gateway</module>
         <module>service-login</module>
         <module>service-match</module>
+        <module>service-rank</module>
     </modules>
 
     <properties>
