@@ -1,4 +1,4 @@
-package com.t13max.game.feature.active.data;
+package com.t13max.game.feature.activity.data;
 
 import game.entity.ActivityDataPb;
 import game.entity.SignInActPb;

@@ -1,9 +1,9 @@
-package com.t13max.game.feature.active;
+package com.t13max.game.feature.activity;
 
-import com.t13max.game.feature.active.data.ActivityData;
-import com.t13max.game.feature.active.data.IActFeature;
+import com.t13max.game.feature.activity.data.ActivityData;
+import com.t13max.game.feature.activity.data.IActFeature;
 import com.t13max.data.manager.AsyncSaveManager;
-import com.t13max.game.feature.active.enums.ActModelEnum;
+import com.t13max.game.feature.activity.enums.ActModelEnum;
 import com.t13max.game.memory.SingleMemory;
 import com.t13max.game.util.Log;
 import com.t13max.template.helper.ActivityHelper;

@@ -1,6 +1,6 @@
-package com.t13max.game.feature.active.model;
+package com.t13max.game.feature.activity.model;
 
-import com.t13max.game.feature.active.enums.ActModelEnum;
+import com.t13max.game.feature.activity.enums.ActModelEnum;
 import com.t13max.game.player.Player;
 import com.t13max.template.temp.TemplateActivity;
 

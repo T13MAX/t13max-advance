@@ -1,4 +1,4 @@
-package com.t13max.game.feature.active.enums;
+package com.t13max.game.feature.activity.enums;
 
 import lombok.Getter;
 

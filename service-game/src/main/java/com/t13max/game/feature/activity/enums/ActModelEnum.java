@@ -1,9 +1,9 @@
-package com.t13max.game.feature.active.enums;
+package com.t13max.game.feature.activity.enums;
 
-import com.t13max.game.feature.active.data.IActFeature;
-import com.t13max.game.feature.active.data.SignInActData;
-import com.t13max.game.feature.active.model.IActModel;
-import com.t13max.game.feature.active.model.SignInModel;
+import com.t13max.game.feature.activity.data.IActFeature;
+import com.t13max.game.feature.activity.data.SignInActData;
+import com.t13max.game.feature.activity.model.IActModel;
+import com.t13max.game.feature.activity.model.SignInModel;
 import lombok.Getter;
 
 import java.util.HashMap;

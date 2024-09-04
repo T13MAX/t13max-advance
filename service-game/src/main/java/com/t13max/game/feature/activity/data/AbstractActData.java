@@ -1,7 +1,7 @@
-package com.t13max.game.feature.active.data;
+package com.t13max.game.feature.activity.data;
 
 import com.t13max.game.exception.GameException;
-import com.t13max.game.feature.active.ActivityManager;
+import com.t13max.game.feature.activity.ActivityManager;
 import com.t13max.template.helper.ActivityHelper;
 import com.t13max.template.manager.TemplateManager;
 import com.t13max.template.temp.TemplateActivity;

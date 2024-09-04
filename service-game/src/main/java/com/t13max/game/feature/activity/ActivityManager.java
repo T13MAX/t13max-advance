@@ -1,8 +1,8 @@
-package com.t13max.game.feature.active;
+package com.t13max.game.feature.activity;
 
 import com.t13max.common.manager.ManagerBase;
-import com.t13max.game.feature.active.enums.ActModelEnum;
-import com.t13max.game.feature.active.enums.ActOpenEnum;
+import com.t13max.game.feature.activity.enums.ActModelEnum;
+import com.t13max.game.feature.activity.enums.ActOpenEnum;
 import com.t13max.game.player.Player;
 import com.t13max.game.player.PlayerManager;
 import com.t13max.game.util.Log;
@@ -26,14 +26,14 @@ import java.util.concurrent.TimeUnit;
  */
 public class ActivityManager extends ManagerBase {
 
-    private ScheduledExecutorService activityExecutor = Executors.newSingleThreadScheduledExecutor();
+    private final ScheduledExecutorService activityExecutor = Executors.newSingleThreadScheduledExecutor();
 
     //当前开启的活动
     @Getter
-    private Map<Integer, Long> activeAct = new ConcurrentHashMap<>();
+    private final Map<Integer, Long> activeAct = new ConcurrentHashMap<>();
     //已关闭的活动
     @Getter
-    private Map<Integer, Long> closedAct = new ConcurrentHashMap<>();
+    private final Map<Integer, Long> closedAct = new ConcurrentHashMap<>();
 
     public static ActivityManager inst() {
         return inst(ActivityManager.class);

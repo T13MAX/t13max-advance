@@ -1,7 +1,7 @@
-package com.t13max.game.feature.active.model;
+package com.t13max.game.feature.activity.model;
 
-import com.t13max.game.feature.active.data.IActFeature;
-import com.t13max.game.feature.active.enums.ActModelEnum;
+import com.t13max.game.feature.activity.data.IActFeature;
+import com.t13max.game.feature.activity.enums.ActModelEnum;
 import com.t13max.template.temp.TemplateActivity;
 import lombok.Getter;
 

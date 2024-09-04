@@ -1,8 +1,8 @@
-package com.t13max.game.feature.active.model;
+package com.t13max.game.feature.activity.model;
 
-import com.t13max.game.feature.active.data.ActivityData;
-import com.t13max.game.feature.active.data.IActFeature;
-import com.t13max.game.feature.active.ActivityMemory;
+import com.t13max.game.feature.activity.data.ActivityData;
+import com.t13max.game.feature.activity.data.IActFeature;
+import com.t13max.game.feature.activity.ActivityMemory;
 import com.t13max.game.player.Player;
 import com.t13max.template.temp.TemplateActivity;
 
