@@ -1,10 +1,17 @@
 syntax = "proto3";
 
-
 option java_package = "game.entity";
 option java_multiple_files = true;
 
-//道具
+//同步信息通用结构
+message Sync{
+  ItemDataPb itemData = 1;
+  repeated EquipDataPb equipList = 2;
+  repeated HeroDataPb heroList = 3;
+  repeated QuestGroup questGroupList = 4;
+}
+
+//道具(资源)
 message ItemDataPb{
   map<uint32, uint64> itemMap = 1;
 }
@@ -13,4 +20,22 @@ message ItemDataPb{
 message EquipDataPb{
   uint64 id = 1;
   uint32 templateId = 2;
+}
+
+//英雄列表
+message HeroDataPb{
+  uint64 id = 1;
+  uint32 templateId = 2;
+}
+
+//一组任务
+message QuestGroup{
+  uint32 type = 1;
+  repeated QuestDataPb questList = 2;
+}
+
+//任务
+message QuestDataPb{
+  uint32 id = 1;
+  uint32 progress = 2;
 }

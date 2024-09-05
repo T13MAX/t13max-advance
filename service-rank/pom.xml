@@ -19,10 +19,21 @@
 
     <dependencies>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-            <scope>test</scope>
+            <groupId>com.t13max.common</groupId>
+            <artifactId>t13max-core</artifactId>
+            <version>${t13max-core.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.t13max.advance</groupId>
+            <artifactId>common-data</artifactId>
+            <version>${common-data.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson</artifactId>
+            <version>${redisson.version}</version>
         </dependency>
     </dependencies>
 </project>

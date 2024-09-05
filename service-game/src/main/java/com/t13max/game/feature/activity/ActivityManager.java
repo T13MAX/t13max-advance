@@ -92,7 +92,7 @@ public class ActivityManager extends ManagerBase {
         activeAct.put(templateActivity.getId(), this.calcEndMills(templateActivity));
 
         for (Player player : PlayerManager.inst().getOnlinePlayerList()) {
-            actModelEnum.getActModel().onStart(player, templateActivity);
+            actModelEnum.getActModel().onStart(player, player.getMemory(ActivityMemory.class), templateActivity);
         }
     }
 
@@ -104,9 +104,10 @@ public class ActivityManager extends ManagerBase {
         }
 
         activeAct.remove(templateActivity.getId());
+        closedAct.put(templateActivity.getId(), TimeUtil.nowMills());
 
         for (Player player : PlayerManager.inst().getOnlinePlayerList()) {
-            actModelEnum.getActModel().onEnd(player, templateActivity);
+            actModelEnum.getActModel().onEnd(player, player.getMemory(ActivityMemory.class), templateActivity);
         }
     }
 

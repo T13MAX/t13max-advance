@@ -1,14 +1,9 @@
 package com.t13max.game.feature.equip;
 
-import com.t13max.data.dao.MongoUtil;
 import com.t13max.data.entity.EquipData;
-import com.t13max.data.manager.AsyncSaveManager;
 import com.t13max.game.memory.MapMemory;
 import game.entity.EquipDataPb;
-import game.entity.ItemDataPb;
 
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author: t13max

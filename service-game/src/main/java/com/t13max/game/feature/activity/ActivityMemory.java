@@ -12,6 +12,8 @@ import com.t13max.template.temp.TemplateActivity;
 import game.entity.ActivityDataListPb;
 
 /**
+ * 活动内存数据
+ *
  * @author: t13max
  * @since: 20:42 2024/6/4
  */
@@ -19,7 +21,7 @@ public class ActivityMemory extends SingleMemory<ActivityDataListPb, ActivityDat
 
     @Override
     public void init() {
-        this.data = new ActivityData();
+        this.data = new ActivityData(player.getRoleId());
         AsyncSaveManager.inst().save(data);
         checkActivity();
     }
@@ -44,6 +46,12 @@ public class ActivityMemory extends SingleMemory<ActivityDataListPb, ActivityDat
         return builder.build();
     }
 
+    /**
+     * 加载数据后 检查活动的开启和关闭
+     *
+     * @Author t13max
+     * @Date 16:34 2024/9/4
+     */
     private void checkActivity() {
 
         ActivityHelper activityHelper = TemplateManager.inst().helper(ActivityHelper.class);
@@ -51,21 +59,21 @@ public class ActivityMemory extends SingleMemory<ActivityDataListPb, ActivityDat
         for (Integer activityId : ActivityManager.inst().getClosedAct().keySet()) {
             TemplateActivity templateActivity = activityHelper.getTemplate(activityId);
             if (templateActivity == null) {
-                Log.game.error("活动开启失败, template不存在, act={}, model={}", activityId);
+                Log.game.error("活动关闭失败, template不存在, act={}", activityId);
                 continue;
             }
             ActModelEnum actModelEnum = ActModelEnum.getActModelEnum(templateActivity.type);
             if (actModelEnum == null) {
-                Log.game.error("活动开启失败, model不存在, act={}, model={}", templateActivity.getId(), templateActivity.type);
+                Log.game.error("活动关闭失败, model不存在, act={}, model={}", templateActivity.getId(), templateActivity.type);
                 continue;
             }
-            actModelEnum.getActModel().onEnd(player, templateActivity);
+            actModelEnum.getActModel().onEnd(player, this, templateActivity);
         }
 
         for (Integer activityId : ActivityManager.inst().getActiveAct().keySet()) {
             TemplateActivity templateActivity = activityHelper.getTemplate(activityId);
             if (templateActivity == null) {
-                Log.game.error("活动开启失败, template不存在, act={}, model={}", activityId);
+                Log.game.error("活动开启失败, template不存在, act={}", activityId);
                 continue;
             }
             ActModelEnum actModelEnum = ActModelEnum.getActModelEnum(templateActivity.type);
@@ -73,7 +81,7 @@ public class ActivityMemory extends SingleMemory<ActivityDataListPb, ActivityDat
                 Log.game.error("活动开启失败, model不存在, act={}, model={}", templateActivity.getId(), templateActivity.type);
                 continue;
             }
-            actModelEnum.getActModel().onStart(player, templateActivity);
+            actModelEnum.getActModel().onStart(player, this, templateActivity);
         }
     }
 

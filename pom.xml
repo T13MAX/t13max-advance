@@ -36,6 +36,7 @@
         <common-proto.version>1.0.0</common-proto.version>
         <common-template.version>1.0.0</common-template.version>
 
+        <redisson.version>3.15.6</redisson.version>
         <log4j.version>2.17.2</log4j.version>
         <lombok.version>1.18.30</lombok.version>
         <sqllite.version>3.41.2.2</sqllite.version>

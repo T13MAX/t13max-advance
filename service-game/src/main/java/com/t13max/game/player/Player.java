@@ -8,6 +8,7 @@ import com.t13max.data.entity.RoleData;
 import com.t13max.game.memory.MemoryTable;
 import com.t13max.game.memory.IMemory;
 import com.t13max.game.util.Log;
+import game.entity.Sync;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -34,10 +35,13 @@ public class Player {
     //玩家自己的任务队列
     private ActionQueue actionQueue;
 
+    private Sync.Builder sync = Sync.newBuilder();
+
     private Map<Class<? extends IMemory<? extends MessageLite, ? extends IData>>, IMemory<? extends MessageLite, ? extends IData>> memoryMap;
 
     public Player(RoleData roleData) {
         this.uuid = roleData.getUuid();
+        this.roleId = roleData.getRoleId();
         this.roleData = roleData;
         this.actionQueue = new ActionQueue(PlayerManager.inst().getActionExecutor());
         this.memoryMap = new HashMap<>();
@@ -103,7 +107,35 @@ public class Player {
         }
     }
 
+    /**
+     * 发送消息
+     *
+     * @Author t13max
+     * @Date 17:02 2024/9/4
+     */
     public void sendMsg(int msgId, MessageLite messageLite) {
 
+    }
+
+    /**
+     * 直接发送sync
+     *
+     * @Author t13max
+     * @Date 17:01 2024/9/4
+     */
+    public void sendSync() {
+
+    }
+
+    /**
+     * 生成sync的pb
+     *
+     * @Author t13max
+     * @Date 17:02 2024/9/4
+     */
+    public Sync genSync() {
+        Sync build = sync.build();
+        //清理sync
+        return build;
     }
 }

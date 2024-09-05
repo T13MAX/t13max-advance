@@ -8,21 +8,29 @@ import com.t13max.template.temp.TemplateActivity;
 import com.t13max.util.TimeUtil;
 import game.entity.ActivityDataPb;
 import lombok.Data;
+import lombok.Getter;
 
 /**
+ * 具体活动数据骨架实现
+ *
  * @author: t13max
  * @since: 20:53 2024/6/4
  */
-@Data
+@Getter
 public abstract class AbstractActData implements IActFeature {
     //活动id
-    private int activityId;
+    private final int activityId;
 
     //活动类型
-    private int type;
+    private final int type;
+
+    protected AbstractActData(int activityId, int type) {
+        this.activityId = activityId;
+        this.type = type;
+    }
 
     //创建时间
-    private long createMills = TimeUtil.nowMills();
+    private final long createMills = TimeUtil.nowMills();
 
     protected ActivityDataPb.Builder baseBuilder() {
         TemplateActivity templateActivity = TemplateManager.inst().helper(ActivityHelper.class).getTemplate(activityId);

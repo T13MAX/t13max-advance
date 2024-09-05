@@ -12,13 +12,15 @@ import lombok.Getter;
 @Getter
 public abstract class AbstractModel implements IActModel {
 
-    protected final ActModelEnum modelEnum = ActModelEnum.SIGN_IN;
+    protected final ActModelEnum modelEnum;
+
+    public AbstractModel(ActModelEnum modelEnum) {
+        this.modelEnum = modelEnum;
+    }
 
     protected <T extends IActFeature> T createData(TemplateActivity activity) {
-        IActFeature featureData = modelEnum.createData();
-        featureData.setActivityId(activity.getId());
-        featureData.setType(modelEnum.getId());
-        return (T)featureData;
+        IActFeature featureData = modelEnum.createData(activity);
+        return (T) featureData;
     }
 
 }
