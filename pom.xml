@@ -20,6 +20,7 @@
         <module>service-login</module>
         <module>service-match</module>
         <module>service-rank</module>
+        <module>service-social</module>
     </modules>
 
     <properties>
