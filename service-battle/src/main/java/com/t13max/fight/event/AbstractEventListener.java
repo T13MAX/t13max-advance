@@ -8,7 +8,7 @@ import java.util.*;
  */
 public abstract class AbstractEventListener implements IFightEventListener {
 
-    private Set<FightEventEnum> interestedEvent = new HashSet<>();
+    private final Set<FightEventEnum> interestedEvent = new HashSet<>();
 
     protected void subscribeEvent(List<FightEventEnum> enums) {
         if (enums == null || enums.isEmpty()) {

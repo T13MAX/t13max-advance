@@ -19,16 +19,16 @@ import java.util.Random;
  */
 public class FightAttrManager {
 
-    private Map<FightAttrEnum, Double> valueAttrMap = new HashMap<>();
+    private final Map<FightAttrEnum, Double> valueAttrMap = new HashMap<>();
 
-    private Map<FightAttrEnum, Double> rateAttrMap = new HashMap<>();
+    private final Map<FightAttrEnum, Double> rateAttrMap = new HashMap<>();
 
-    private Map<FightAttrEnum, Double> finalAttrMap = new HashMap<>();
+    private final Map<FightAttrEnum, Double> finalAttrMap = new HashMap<>();
 
     @Getter
     private boolean die;
 
-    private FightHero owner;
+    private final FightHero owner;
 
     public FightAttrManager(FightHero fightHero) {
         this.owner = fightHero;
