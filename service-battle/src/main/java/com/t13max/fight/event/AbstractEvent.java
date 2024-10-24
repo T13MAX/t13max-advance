@@ -6,7 +6,7 @@ package com.t13max.fight.event;
  */
 public class AbstractEvent implements IFightEvent {
 
-    private FightEventEnum eventEnum;
+    private final FightEventEnum eventEnum;
 
     public AbstractEvent(FightEventEnum eventEnum) {
         this.eventEnum = eventEnum;

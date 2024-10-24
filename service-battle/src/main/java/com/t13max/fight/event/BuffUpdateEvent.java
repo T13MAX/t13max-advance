@@ -12,7 +12,7 @@ import lombok.Getter;
 @Getter
 public class BuffUpdateEvent extends AbstractEvent implements IFightEventPackager {
 
-    private IBuffBox buffBox;
+    private final IBuffBox buffBox;
 
     public BuffUpdateEvent(IBuffBox buffBox) {
         super(FightEventEnum.BUFF_UPDATE);

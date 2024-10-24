@@ -9,15 +9,17 @@ import lombok.Getter;
 import java.util.Collection;
 
 /**
+ * 战斗"时光机"
+ *
  * @author: t13max
  * @since: 11:34 2024/4/11
  */
 public class FightTimeMachine {
 
-    private TriggerTimeline triggerTimeline;
+    private final TriggerTimeline triggerTimeline;
 
     @Getter
-    private FightContext fightContext;
+    private final FightContext fightContext;
 
     public FightTimeMachine(FightContext fightContext) {
         this.fightContext = fightContext;

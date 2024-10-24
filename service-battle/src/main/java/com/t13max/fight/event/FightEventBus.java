@@ -3,20 +3,23 @@ package com.t13max.fight.event;
 import com.t13max.fight.context.FightContext;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
+ * 战斗事件总线
+ *
  * @author: t13max
  * @since: 16:49 2024/4/15
  */
 public class FightEventBus {
 
-    private FightContext fightContext;
+    private final FightContext fightContext;
+
+    private final Map<FightEventEnum, LinkedList<IFightEventListener>> listenersMap = new ConcurrentHashMap<>();
 
     public FightEventBus(FightContext fightContext) {
         this.fightContext = fightContext;
     }
-
-    private Map<FightEventEnum, LinkedList<IFightEventListener>> listenersMap = new HashMap<>();
 
     public void register(List<IFightEventListener> eventListenerList) {
         for (IFightEventListener eventListener : eventListenerList) {

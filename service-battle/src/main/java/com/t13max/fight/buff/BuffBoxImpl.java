@@ -142,10 +142,10 @@ public class BuffBoxImpl extends AbstractEventListener implements IBuffBox {
         if (templateBuff == null) {
             throw new BattleException("buff不存在, id=" + buffId);
         }
-       List<Integer> effect = templateBuff.effect;
-       List<String> params = templateBuff.params;
-       List<String> activeConditions = templateBuff.activeCondition;
-       List<String> disposedConditions = templateBuff.disposedCondition;
+        List<Integer> effect = templateBuff.effect;
+        List<String> params = templateBuff.params;
+        List<String> activeConditions = templateBuff.activeCondition;
+        List<String> disposedConditions = templateBuff.disposedCondition;
 
         for (int i = 0; i < effect.size(); i++) {
             int effectId = effect.get(i);
@@ -176,14 +176,17 @@ public class BuffBoxImpl extends AbstractEventListener implements IBuffBox {
         Log.battle.info("switchBuffStatus, pre={}, now={}, removeReason={}", prevStatus, nextStatus, removeReason);
 
         switch (nextStatus) {
-            case ACTIVE:
+            case ACTIVE -> {
                 // 盒子激活
                 fightContext.getFightEventBus().postEvent(new BuffSwitchToActiveEvent(this));
-                break;
-            case DISPOSED:
+            }
+            case DISPOSED -> {
                 fightContext.getFightMatch().getFightHero(this.ownerId).getBuffManager().removeBuff(this.id, removeReason);
                 this.onDestroy(removeReason);
-                break;
+            }
+            default -> {
+                Log.battle.info("switchBuffStatus, 状态异常, pre={}, nextStatus={}, removeReason={}", prevStatus, nextStatus, removeReason);
+            }
         }
     }
 

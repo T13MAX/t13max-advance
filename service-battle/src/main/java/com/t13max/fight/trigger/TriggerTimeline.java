@@ -3,12 +3,14 @@ package com.t13max.fight.trigger;
 import java.util.*;
 
 /**
+ * 时间线
+ *
  * @author: t13max
  * @since: 17:00 2024/4/15
  */
 public class TriggerTimeline {
 
-    private Map<Integer, LinkedList<ITrigger>> triggerListMap = new HashMap<>();
+    private final Map<Integer, LinkedList<ITrigger>> triggerListMap = new HashMap<>();
 
     public boolean hasTriggerRemains() {
         return !triggerListMap.isEmpty();

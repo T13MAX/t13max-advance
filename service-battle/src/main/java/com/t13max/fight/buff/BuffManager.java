@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 玩家buff管理类
+ * 英雄buff管理器
  *
  * @author: t13max
  * @since: 15:27 2024/4/10

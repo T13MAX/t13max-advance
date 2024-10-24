@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 public class UnitDeadEvent extends AbstractEvent {
 
-    private List<Long> deadList;
+    private final List<Long> deadList;
 
     public UnitDeadEvent(List<Long> deadList) {
         super(FightEventEnum.UNIT_DEAD);

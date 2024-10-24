@@ -16,7 +16,7 @@ public class LifecycleObserver implements IFightEventListener {
 
     private static final Set<FightEventEnum> INTEREST_EVENT;
 
-    private FightHero fightHero;
+    private final FightHero fightHero;
 
     static {
         Set<FightEventEnum> interests = new HashSet<>();
