@@ -1,6 +1,9 @@
 package com.t13max.rank.manager;
 
 import com.t13max.common.manager.ManagerBase;
+import com.t13max.data.redis.RedisManager;
+import com.t13max.rank.consts.Const;
+import org.redisson.api.RBlockingQueue;
 
 import java.util.concurrent.*;
 
@@ -12,7 +15,8 @@ public class RankManager extends ManagerBase {
 
     private final ScheduledExecutorService autoSaveExecutor = Executors.newSingleThreadScheduledExecutor();
 
-    private BlockingQueue updateQueue=new LinkedBlockingQueue<>();
+    private RBlockingQueue<String> rankQueue;
+
     public RankManager inst() {
         return inst(RankManager.class);
     }
@@ -24,6 +28,8 @@ public class RankManager extends ManagerBase {
 
     @Override
     protected void init() {
+
+        rankQueue = RedisManager.inst().getBlockingQueue(Const.RANK_QUEUE);
         //反序列化
         autoSaveExecutor.scheduleAtFixedRate(this::rankDump, 5, 5, TimeUnit.SECONDS);
     }

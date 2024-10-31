@@ -1,9 +1,9 @@
 package com.t13max.game.memory;
 
 import com.google.protobuf.MessageLite;
-import com.t13max.data.dao.MongoUtil;
-import com.t13max.data.entity.IData;
-import com.t13max.data.manager.AsyncSaveManager;
+import com.t13max.data.mongo.AutoSaveManager;
+import com.t13max.data.mongo.IData;
+import com.t13max.data.mongo.MongoManager;
 import com.t13max.game.util.Log;
 
 import java.util.HashMap;
@@ -24,7 +24,7 @@ public abstract class MapMemory<PB extends MessageLite, DATA extends IData> exte
 
     @Override
     public void load() {
-        List<DATA> dataList = MongoUtil.findList(getDataClazz());
+        List<DATA> dataList = MongoManager.inst().findList(getDataClazz());
         for (DATA data : dataList) {
             dataMap.put(data.getId(), data);
         }
@@ -32,14 +32,14 @@ public abstract class MapMemory<PB extends MessageLite, DATA extends IData> exte
 
     @Override
     public void batchSave() {
-        AsyncSaveManager.inst().batchSave(getAll());
+        AutoSaveManager.inst().batchSave(getAll());
     }
 
     public abstract PB buildPb(long id);
 
     public void delete(long id) {
         DATA remove = dataMap.remove(id);
-        AsyncSaveManager.inst().delete(remove);
+        AutoSaveManager.inst().delete(remove);
     }
 
     public List<PB> buildPbList() {

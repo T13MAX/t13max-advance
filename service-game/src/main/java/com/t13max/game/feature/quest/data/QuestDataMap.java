@@ -1,6 +1,6 @@
 package com.t13max.game.feature.quest.data;
 
-import com.t13max.data.entity.IData;
+import com.t13max.data.mongo.IData;
 import com.t13max.game.feature.quest.enums.EQuestGroup;
 
 import java.util.HashMap;

@@ -1,7 +1,6 @@
 package com.t13max.game.feature.activity.data;
 
-import com.t13max.data.entity.IData;
-import lombok.Data;
+import com.t13max.data.mongo.IData;
 import lombok.Getter;
 
 import java.util.HashMap;

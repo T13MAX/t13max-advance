@@ -12,7 +12,6 @@ import org.apache.logging.log4j.Logger;
 public class Log {
     public static Logger def = LogManager.getLogger("DEF");
     public static Logger msg = LogManager.getLogger("MSG");
-    public static Logger scene = LogManager.getLogger("SCENE");
     public static Logger game = LogManager.getLogger("GAME");
     public static Logger battle = LogManager.getLogger("BATTLE");
     public static Logger template = LogManager.getLogger("TEMPLATE");

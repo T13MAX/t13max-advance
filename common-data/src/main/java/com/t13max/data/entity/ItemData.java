@@ -1,5 +1,6 @@
 package com.t13max.data.entity;
 
+import com.t13max.data.mongo.IData;
 import lombok.Data;
 
 import java.util.HashMap;
@@ -33,6 +34,7 @@ public class ItemData implements IData {
      * @Author t13max
      * @Date 19:24 2024/6/4
      */
+    @Override
     public long getId() {
         return uuid;
     }

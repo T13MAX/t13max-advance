@@ -1,8 +1,8 @@
 package com.t13max.game.feature.activity;
 
+import com.t13max.data.mongo.MongoManager;
 import com.t13max.game.feature.activity.data.ActivityData;
 import com.t13max.game.feature.activity.data.IActFeature;
-import com.t13max.data.manager.AsyncSaveManager;
 import com.t13max.game.feature.activity.enums.ActModelEnum;
 import com.t13max.game.memory.SingleMemory;
 import com.t13max.game.util.Log;
@@ -22,7 +22,7 @@ public class ActivityMemory extends SingleMemory<ActivityDataListPb, ActivityDat
     @Override
     public void init() {
         this.data = new ActivityData(player.getRoleId());
-        AsyncSaveManager.inst().save(data);
+        MongoManager.inst().save(data);
         checkActivity();
     }
 

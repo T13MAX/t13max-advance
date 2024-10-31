@@ -3,12 +3,12 @@ package com.t13max.fight;
 import battle.api.CreateFightMatchReq;
 import battle.api.LoginBattleReq;
 import com.t13max.common.msg.MessageManager;
+import com.t13max.common.run.Application;
+import com.t13max.common.run.ConfigClazz;
+import com.t13max.common.run.ServerClazz;
 import com.t13max.fight.msg.CreateMatchMessage;
 import com.t13max.fight.msg.LoginBattleMessage;
 import com.t13max.game.config.BattleConfig;
-import com.t13max.game.run.Application;
-import com.t13max.game.run.NettyServer;
-import com.t13max.game.run.ApplicationConfig;
 import com.t13max.game.server.BattleServer;
 import com.t13max.game.util.Log;
 import message.id.MessageId;
@@ -19,8 +19,8 @@ import java.util.concurrent.locks.LockSupport;
  * @author: t13max
  * @since: 14:01 2024/5/23
  */
-@ApplicationConfig(configClazz = BattleConfig.class)
-@NettyServer(serverClazz = BattleServer.class)
+@ConfigClazz(configClazz = BattleConfig.class)
+@ServerClazz(serverClazz = BattleServer.class)
 public class BattleApplication {
 
     public static void main(String[] args) throws Exception {

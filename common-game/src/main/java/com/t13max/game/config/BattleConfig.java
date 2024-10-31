@@ -1,5 +1,6 @@
 package com.t13max.game.config;
 
+import com.t13max.common.config.BaseConfig;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,7 +10,7 @@ import lombok.Setter;
  */
 @Setter
 @Getter
-public class BattleConfig extends BaseConfig{
+public class BattleConfig extends BaseConfig {
 
     private boolean test;
 }

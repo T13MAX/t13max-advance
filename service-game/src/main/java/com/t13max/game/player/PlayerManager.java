@@ -1,9 +1,9 @@
 package com.t13max.game.player;
 
 import com.t13max.common.action.ActionExecutor;
+import com.t13max.common.config.ActionConfig;
 import com.t13max.common.manager.ManagerBase;
-import com.t13max.game.config.ActionConfig;
-import com.t13max.game.run.Application;
+import com.t13max.common.run.Application;
 import lombok.Getter;
 
 import java.util.LinkedList;
@@ -39,8 +39,7 @@ public class PlayerManager extends ManagerBase {
 
     @Override
     public void init() {
-        ActionConfig actionConfig = Application.config().getAction();
-        actionExecutor = ActionExecutor.createExecutor(actionConfig.getCore(), actionConfig.getMax(), actionConfig.getName());
+        actionExecutor = ActionExecutor.createExecutor();
     }
 
     public Player getPlayer(long uuid) {

@@ -1,9 +1,9 @@
 package com.t13max.game.memory;
 
 import com.google.protobuf.MessageLite;
-import com.t13max.data.dao.MongoUtil;
-import com.t13max.data.entity.IData;
-import com.t13max.data.manager.AsyncSaveManager;
+import com.t13max.data.mongo.AutoSaveManager;
+import com.t13max.data.mongo.IData;
+import com.t13max.data.mongo.MongoManager;
 
 
 /**
@@ -18,12 +18,12 @@ public abstract class SingleMemory<PB extends MessageLite, DATA extends IData> e
 
     @Override
     public void load() {
-        this.data = MongoUtil.findById(player.getUuid(), getDataClazz());
+        this.data = MongoManager.inst().findById(getDataClazz(), player.getUuid());
     }
 
     @Override
     public void batchSave() {
-        AsyncSaveManager.inst().save(data);
+        AutoSaveManager.inst().save(data);
     }
 
     public abstract PB buildPb();

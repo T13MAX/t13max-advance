@@ -7,7 +7,6 @@ import com.t13max.common.msg.MessagePack;
 import com.t13max.common.session.ISession;
 import com.t13max.game.player.Player;
 import com.t13max.game.player.PlayerManager;
-import com.t13max.game.run.Application;
 import com.t13max.game.util.Log;
 
 /**
@@ -24,7 +23,7 @@ public abstract class AbstractMessage<T extends MessageLite> implements IMessage
             T message = messagePack.getMessageLite();
             Player player = PlayerManager.inst().getPlayer(session.getUuid());
             if (player == null) {
-                Application.autoLogger().error("玩家不存在, 无法处理消息, uuid={}, message={}", session.getUuid(), message);
+              Log.msg.error("玩家不存在, 无法处理消息, uuid={}, message={}", session.getUuid(), message);
                 return;
             }
             //在自己的业务线程池中执行

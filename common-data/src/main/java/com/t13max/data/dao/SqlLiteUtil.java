@@ -1,9 +1,9 @@
 package com.t13max.data.dao;
 
+import com.t13max.common.config.BaseConfig;
+import com.t13max.common.run.Application;
 import com.t13max.data.entity.AccountData;
-import com.t13max.game.config.BaseConfig;
 import com.t13max.game.exception.DataException;
-import com.t13max.game.run.Application;
 import com.t13max.game.util.Log;
 import com.t13max.util.TextUtil;
 import lombok.experimental.UtilityClass;
@@ -18,7 +18,6 @@ import java.sql.*;
  * @since: 11:10 2024/5/29
  */
 @UtilityClass
-@Deprecated
 public class SqlLiteUtil {
 
     //暂时就单链接 后续补充优化

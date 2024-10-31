@@ -1,9 +1,11 @@
 package com.t13max.game.server;
 
-import com.t13max.game.config.NettyConfig;
-import com.t13max.game.run.Application;
+import com.t13max.common.config.NettyConfig;
+import com.t13max.common.net.AbstractServer;
+import com.t13max.common.run.Application;
 import com.t13max.game.server.codec.BattleServerHandler;
 import com.t13max.game.server.codec.FrameDecoder;
+import com.t13max.game.util.Log;
 import com.t13max.util.ThreadNameFactory;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
@@ -18,7 +20,7 @@ import io.netty.handler.timeout.IdleStateHandler;
  * @author: t13max
  * @since: 18:44 2024/5/23
  */
-public class BattleServer extends BaseServer {
+public class BattleServer extends AbstractServer {
 
     @Override
     protected void init() {
@@ -27,11 +29,11 @@ public class BattleServer extends BaseServer {
         if (nettyConfig.isUseEpoll()) {
             this.bossGroup = new EpollEventLoopGroup(1, new ThreadNameFactory("epoll-boss"));
             this.workerGroup = new EpollEventLoopGroup(threadNum, new ThreadNameFactory("epoll-worker"));
-            Application.autoLogger().info("use EpollEventLoopGroup.....");
+            Log.msg.info("use EpollEventLoopGroup.....");
         } else {
             this.bossGroup = new NioEventLoopGroup(1, new ThreadNameFactory("nio-boss"));
             this.workerGroup = new NioEventLoopGroup(threadNum, new ThreadNameFactory("nio-worker"));
-            Application.autoLogger().info("use NioEventLoopGroup.....");
+            Log.msg.info("use NioEventLoopGroup.....");
         }
 
         this.channelInitializer = new ChannelInitializer<SocketChannel>() {

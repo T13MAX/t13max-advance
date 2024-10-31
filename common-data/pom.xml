@@ -24,6 +24,16 @@
             <artifactId>common-game</artifactId>
             <version>${common-game.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.t13max.data.mongo</groupId>
+            <artifactId>t13max-data-mongo</artifactId>
+            <version>${t13max-data-mongo.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.t13max.data.redis</groupId>
+            <artifactId>t13max-data-redis</artifactId>
+            <version>${t13max-data-redis.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>org.xerial</groupId>

@@ -1,5 +1,6 @@
 package com.t13max.data.entity;
 
+import com.t13max.data.mongo.IData;
 import lombok.Data;
 
 /**

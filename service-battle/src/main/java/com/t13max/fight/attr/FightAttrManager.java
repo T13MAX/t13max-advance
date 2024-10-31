@@ -36,7 +36,6 @@ public class FightAttrManager {
     }
 
     private void initAttr() {
-        Random random = new Random();
         HeroHelper heroHelper = TemplateManager.inst().helper(HeroHelper.class);
         TemplateHero template = heroHelper.getTemplate(owner.getTemplateId());
         if (template == null) {
@@ -50,6 +49,7 @@ public class FightAttrManager {
         valueAttrMap.put(FightAttrEnum.MASTERY, (double) template.mastery);
 
         //临时
+        Random random = new Random();
         rateAttrMap.put(FightAttrEnum.ATTACK, random.nextDouble(100));
         rateAttrMap.put(FightAttrEnum.DEF, random.nextDouble(100));
         rateAttrMap.put(FightAttrEnum.MAX_HP, random.nextDouble(100));

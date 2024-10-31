@@ -1,5 +1,6 @@
 package com.t13max.game.memory;
 
+import com.t13max.data.mongo.IData;
 import com.t13max.game.player.Player;
 
 
@@ -7,7 +8,7 @@ import com.t13max.game.player.Player;
  * @author: t13max
  * @since: 18:58 2024/6/4
  */
-public interface IMemory<PB, DATA> {
+public interface IMemory<PB, DATA extends IData> {
 
     // 免库初始化
     void init();
