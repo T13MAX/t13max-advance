@@ -18,4 +18,7 @@ public interface Const {
    String RANK_RESTORE_LOCK = "rank_restore_lock";
    String RANK_TIMING_DUMP = "rank_timing_dump";
    int MAX_PAGE_LEN = 1000;
+   int RANK_KEY_DATA_ID = 1;
+   int MAX_ELEMENTS = 100;
+   int EXCESS_QUERY_COUNT = 5;
 }

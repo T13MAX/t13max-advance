@@ -1,6 +1,9 @@
 package com.t13max.game.api;
 
+import com.t13max.game.api.args.*;
 import com.t13max.rpc.anno.RpcInterface;
+
+import java.util.List;
 
 /**
  * @author t13max
@@ -8,4 +11,9 @@ import com.t13max.rpc.anno.RpcInterface;
  */
 @RpcInterface
 public interface IRankService {
+    void updateRankList(UpdateRankReq args);
+
+    List<RankViewInfo> viewRankInfo(RankInfoReq request);
+
+    OwnRankInfo selectRankOwn(RankOwnReq request);
 }

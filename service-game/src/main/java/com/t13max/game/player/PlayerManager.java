@@ -17,7 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class PlayerManager extends ManagerBase {
 
-    private Map<Long, Player> playerMap = new ConcurrentHashMap<>();
+    private final Map<Long, Player> playerMap = new ConcurrentHashMap<>();
 
     @Getter
     private ActionExecutor actionExecutor;
