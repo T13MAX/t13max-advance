@@ -33,7 +33,7 @@ public class LoginBattleMessage implements IMessage<LoginBattleReq> {
             accountData = createAccountData(message);
         }
         if (!accountData.getPassword().equals(message.getPassword())) {
-            session.sendError(MessageId.S_BATTLE_LOGIN_VALUE, ErrorCode.FAIL);
+            session.sendError(MessageId.S_BATTLE_LOGIN_VALUE, ErrorCode.FAIL.getCode());
             return;
         }
         long uuid = accountData.getId();

@@ -1,6 +1,8 @@
 package com.t13max.game.api;
 
 import com.t13max.game.api.args.*;
+import com.t13max.game.api.entity.OwnRankInfo;
+import com.t13max.game.api.entity.RankViewInfo;
 import com.t13max.rpc.anno.RpcInterface;
 
 import java.util.List;
@@ -11,6 +13,7 @@ import java.util.List;
  */
 @RpcInterface
 public interface IRankService {
+
     void updateRankList(UpdateRankReq args);
 
     List<RankViewInfo> viewRankInfo(RankInfoReq request);

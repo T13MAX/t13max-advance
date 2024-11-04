@@ -1,12 +1,24 @@
 package com.t13max.game.msg;
 
+import lombok.Getter;
+
 /**
  * @author: t13max
  * @since: 15:23 2024/5/29
  */
-public interface ErrorCode {
+@Getter
+public enum ErrorCode {
 
-    int SUCCESS = 0;
 
-    int FAIL = 1;
+    SUCCESS(0),
+
+    FAIL(1),
+
+    ;
+
+    private final int code;
+
+    ErrorCode(int code) {
+        this.code = code;
+    }
 }

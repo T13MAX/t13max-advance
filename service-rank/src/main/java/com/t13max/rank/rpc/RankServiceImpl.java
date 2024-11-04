@@ -2,6 +2,9 @@ package com.t13max.rank.rpc;
 
 import com.t13max.game.api.IRankService;
 import com.t13max.game.api.args.*;
+import com.t13max.game.api.entity.OwnRankInfo;
+import com.t13max.game.api.entity.RankInfo;
+import com.t13max.game.api.entity.RankViewInfo;
 import com.t13max.rank.manager.RankManager;
 import com.t13max.rpc.anno.RpcImpl;
 

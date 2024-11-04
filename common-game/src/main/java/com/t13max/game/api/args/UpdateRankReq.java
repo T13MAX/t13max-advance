@@ -1,5 +1,6 @@
 package com.t13max.game.api.args;
 
+import com.t13max.game.api.entity.RankInfo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

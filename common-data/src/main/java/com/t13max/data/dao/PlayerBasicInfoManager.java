@@ -1,7 +1,7 @@
 package com.t13max.data.dao;
 
 import com.t13max.common.manager.ManagerBase;
-import com.t13max.game.api.args.PlayerBasicInfo;
+import com.t13max.game.api.entity.PlayerBasicInfo;
 
 import java.util.Collections;
 import java.util.Map;

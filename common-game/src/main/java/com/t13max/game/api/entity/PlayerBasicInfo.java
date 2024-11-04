@@ -1,4 +1,4 @@
-package com.t13max.game.api.args;
+package com.t13max.game.api.entity;
 
 import lombok.Data;
 

@@ -1,5 +1,7 @@
 package com.t13max.match;
 
+import com.t13max.common.run.Application;
+
 /**
  * 匹配服
  *
@@ -8,7 +10,7 @@ package com.t13max.match;
  */
 public class MatchApplication {
 
-    public static void main(String[] args) {
-
+    public static void main(String[] args) throws Exception{
+        Application.run(MatchApplication.class, args);
     }
 }
