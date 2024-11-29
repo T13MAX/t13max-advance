@@ -18,6 +18,10 @@
     </properties>
 
     <dependencies>
-
+        <dependency>
+            <groupId>com.t13max.advance</groupId>
+            <artifactId>common-game</artifactId>
+            <version>${common-game.version}</version>
+        </dependency>
     </dependencies>
 </project>

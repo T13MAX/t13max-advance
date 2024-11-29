@@ -6,5 +6,6 @@ package com.t13max.game;
  */
 public interface Const {
 
-    public String CONFIG_NAME = "application.yaml";
+    String CONFIG_NAME = "application.yaml";
+    String SERVER_SESSION_TOKEN = "SERVER_SESSION_TOKEN";
 }

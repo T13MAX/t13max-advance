@@ -35,6 +35,11 @@
             <artifactId>t13max-rpc</artifactId>
             <version>${t13max-rpc.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.t13max.advance</groupId>
+            <artifactId>common-proto</artifactId>
+            <version>${t13max-advance.version}</version>
+        </dependency>
     </dependencies>
 
 </project>

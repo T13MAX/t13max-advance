@@ -1,9 +1,7 @@
 package com.t13max.game.player;
 
 import com.t13max.common.action.ActionExecutor;
-import com.t13max.common.config.ActionConfig;
 import com.t13max.common.manager.ManagerBase;
-import com.t13max.common.run.Application;
 import lombok.Getter;
 
 import java.util.LinkedList;
@@ -44,6 +42,10 @@ public class PlayerManager extends ManagerBase {
 
     public Player getPlayer(long uuid) {
         return playerMap.get(uuid);
+    }
+
+    public Player removePlayer(long uuid) {
+        return playerMap.remove(uuid);
     }
 
     public List<Player> getOnlinePlayerList() {

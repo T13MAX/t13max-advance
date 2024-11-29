@@ -24,20 +24,20 @@ import java.util.Map;
 public class Player {
 
     //玩家的唯一id
-    private long uuid;
+    private final long uuid;
 
     //当前所选角色id
-    private long roleId;
+    private final long roleId;
 
     //角色数据实体
-    private RoleData roleData;
+    private final RoleData roleData;
 
     //玩家自己的任务队列
-    private ActionQueue actionQueue;
+    private final ActionQueue actionQueue;
 
-    private Sync.Builder sync = Sync.newBuilder();
+    private final Sync.Builder sync = Sync.newBuilder();
 
-    private Map<Class<? extends IMemory<? extends MessageLite, ? extends IData>>, IMemory<? extends MessageLite, ? extends IData>> memoryMap;
+    private final Map<Class<? extends IMemory<? extends MessageLite, ? extends IData>>, IMemory<? extends MessageLite, ? extends IData>> memoryMap;
 
     public Player(RoleData roleData) {
         this.uuid = roleData.getUuid();

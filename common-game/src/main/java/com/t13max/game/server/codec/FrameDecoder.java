@@ -23,19 +23,16 @@ public class FrameDecoder extends ByteToMessageDecoder {
     }
 
     protected Object decode(ChannelHandlerContext ctx, ByteBuf in) throws Exception {
-
-        if (in.isReadable(MessageConst.HEADER_LENGTH)) {
-
-            // 标记读位置
-            in.markReaderIndex();
-            int frameLength = in.readInt() - MessageConst.LEN_LENGTH;
-            if (in.isReadable(frameLength))
-                return in.readRetainedSlice(frameLength);
-            else
-                in.resetReaderIndex();
-
+        if (!in.isReadable(MessageConst.HEADER_LENGTH)) {
+            return null;
         }
-
+        // 标记读位置
+        in.markReaderIndex();
+        int frameLength = in.readInt() - MessageConst.LEN_LENGTH;
+        if (in.isReadable(frameLength))
+            return in.readRetainedSlice(frameLength);
+        else
+            in.resetReaderIndex();
         return null;
     }
 }

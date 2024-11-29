@@ -20,11 +20,11 @@ public enum MemoryTable {
 
     ;
 
-    private byte id;
+    private final byte id;
 
-    private Class<? extends IMemory<?, ?>> memoryClazz;
+    private final Class<? extends IMemory<?, ?>> memoryClazz;
 
-    private Supplier<? extends IMemory<?, ?>> supplier;
+    private final Supplier<? extends IMemory<?, ?>> supplier;
 
     MemoryTable(byte id, Class<? extends IMemory<?, ?>> memoryClazz, Supplier<? extends IMemory<?, ?>> supplier) {
         this.id = id;
