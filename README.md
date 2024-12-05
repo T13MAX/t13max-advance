@@ -19,9 +19,8 @@
 
 ### 备忘录
 
-* login gateway 
 * 功能:  任务/成就(进度) 支付 消息同步(全量/变化 合并)
 * game内存管理 存储 活动 道具(装备,资源) 奖励
 *
-* social
+* social login gateway
 * 

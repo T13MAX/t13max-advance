@@ -8,4 +8,10 @@ import lombok.Data;
  */
 @Data
 public class StopMatchReq {
+
+    private final long uuid;
+
+    public StopMatchReq(long uuid) {
+        this.uuid = uuid;
+    }
 }
